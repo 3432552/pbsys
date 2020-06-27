@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzy.manager.dao.UserMapper">
+    <resultMap id="BaseMapper" type="com.hzy.manager.domain.User">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="real_name" property="realName"/>
+        <result column="phone" property="phone"/>
+        <result column="status" property="status"/>
+        <result column="sex" property="sex"/>
+        <result column="email" property="email"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="avatar_url" property="avatarUrl"/>
+        <result column="describle" property="describle"/>
+        <association property="dept" javaType="com.hzy.manager.domain.Dept">
+            <result column="id" property="id"/>
+            <result column="parent_id" property="parentId"/>
+            <result column="dept_name" property="deptName"/>
+            <result column="order_num" property="orderNum"/>
+            <result column="create_time" property="createTime"/>
+            <result column="modify_time" property="modifyTime"/>
+        </association>
+    </resultMap>
+    <select id="selectUserAndDeptPage" resultMap="BaseMapper" parameterType="map">
+        select u.* ,d.dept_name
+        from p_user u
+        left join p_dept d
+        on (u.dept_id=d.id)
+        where 1=1
+        <if test="realName != null and realName != ''">
+            and u.real_name like concat('%', #{realName}, '%')
+        </if>
+        <if test="deptId != null and deptId != ''">
+            and u.dept_id = #{deptId}
+        </if>
+        <if test="status != null and status != ''">
+            and u.status = #{status}
+        </if>
+        order by create_time desc
+        limit #{offSet},#{pageSize}
+    </select>
+</mapper>

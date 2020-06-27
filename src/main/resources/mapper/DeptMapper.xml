@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzy.manager.dao.DeptMapper">
+    <resultMap id="BaseMapper" type="com.hzy.manager.domain.Dept">
+        <id column="id" property="id"></id>
+        <result column="parent_id" property="parentId"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+    <select id="selectDeptList" resultMap="BaseMapper">
+        select * from p_dept where parent_id!=0
+    </select>
+</mapper>
