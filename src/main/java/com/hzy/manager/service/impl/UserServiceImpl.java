@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
+import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
@@ -26,13 +28,18 @@ import java.util.regex.Pattern;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
+    private LoginUserMapper loginUserMapper;
+    @Autowired
     private UserMapper userMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public User findByName(String username, String password, String code) throws LoginException {
-        User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUserName, username));
+    public LoginUser findByName(String username, String password, String code) throws LoginException {
+        if (StringUtils.isEmpty(username)) {
+            throw new LoginException("用户名不能为空!");
+        }
+        LoginUser user = loginUserMapper.findByUserName(username);
         if (user == null) {
             throw new LoginException("用户或密码错误!");
         }
@@ -54,9 +61,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.selectUserAndDeptPage(getMap);
     }
 
-    public User findByUserToRegister(String userName) throws LoginException {
-        User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUserName, userName));
-        return user == null ? null : user;
+    public LoginUser findByUserToRegister(String userName) throws LoginException {
+        LoginUser loginUser = loginUserMapper.findByUserName(userName);
+        return loginUser == null ? null : loginUser;
     }
 
     @Transactional

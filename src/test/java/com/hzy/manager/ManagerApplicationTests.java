@@ -3,12 +3,15 @@ package com.hzy.manager;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.dao.DeptMapper;
+import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.Dept;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.DateUtil;
 import com.hzy.manager.util.MD5Util;
+import net.bytebuddy.asm.Advice;
 import org.assertj.core.api.IntArrayAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,8 @@ class ManagerApplicationTests {
     private DeptMapper deptMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private LoginUserMapper loginUserMapper;
 
     @Test
     void contextLoads() {
@@ -53,9 +58,8 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads4() {
-        int count = userService.count();
-        System.out.println("用户多少个:" + count);
-
+        LoginUser loginUser = loginUserMapper.findByUserName("wzh");
+        System.out.println(loginUser.toString());
     }
 
     @Test

@@ -1,7 +1,9 @@
 package com.hzy.manager.controller;
+
 import com.hzy.manager.common.Result;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,8 @@ public class UserController {
      */
     @GetMapping("/checkUserName/{userName}")
     public boolean checkUserName(@PathVariable String userName) throws LoginException {
-        User u = userService.findByUserToRegister(userName);
-        if (u == null) {
+        LoginUser loginUser = userService.findByUserToRegister(userName);
+        if (loginUser == null) {
             return true;
         } else {
             throw new LoginException("该用户名已被占用!");

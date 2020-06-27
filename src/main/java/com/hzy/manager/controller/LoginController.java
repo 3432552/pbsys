@@ -11,6 +11,7 @@ import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.common.properties.FebsProperties;
 import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.FebsUtil;
 import com.hzy.manager.util.MD5Util;
@@ -41,22 +42,10 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private FebsProperties febsProperties;
-    @Autowired
-    private UserMapper userMapper;
 
     @RequestMapping("/mes")
     public Result mes() {
-        int totalNum = userMapper.selectCount(null);
-        PageUtils<User> pageUtils = new PageUtils<>(2, 4, totalNum);
-        Map<String, Object> map = new HashMap<>();
-        map.put("realName", "");
-        map.put("deptId", "");
-        map.put("status", "");
-        map.put("offSet", pageUtils.getOffset());
-        map.put("pageSize", pageUtils.getPageSize());
-        List<User> list = userMapper.selectUserAndDeptPage(map);
-        pageUtils.setPageList(list);
-        return Result.ok(pageUtils);
+        return Result.ok();
     }
 
     /**
@@ -70,12 +59,12 @@ public class LoginController {
      */
     @PostMapping("/login")
     public Result userLogin(String username, String password, String code) throws LoginException {
-        User user = userService.findByName(username, password, code);
+        LoginUser loginUser = userService.findByName(username, password, code);
         String token = FebsUtil.encryptToken(JWTUtil.sign(username, MD5Util.encrypt(username, password)));
         Long expireTimes = febsProperties.getShiro().getJwtTimeOut();
         redisTemplate.opsForValue().set(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY), token, expireTimes, TimeUnit.SECONDS);
         Map<String, Object> map = new HashMap<>();
-        map.put("user", user);
+        map.put("user", loginUser);
         map.put("token", token);
         return Result.ok(map);
     }
