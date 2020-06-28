@@ -4,8 +4,10 @@ import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.dao.DeptMapper;
 import com.hzy.manager.dao.LoginUserMapper;
+import com.hzy.manager.dao.MenuMapper;
 import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.Dept;
+import com.hzy.manager.domain.Menu;
 import com.hzy.manager.domain.User;
 import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
@@ -33,6 +35,8 @@ class ManagerApplicationTests {
     @Autowired
     private UserService userService;
     @Autowired
+    private MenuMapper menuMapper;
+    @Autowired
     private DeptMapper deptMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
@@ -58,8 +62,8 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads4() {
-        LoginUser loginUser = loginUserMapper.findByUserName("wzh");
-        System.out.println(loginUser.toString());
+        Dept dept = deptMapper.selectById(4L);
+        System.out.println(dept.toString());
     }
 
     @Test

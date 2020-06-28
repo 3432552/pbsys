@@ -1,5 +1,8 @@
 package com.hzy.manager.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -7,8 +10,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@TableName("p_menu")
 public class Menu implements Serializable {
     private static final long serialVersionUID = 6428303321781682589L;
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     private Long parentId;
     private String menuName;

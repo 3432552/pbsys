@@ -30,9 +30,6 @@
         u.email,u.create_time,u.modify_time,u.last_login_time,u.avatar_url,u.describle
         from p_user u
     </sql>
-    <select id="findByUserName" resultMap="BaseMapper">
-        select
-    </select>
     <select id="selectUserAndDeptPage" resultMap="BaseMapper" parameterType="map">
         select u.* ,d.dept_name
         from p_user u

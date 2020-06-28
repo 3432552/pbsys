@@ -1,21 +1,15 @@
 package com.hzy.manager.controller;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.Result;
-import com.hzy.manager.common.authentication.JWTToken;
 import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.common.properties.FebsProperties;
-import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.User;
 import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.FebsUtil;
 import com.hzy.manager.util.MD5Util;
-import com.hzy.manager.util.PageUtils;
 import com.hzy.manager.util.vcode.Captcha;
 import com.hzy.manager.util.vcode.GifCaptcha;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 

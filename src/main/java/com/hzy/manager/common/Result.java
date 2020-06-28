@@ -15,6 +15,13 @@ public class Result extends HashMap<String, Object> {
         return new Result();
     }
 
+    public static Result ok(String msg) {
+        Result result = new Result();
+        result.put("code", 200);
+        result.put("msg", msg);
+        return result;
+    }
+
     public static Result ok(Object data) {
         Result result = new Result();
         result.put("code", 200);
