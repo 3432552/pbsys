@@ -2,7 +2,11 @@ package com.hzy.manager.common.authentication;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hzy.manager.common.Constant;
+import com.hzy.manager.dao.MenuMapper;
+import com.hzy.manager.dao.RoleMapper;
 import com.hzy.manager.dao.UserMapper;
+import com.hzy.manager.domain.Menu;
+import com.hzy.manager.domain.Role;
 import com.hzy.manager.domain.User;
 import com.hzy.manager.util.FebsUtil;
 import com.hzy.manager.util.MD5Util;
@@ -18,7 +22,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 自定义实现 ShiroRealm，包含认证和授权两大模块
@@ -31,6 +39,10 @@ public class ShiroRealm extends AuthorizingRealm {
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
+    private MenuMapper menuMapper;
 
     //同一个bean对象
     @Override
@@ -52,16 +64,16 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
         // 获取用户角色集
-        /*Set<String> roleSet = userManager.getUserRoles(username);
-        System.out.println("获取用户角色集=============>");
-        roleSet.forEach(System.out::println);
-        simpleAuthorizationInfo.setRoles(roleSet);*/
+        List<Role> roleList = roleMapper.getUserRoles(username);
+        Set<String> roleSet = roleList.stream().map(Role::getRoleName).collect(Collectors.toSet());
+        log.info("获取用户角色集=============>" + roleSet);
+        simpleAuthorizationInfo.setRoles(roleSet);
 
         // 获取用户权限集
-        /*Set<String> permissionSet = userManager.getUserPermissions(username);
-        System.out.println("获取用户权限集=============>");
-        permissionSet.forEach(System.out::println);
-        simpleAuthorizationInfo.setStringPermissions(permissionSet);*/
+        List<Menu> permissionList = menuMapper.getUserPermissions(username);
+        Set<String> permissionSet = permissionList.stream().map(Menu::getPerms).collect(Collectors.toSet());
+        log.info("获取用户权限集=============>" + permissionSet);
+        simpleAuthorizationInfo.setStringPermissions(permissionSet);
         return simpleAuthorizationInfo;
     }
 

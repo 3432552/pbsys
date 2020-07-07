@@ -1,13 +1,14 @@
 package com.hzy.manager.service.impl;
-
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.UserMapper;
+import com.hzy.manager.dao.UserRoleMapper;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.domain.UserRole;
 import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.MD5Util;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +33,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private LoginUserMapper loginUserMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -82,8 +86,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (p.matcher(user.getEmail()).matches() == false) {
             throw new BusinessException("你输入的邮箱格式不正确!");
         }
+        user.setDeptId(user.getDeptId());
         user.setCreateTime(new Date());
         userMapper.insert(user);
     }
 
+    @Transactional
+    @Override
+    public void addUser(User user) throws BusinessException {
+     /*   user.setUserName(user.getUserName());
+        user.setPassword(MD5Util.encrypt(user.getUserName(), user.getPassword()));
+        user.setRealName(user.getRealName());
+        Pattern pattern = Pattern.compile("^[1]\\d{10}$");
+        if (pattern.matcher(user.getPhone()).matches() == false) {
+            throw new BusinessException("你输入的手机号格式不正确!");
+        }
+        user.setPhone(user.getPhone());
+        user.setSex(user.getSex());
+        user.setEmail(user.getEmail());
+        Pattern p = Pattern.compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
+        if (p.matcher(user.getEmail()).matches() == false) {
+            throw new BusinessException("你输入的邮箱格式不正确!");
+        }*/
+        user.setDeptId(user.getDeptId());
+        user.setCreateTime(new Date());
+        userMapper.insert(user);
+        //保存用户角色
+        String[] roles = user.getRoleId().split(StringPool.COMMA);
+        Arrays.stream(roles).forEach(roleId -> {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getId());
+            userRole.setRoleId(Long.valueOf(roleId));
+            userRoleMapper.insert(userRole);
+        });
+    }
 }

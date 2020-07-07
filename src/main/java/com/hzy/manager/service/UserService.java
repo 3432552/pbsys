@@ -18,4 +18,6 @@ public interface UserService extends IService<User> {
 
     List<User> getUserList(Map<String, Object> getMap);
 
+    void addUser(User user) throws BusinessException;
+
 }

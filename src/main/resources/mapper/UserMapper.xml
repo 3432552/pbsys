@@ -17,12 +17,11 @@
         <result column="avatar_url" property="avatarUrl"/>
         <result column="describle" property="describle"/>
         <association property="dept" javaType="com.hzy.manager.domain.Dept">
-            <result column="id" property="id"/>
             <result column="parent_id" property="parentId"/>
             <result column="dept_name" property="deptName"/>
-            <result column="order_num" property="orderNum"/>
-            <result column="create_time" property="createTime"/>
-            <result column="modify_time" property="modifyTime"/>
+        </association>
+        <association property="role" javaType="com.hzy.manager.domain.Role">
+            <result column="role_name" property="roleName"/>
         </association>
     </resultMap>
     <sql id="selectUser">
@@ -31,10 +30,11 @@
         from p_user u
     </sql>
     <select id="selectUserAndDeptPage" resultMap="BaseMapper" parameterType="map">
-        select u.* ,d.dept_name
+        select u.* ,d.dept_name,r.id,r.role_name
         from p_user u
-        left join p_dept d
-        on (u.dept_id=d.id)
+        left join p_user_role ur on (u.id=ur.user_id)
+        left join p_role r on (ur.role_id=r.id)
+        left join p_dept d on (u.dept_id=d.id)
         where 1=1
         <if test="realName != null and realName != ''">
             and u.real_name like concat('%', #{realName}, '%')

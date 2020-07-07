@@ -17,9 +17,21 @@ public class Tree<T> {
      */
     private String icon;
     /**
-     * url
+     * path
      */
-    private String url;
+    private String path;
+    /**
+     * type(菜单类型 0:菜单 1：按钮)
+     */
+    private String type;
+    /**
+     * 权限标识 perms
+     */
+    private String perms;
+    /**
+     * 创建时间
+     */
+    private String creteTime;
     /**
      * 显示节点文本
      */
@@ -67,6 +79,14 @@ public class Tree<T> {
         return text;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public void setText(String text) {
         this.text = text;
     }
@@ -97,6 +117,10 @@ public class Tree<T> {
 
     public List<Tree<T>> getChildren() {
         return children;
+    }
+
+    public void setHasChildren(boolean hasChildren) {
+        this.hasChildren = hasChildren;
     }
 
     public void setChildren(List<Tree<T>> children) {
@@ -136,11 +160,35 @@ public class Tree<T> {
     }
 
     public String getUrl() {
-        return url;
+        return path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
+    }
+
+    public String getCreteTime() {
+        return creteTime;
+    }
+
+    public void setCreteTime(String creteTime) {
+        this.creteTime = creteTime;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.path = url;
     }
 
     public Tree() {

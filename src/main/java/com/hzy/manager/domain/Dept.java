@@ -14,7 +14,7 @@ import java.util.Date;
 public class Dept implements Serializable {
     private static final long serialVersionUID = -4260159202860777982L;
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private Long deptId;
     private Long parentId;
     private String deptName;
     private Integer orderNum;

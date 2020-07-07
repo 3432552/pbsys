@@ -8,4 +8,10 @@
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
     </resultMap>
+    <select id="getUserRoles" resultMap="BaseMapper">
+     select r.* from p_role r
+     left join p_user_role ur on (r.id=ur.role_id)
+     left join p_user u on (u.id=ur.user_id)
+     where user_name=#{userName}
+    </select>
 </mapper>

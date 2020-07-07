@@ -1,12 +1,14 @@
 package com.hzy.manager.controller;
-
 import com.hzy.manager.common.Result;
+import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.domain.User;
 import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.PageUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Slf4j
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -59,4 +62,10 @@ public class UserController {
         return Result.ok(pageUtils);
     }
 
+    @PostMapping("/addUser")
+    @Transactional
+    public Result insertUser(User user) throws BusinessException {
+        userService.addUser(user);
+        return Result.error("新增用户成功!");
+    }
 }

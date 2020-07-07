@@ -28,5 +28,9 @@ public class Constant {
     public static final Integer WIDTH = 146;
     public static final Integer HEIGHT = 33;
     public static final Integer LEN = 4;
-
+    /**
+     * 菜单0,按钮1
+     */
+    public static final String MENU = "0";
+    public static final String BUTTON = "1";
 }

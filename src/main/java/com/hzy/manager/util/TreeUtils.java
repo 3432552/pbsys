@@ -1,6 +1,8 @@
 package com.hzy.manager.util;
 
 import com.hzy.manager.dto.Tree;
+import com.hzy.manager.dto.router.RouterMeta;
+import com.hzy.manager.dto.router.VueRouter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class TreeUtils {
-
     protected TreeUtils() {
 
     }
 
+    //构建部门树
     public static <T> Tree<T> build(List<Tree<T>> nodes) {
         if (nodes == null) {
             return null;
@@ -48,5 +50,56 @@ public class TreeUtils {
         state.put("opened", true);
         root.setState(state);
         return root;
+    }
+
+    /**
+     * 构造前端路由
+     *
+     * @param routes routes
+     * @param <T>    T
+     * @return
+     */
+    public static <T> List<VueRouter<T>> buildVueRouter(List<VueRouter<T>> routes) {
+        if (routes == null) {
+            return null;
+        }
+        //父节点
+        List<VueRouter<T>> topRoutes = new ArrayList<>();
+        routes.forEach(route -> {
+            String parentId = route.getParentId();
+            if (parentId == null || "0".equals(parentId)) {
+                topRoutes.add(route);
+                return;
+            }
+            for (VueRouter<T> parent : routes) {
+                String id = parent.getId();
+                if (id != null && id.equals(parentId)) {
+                    if (parent.getChildren() == null)
+                        parent.initChildren();
+                    parent.getChildren().add(route);
+                    parent.setHasChildren(true);
+                    route.setHasParent(true);
+                    parent.setHasParent(true);
+                    return;
+                }
+            }
+        });
+        List<VueRouter<T>> list = new ArrayList<>();
+        VueRouter<T> root = new VueRouter<>();
+        root.setName("主页");
+        root.setComponent("MenuView");
+        root.setIcon("none");
+        root.setPath("/");
+        root.setRedirect("/home");
+        root.setChildren(topRoutes);
+        list.add(root);
+
+        root = new VueRouter<>();
+        root.setName("404");
+        root.setComponent("error/404");
+        root.setPath("*");
+        list.add(root);
+
+        return list;
     }
 }

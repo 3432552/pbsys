@@ -1,4 +1,5 @@
 package com.hzy.manager.controller;
+
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.common.authentication.JWTUtil;
@@ -25,7 +26,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@Validated
 @Slf4j
 public class LoginController {
     @Resource
@@ -62,7 +62,7 @@ public class LoginController {
     }
 
     /**
-     * 注册用户(前端要检查用户名是否存在)
+     * 注册用户(前端要检查用户名是否存在,带新增部门)
      *
      * @param user
      * @return

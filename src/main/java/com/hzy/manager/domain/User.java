@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @TableName("p_user")
@@ -19,6 +20,7 @@ public class User implements Serializable {
     private String userName;
     private String password;
     private Long deptId;
+    private transient String roleId;
     private String realName;
     private String phone;
     private String status;
@@ -33,4 +35,5 @@ public class User implements Serializable {
     private String avatarUrl;
     private String describle;
     private Dept dept;
+    private Role role;
 }

@@ -45,8 +45,10 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads() {
-        List<User> userList = userMapper.selectList(null);
-        userList.forEach(System.out::println);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userName", "wzh");
+        List<Menu> menuList = menuMapper.getMenuByCondition(map);
+        menuList.forEach(System.out::println);
     }
 
     @Test
@@ -69,11 +71,11 @@ class ManagerApplicationTests {
     @Test
     void contextLoads3() {
         Map<String, Object> map = new HashMap<>();
-        map.put("realName", "张三");
+        /*map.put("realName", "张三");
         map.put("deptId", "2");
-        map.put("status", "0");
-        map.put("pageNo", 1);
-        map.put("pageSize", 3);
+        map.put("status", "0");*/
+        map.put("offSet", 1);
+        map.put("pageSize", 5);
         List<User> userList = userMapper.selectUserAndDeptPage(map);
         System.out.println(userList.toString());
     }

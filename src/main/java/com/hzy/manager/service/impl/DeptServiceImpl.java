@@ -46,7 +46,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         List<Dept> deptTreeList = deptMapper.selectList(null);
         deptTreeList.forEach(dept -> {
             Tree<Dept> tree = new Tree<>();
-            tree.setId(dept.getId().toString());
+            tree.setId(dept.getDeptId().toString());
             tree.setParentId(dept.getParentId().toString());
             tree.setText(dept.getDeptName());
             trees.add(tree);

@@ -62,7 +62,7 @@ public class DeptController {
      * @throws Exception
      */
     @PostMapping("/addDept")
-    public Result addDept(Dept dept) {
+    public Result addDept(@RequestBody Dept dept) {
         try {
             deptService.addDept(dept);
             return Result.ok("新增部门成功");
@@ -78,8 +78,8 @@ public class DeptController {
      * @param deptId
      * @return
      */
-    @GetMapping("/selectDeptById")
-    public Result selDeptById(Long deptId) {
+    @GetMapping("/selectDeptById/{deptId}")
+    public Result selDeptById(@PathVariable Long deptId) {
         try {
             Dept dept = deptService.selectListById(deptId);
             return Result.ok(dept);
@@ -97,7 +97,7 @@ public class DeptController {
      * @return
      */
     @PutMapping("/updateDept")
-    public Result updateDeptById(Dept dept) {
+    public Result updateDeptById(@RequestBody Dept dept) {
         try {
             deptService.updateDept(dept);
             return Result.ok("修改部门成功!");
@@ -113,7 +113,7 @@ public class DeptController {
      * @param ids
      * @return
      */
-    @DeleteMapping("/deleteDept")
+    @DeleteMapping("/deleteDept/{ids}")
     public Result delDeptById(@PathVariable String ids) {
         try {
             String[] idArray = ids.split(StringPool.COMMA);
