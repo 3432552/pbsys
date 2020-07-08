@@ -1,5 +1,7 @@
 package com.hzy.manager.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -23,7 +25,7 @@ public class DateUtil {
     public static String getDateTime(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat(FULL_TIME_SPLIT_PATTERN);
         String time = sdf.format(date);
-        return time;
+        return time == null ? null : time;
     }
 
     public static String formatFullTime(LocalDateTime localDateTime, String pattern) {

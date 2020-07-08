@@ -2,12 +2,10 @@ package com.hzy.manager;
 
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.exception.BusinessException;
-import com.hzy.manager.dao.DeptMapper;
-import com.hzy.manager.dao.LoginUserMapper;
-import com.hzy.manager.dao.MenuMapper;
-import com.hzy.manager.dao.UserMapper;
+import com.hzy.manager.dao.*;
 import com.hzy.manager.domain.Dept;
 import com.hzy.manager.domain.Menu;
+import com.hzy.manager.domain.Role;
 import com.hzy.manager.domain.User;
 import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
@@ -38,17 +36,27 @@ class ManagerApplicationTests {
     private MenuMapper menuMapper;
     @Autowired
     private DeptMapper deptMapper;
+    @Autowired
+    private RoleMapper roleMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private LoginUserMapper loginUserMapper;
 
+    //获取用户角色
     @Test
     void contextLoads() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("userName", "wzh");
-        List<Menu> menuList = menuMapper.getMenuByCondition(map);
-        menuList.forEach(System.out::println);
+        String name = "wzh";
+        List<Role> roleList = roleMapper.getUserRoles(name);
+        roleList.forEach(System.out::println);
+    }
+
+    //获取用户权限
+    @Test
+    void contextLoads12() {
+        String name = "wzh";
+        List<Menu> roleList = menuMapper.getUserPermissions(name);
+        roleList.forEach(System.out::println);
     }
 
     @Test

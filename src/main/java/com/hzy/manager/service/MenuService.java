@@ -11,7 +11,7 @@ import java.util.Map;
 public interface MenuService extends IService<Menu> {
     void addMenu(Menu menu);
 
-    Tree<Menu> getMenuTree(Map<String, Object> map);
+    Tree<Menu> getMenuTree(String userName, String type);
 
-    List<VueRouter<Menu>> getUserRouters(String userName);
+    List<VueRouter<Menu>> getUserRouters();
 }

@@ -20,9 +20,6 @@
             <result column="parent_id" property="parentId"/>
             <result column="dept_name" property="deptName"/>
         </association>
-        <association property="role" javaType="com.hzy.manager.domain.Role">
-            <result column="role_name" property="roleName"/>
-        </association>
     </resultMap>
     <sql id="selectUser">
         select u.id,u.user_name,u.password,u.real_name,u.dept_id,u.phone,u.status,u.sex,
@@ -30,7 +27,7 @@
         from p_user u
     </sql>
     <select id="selectUserAndDeptPage" resultMap="BaseMapper" parameterType="map">
-        select u.* ,d.dept_name,r.id,r.role_name
+        select u.* ,d.dept_name
         from p_user u
         left join p_user_role ur on (u.id=ur.user_id)
         left join p_role r on (ur.role_id=r.id)

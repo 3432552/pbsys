@@ -1,4 +1,5 @@
 package com.hzy.manager.controller;
+
 import com.hzy.manager.common.Result;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
@@ -7,8 +8,8 @@ import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.PageUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -48,7 +49,8 @@ public class UserController {
      * @return
      */
     @GetMapping("/selectUserList/{currentNo}/{pageSize}")
-    public Result userList(@RequestBody User user, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
+    @RequiresPermissions("user:view")
+    public Result userList(User user, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
         int totalNum = userService.count();
         PageUtils<User> pageUtils = new PageUtils<>(currentNo, pageSize, totalNum);
         Map<String, Object> map = new HashMap<>();
@@ -63,9 +65,9 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    @Transactional
+    @RequiresPermissions("user:add")
     public Result insertUser(User user) throws BusinessException {
         userService.addUser(user);
-        return Result.error("新增用户成功!");
+        return Result.ok("新增用户成功!");
     }
 }

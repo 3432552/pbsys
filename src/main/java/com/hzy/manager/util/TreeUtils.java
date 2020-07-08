@@ -1,7 +1,6 @@
 package com.hzy.manager.util;
 
 import com.hzy.manager.dto.Tree;
-import com.hzy.manager.dto.router.RouterMeta;
 import com.hzy.manager.dto.router.VueRouter;
 
 import java.util.ArrayList;

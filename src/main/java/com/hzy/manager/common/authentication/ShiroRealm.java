@@ -2,12 +2,14 @@ package com.hzy.manager.common.authentication;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hzy.manager.common.Constant;
+import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.MenuMapper;
 import com.hzy.manager.dao.RoleMapper;
 import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.Menu;
 import com.hzy.manager.domain.Role;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.util.FebsUtil;
 import com.hzy.manager.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
@@ -35,21 +37,18 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class ShiroRealm extends AuthorizingRealm {
-    @Resource
-    private RedisTemplate<String, Object> redisTemplate;
-    @Autowired
-    private UserMapper userMapper;
     @Autowired
     private RoleMapper roleMapper;
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+    private LoginUserMapper loginUserMapper;
 
     //同一个bean对象
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof JWTToken;
     }
-
     /**
      * `
      * 授权模块，获取用户角色和权限
@@ -59,6 +58,7 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection token) {
+        log.info("进入授权功能====================================================》");
         String username = JWTUtil.getUsername(token.toString());
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -94,14 +94,14 @@ public class ShiroRealm extends AuthorizingRealm {
         if (StringUtils.isBlank(username))
             throw new AuthenticationException("token校验不通过");
         // 通过用户名查询用户信息
-        User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUserName, username));
-        if (user == null) {
+        LoginUser loginUser = loginUserMapper.findByUserName(username);
+        if (loginUser == null) {
             throw new AuthenticationException("用户名或密码错误");
         }
-        String cacheTokens = (String) redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY));
+       /* String cacheTokens = (String) redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY));
         if (!StringUtils.equals(cacheTokens, FebsUtil.encryptToken(token))) {
             throw new AuthenticationException("token校验不通过");
-        }
+        }*/
         return new SimpleAuthenticationInfo(token, token, getName());
     }
 }

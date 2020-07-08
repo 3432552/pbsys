@@ -9,6 +9,10 @@ public class Constant {
      */
     public static final String TOKEN_CACHE_KEY = "cacheToken";
     /**
+     * 登录用户信息缓存前缀
+     */
+    public static final String USER_CACHE = "smooth";
+    /**
      * 验证码前缀
      */
     public static final String CODE_KEY = "code";

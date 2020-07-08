@@ -4,27 +4,36 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.dao.MenuMapper;
 import com.hzy.manager.domain.Menu;
+import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.dto.Tree;
 import com.hzy.manager.dto.router.RouterMeta;
 import com.hzy.manager.dto.router.VueRouter;
 import com.hzy.manager.service.MenuService;
 import com.hzy.manager.util.DateUtil;
+import com.hzy.manager.util.MD5Util;
 import com.hzy.manager.util.TreeUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Transactional
     @Override
@@ -42,9 +51,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public List<VueRouter<Menu>> getUserRouters(String userName) {
+    public List<VueRouter<Menu>> getUserRouters() {
         List<VueRouter<Menu>> routes = new ArrayList<>();
-        List<Menu> menus = menuMapper.getMenuByUserName(userName);
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.USER_CACHE));
+        List<Menu> menus = menuMapper.getMenuByUserId(loginUser.getId());
         menus.forEach(menu -> {
             VueRouter<Menu> route = new VueRouter<>();
             route.setId(menu.getId().toString());
@@ -60,16 +70,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Tree<Menu> getMenuTree(Map<String, Object> map) {
+    public Tree<Menu> getMenuTree(String userName, String type) {
         List<Tree<Menu>> menuTree = new ArrayList<>();
-        List<Menu> menuList = menuMapper.getMenuByCondition(map);
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.USER_CACHE));
+        List<Menu> menuList = menuMapper.getMenuByCondition(userName, type, loginUser.getId());
         menuList.forEach(menu -> {
             Tree<Menu> menuTree1 = new Tree<>();
             menuTree1.setId(menu.getId().toString());
             menuTree1.setText(menu.getMenuName());
+            menuTree1.setIcon(menu.getIcon());
             menuTree1.setType(menu.getType());
+            menuTree1.setPerms(menu.getPerms());
             menuTree1.setPath(menu.getPath());
-            menuTree1.setText(menu.getMenuName());
             menuTree1.setCreteTime(DateUtil.getDateTime(menu.getCreateTime()));
             menuTree1.setParentId(menu.getParentId().toString());
             menuTree.add(menuTree1);

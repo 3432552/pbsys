@@ -14,9 +14,9 @@ import com.hzy.manager.util.MD5Util;
 import com.hzy.manager.util.vcode.Captcha;
 import com.hzy.manager.util.vcode.GifCaptcha;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,6 +36,7 @@ public class LoginController {
     private FebsProperties febsProperties;
 
     @RequestMapping("/mes")
+    @RequiresPermissions("user:view")
     public Result mes() {
         return Result.ok();
     }
@@ -55,6 +56,7 @@ public class LoginController {
         String token = FebsUtil.encryptToken(JWTUtil.sign(username, MD5Util.encrypt(username, password)));
         Long expireTimes = febsProperties.getShiro().getJwtTimeOut();
         redisTemplate.opsForValue().set(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY), token, expireTimes, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(MD5Util.encrypt(Constant.USER_CACHE), loginUser);
         Map<String, Object> map = new HashMap<>();
         map.put("user", loginUser);
         map.put("token", token);

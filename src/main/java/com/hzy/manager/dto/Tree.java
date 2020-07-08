@@ -1,7 +1,6 @@
 package com.hzy.manager.dto;
 
 import com.alibaba.fastjson.JSON;
-import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,14 +78,6 @@ public class Tree<T> {
         return text;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public void setText(String text) {
         this.text = text;
     }
@@ -117,10 +108,6 @@ public class Tree<T> {
 
     public List<Tree<T>> getChildren() {
         return children;
-    }
-
-    public void setHasChildren(boolean hasChildren) {
-        this.hasChildren = hasChildren;
     }
 
     public void setChildren(List<Tree<T>> children) {
@@ -163,12 +150,16 @@ public class Tree<T> {
         return path;
     }
 
-    public String getPath() {
-        return path;
+    public void setUrl(String url) {
+        this.path = url;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getPerms() {
@@ -187,12 +178,20 @@ public class Tree<T> {
         this.creteTime = creteTime;
     }
 
-    public void setUrl(String url) {
-        this.path = url;
+    public void setHasChildren(boolean hasChildren) {
+        this.hasChildren = hasChildren;
     }
 
     public Tree() {
         super();
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override

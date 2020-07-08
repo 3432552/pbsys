@@ -35,5 +35,4 @@ public class User implements Serializable {
     private String avatarUrl;
     private String describle;
     private Dept dept;
-    private Role role;
 }

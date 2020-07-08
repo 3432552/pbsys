@@ -1,7 +1,6 @@
 package com.hzy.manager.controller;
 
 import com.hzy.manager.common.Result;
-import com.hzy.manager.domain.Dept;
 import com.hzy.manager.domain.Menu;
 import com.hzy.manager.dto.Tree;
 import com.hzy.manager.dto.router.VueRouter;
@@ -9,9 +8,7 @@ import com.hzy.manager.service.MenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -21,34 +18,39 @@ public class MenuController {
     private MenuService menuService;
 
     /**
-     * 根据用户名生成左侧菜单,只生成菜单(增删改属于按钮,左侧菜单树不显示)
+     * 根据用户ID生成左侧菜单,只生成菜单(增删改属于按钮,左侧菜单树不显示)
      *
-     * @param userName
+     * @param
      * @return
      */
-    @GetMapping("/{userName}")
-    public Result getMenuRoutes(@PathVariable String userName) {
-        List<VueRouter<Menu>> vueRouters = menuService.getUserRouters(userName);
-        return Result.ok(vueRouters);
+    @GetMapping("/onlyMenuTree")
+    public Result getMenuRoutes() {
+        List<VueRouter<Menu>> vueRouters = null;
+        try {
+            vueRouters = menuService.getUserRouters();
+            return Result.ok(vueRouters);
+        } catch (Exception e) {
+            log.error("生成菜单树失败:", e);
+            return Result.error("生成菜单树失败!");
+        }
     }
 
     /**
      * 生成菜单列表,生成菜单和按钮
      *
-     * @param map
+     * @param
      * @return
      */
     @GetMapping("/menuTree")
-    public Result getMenu(Map<String, Object> map) {
-        map.put("userName", "admin");
+    public Result getMenu(Menu menu) {
         Tree<Menu> menuTree = null;
         try {
-            menuTree = menuService.getMenuTree(map);
+            menuTree = menuService.getMenuTree(menu.getMenuName(), menu.getType());
+            return Result.ok(menuTree);
         } catch (Exception e) {
-            log.error("生成菜单树失败:", e);
-            return Result.error("生成菜单树失败!");
+            log.error("生成菜单列表树失败:", e);
+            return Result.error("生成列表树失败!");
         }
-        return Result.ok(menuTree);
     }
 
     /**
