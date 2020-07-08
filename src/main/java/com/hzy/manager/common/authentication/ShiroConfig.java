@@ -1,6 +1,5 @@
 package com.hzy.manager.common.authentication;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -17,12 +16,10 @@ import java.util.LinkedHashMap;
  * @author MrBird
  */
 @Configuration
-@Slf4j
 public class ShiroConfig {
 
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
-        log.info("=====================>6");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 设置 securityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -42,7 +39,6 @@ public class ShiroConfig {
 
     @Bean
     public SecurityManager securityManager() {
-        log.info("=====================>7");
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 配置 SecurityManager，并注入 shiroRealm
         securityManager.setRealm(shiroRealm());
@@ -51,7 +47,6 @@ public class ShiroConfig {
 
     @Bean
     public ShiroRealm shiroRealm() {
-        log.info("=====================>8");
         // 配置 Realm
         return new ShiroRealm();
     }

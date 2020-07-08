@@ -9,8 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,8 +22,6 @@ import java.io.PrintWriter;
 
 @Slf4j
 public class JWTFilter extends BasicHttpAuthenticationFilter {
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
     private static final String TOKEN = "token";
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();

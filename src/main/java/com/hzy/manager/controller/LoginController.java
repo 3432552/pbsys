@@ -2,6 +2,7 @@ package com.hzy.manager.controller;
 
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.Result;
+import com.hzy.manager.common.annotation.hasPermission;
 import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
@@ -14,7 +15,6 @@ import com.hzy.manager.util.MD5Util;
 import com.hzy.manager.util.vcode.Captcha;
 import com.hzy.manager.util.vcode.GifCaptcha;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +36,7 @@ public class LoginController {
     private FebsProperties febsProperties;
 
     @RequestMapping("/mes")
-    @RequiresPermissions("user:view")
+    @hasPermission("user:view")
     public Result mes() {
         return Result.ok();
     }
@@ -74,7 +74,6 @@ public class LoginController {
         userService.register(user);
         return Result.ok("注册成功!");
     }
-
     /**
      * 生成验证码
      *
