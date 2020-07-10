@@ -49,6 +49,7 @@ public class ShiroRealm extends AuthorizingRealm {
     public boolean supports(AuthenticationToken token) {
         return token instanceof JWTToken;
     }
+
     /**
      * `
      * 授权模块，获取用户角色和权限
@@ -87,6 +88,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         log.info("=====================>9");
+        log.info("进入用户认证功能====================================================》");
         // 这里的 token是从 JWTFilter 的 executeLogin 方法传递过来的，已经经过了解密
         String token = (String) authenticationToken.getCredentials();
         String username = JWTUtil.getUsername(token);

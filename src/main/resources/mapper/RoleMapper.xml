@@ -14,4 +14,10 @@
      left join p_user u on (u.id=ur.user_id)
      where user_name=#{userName}
     </select>
+    <select id="getUserRole" resultMap="BaseMapper" parameterType="long">
+        SELECT r.* FROM p_role r
+       LEFT JOIN p_user_role ur ON(r.id=ur.role_id)
+       LEFT JOIN p_user u ON(u.id=ur.user_id)
+       where u.id=#{uid}
+    </select>
 </mapper>

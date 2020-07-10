@@ -5,6 +5,7 @@ import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,12 @@ public class GlobalExceptionHandler {
     public Result businessException(BusinessException e) {
         log.error("业务异常:" + e.getMessage());
         return Result.wan(e.getMessage());
+    }
+
+    @ExceptionHandler(value = UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public Result handleUnauthorizedException(Exception e) {
+        log.error("权限不足，{}", e.getMessage());
+        return Result.error(401, "权限不足，不能执行此操作!");
     }
 }

@@ -1,9 +1,14 @@
 package com.hzy.manager.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.dao.MenuMapper;
+import com.hzy.manager.dao.RoleMapper;
+import com.hzy.manager.dao.RoleMenuMapper;
 import com.hzy.manager.domain.Menu;
+import com.hzy.manager.domain.Role;
+import com.hzy.manager.domain.RoleMenu;
 import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.dto.Tree;
 import com.hzy.manager.dto.router.RouterMeta;
@@ -32,6 +37,10 @@ import java.util.Map;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
+    private RoleMenuMapper roleMenuMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -48,6 +57,22 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         menu.setCreateTime(new Date());
         menuMapper.insert(menu);
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.USER_CACHE));
+        Role role = roleMapper.getUserRole(loginUser.getId());
+        RoleMenu roleMenu = new RoleMenu();
+        roleMenu.setRoleId(role.getId());
+        roleMenu.setMenuId(menu.getId());
+        roleMenuMapper.insert(roleMenu);
+    }
+
+    @Override
+    public void updateMenu(Menu menu) {
+        if (menu.getType().equals(Constant.BUTTON)) {
+            menu.setIcon(null);
+            menu.setPath(null);
+        }
+        menu.setModifyTime(new Date());
+        menuMapper.updateById(menu);
     }
 
     @Override
@@ -87,5 +112,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             menuTree.add(menuTree1);
         });
         return TreeUtils.build(menuTree);
+    }
+
+    @Override
+    public Menu findMenuById(Long mid) {
+        return menuMapper.selectById(mid);
+    }
+
+    @Override
+    public void deleteMenu(Long mid) {
+        //先删除菜单
+        menuMapper.deleteById(mid);
+        //再删除关联表角色和菜单
+        roleMenuMapper.deleteRoleIdByMenuId(mid);
     }
 }

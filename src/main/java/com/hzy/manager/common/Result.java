@@ -36,6 +36,14 @@ public class Result extends HashMap<String, Object> {
         return result;
     }
 
+    public static Result error(Integer code, Object msg) {
+        Result result = new Result();
+        result.put("code", code);
+        result.put("msg", msg);
+        return result;
+    }
+
+
     public static Result wan(Object msg) {
         Result result = new Result();
         result.put("code", 400);

@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Resource;
+import javax.jws.soap.SOAPBinding;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -72,8 +73,8 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads4() {
-        Dept dept = deptMapper.selectById(4L);
-        System.out.println(dept.toString());
+        Role role = roleMapper.getUserRole(1L);
+        System.out.println(role.toString());
     }
 
     @Test

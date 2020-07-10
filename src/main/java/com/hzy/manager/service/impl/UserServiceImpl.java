@@ -1,4 +1,7 @@
 package com.hzy.manager.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
@@ -91,10 +94,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.insert(user);
     }
 
+    @Override
+    public User getUserById(Long uid) {
+        return userMapper.selectByUid(uid);
+    }
+
     @Transactional
     @Override
     public void addUser(User user) throws BusinessException {
-     /*   user.setUserName(user.getUserName());
+        user.setUserName(user.getUserName());
         user.setPassword(MD5Util.encrypt(user.getUserName(), user.getPassword()));
         user.setRealName(user.getRealName());
         Pattern pattern = Pattern.compile("^[1]\\d{10}$");
@@ -107,17 +115,46 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Pattern p = Pattern.compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
         if (p.matcher(user.getEmail()).matches() == false) {
             throw new BusinessException("你输入的邮箱格式不正确!");
-        }*/
+        }
         user.setDeptId(user.getDeptId());
         user.setCreateTime(new Date());
         userMapper.insert(user);
-        //保存用户角色
+        //保存用户角色,可批量保存用户角色
         String[] roles = user.getRoleId().split(StringPool.COMMA);
         Arrays.stream(roles).forEach(roleId -> {
             UserRole userRole = new UserRole();
             userRole.setUserId(user.getId());
             userRole.setRoleId(Long.valueOf(roleId));
             userRoleMapper.insert(userRole);
+        });
+    }
+
+    @Transactional
+    @Override
+    public void updateUser(User user) {
+        user.setModifyTime(new Date());
+        userMapper.updateById(user);
+        //可批量修改用户角色(先删除后新增间接修改角色id,直接修改不可行)
+        String[] roleIds = user.getRoleId().split(StringPool.COMMA);
+        userRoleMapper.delete(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getId()));
+        Arrays.asList(roleIds).forEach(roleId -> {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getId());
+            userRole.setRoleId(Long.valueOf(roleId));
+            userRoleMapper.insert(userRole);
+        });
+    }
+
+    @Transactional
+    @Override
+    public void deleteUserByIds(String[] ids) {
+        //删除用户
+        userMapper.deleteBatchIds(Arrays.asList(ids));
+        //删除用户角色
+        Arrays.asList(ids).forEach(uid -> {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(Long.valueOf(uid));
+            userRoleMapper.deleteRoleIdByUid(userRole.getUserId().toString());
         });
     }
 }

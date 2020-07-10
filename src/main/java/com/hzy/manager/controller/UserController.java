@@ -1,5 +1,6 @@
 package com.hzy.manager.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
@@ -8,7 +9,6 @@ import com.hzy.manager.dto.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.PageUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +49,6 @@ public class UserController {
      * @return
      */
     @GetMapping("/selectUserList/{currentNo}/{pageSize}")
-    @RequiresPermissions("user:view")
     public Result userList(User user, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
         int totalNum = userService.count();
         PageUtils<User> pageUtils = new PageUtils<>(currentNo, pageSize, totalNum);
@@ -64,10 +63,69 @@ public class UserController {
         return Result.ok(pageUtils);
     }
 
+    /**
+     * 新增用户
+     *
+     * @param user 可批量新增角色信息
+     * @return deptId, userName, roleId
+     * @throws BusinessException
+     */
     @PostMapping("/addUser")
-    @RequiresPermissions("user:add")
     public Result insertUser(User user) throws BusinessException {
         userService.addUser(user);
         return Result.ok("新增用户成功!");
+    }
+
+    /**
+     * 根据用户ID查询一条用户信息用于修改
+     *
+     * @param uid
+     * @return
+     */
+    @GetMapping("/selectUserById/{uid}")
+    public Result selUserById(@PathVariable Long uid) {
+        try {
+            User user = userService.getUserById(uid);
+            return Result.ok(user);
+        } catch (Exception e) {
+            log.error("查询用户失败:", e);
+            return Result.error("查询用户失败!");
+        }
+    }
+
+    /**
+     * 修改用户信息，可批量修改角色信息
+     * 必传的,id,deptId,roleId
+     *
+     * @param user
+     * @return
+     */
+    @PutMapping("/updateUser")
+    public Result updateDeptById(User user) {
+        try {
+            userService.updateUser(user);
+            return Result.ok("修改用户成功!");
+        } catch (Exception e) {
+            log.error("修改用户失败:", e);
+            return Result.error("修改用户失败!");
+        }
+    }
+
+    /**
+     * 可批量删除用户(也把用户角色信息一起删除了)
+     *
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("/deleteUser/{ids}")
+    public Result delUserByIds(@PathVariable String ids) {
+        try {
+            String[] arrIds = ids.split(StringPool.COMMA);
+            userService.deleteUserByIds(arrIds);
+            return Result.ok("删除用户成功!");
+        } catch (Exception e) {
+            log.error("删除用户失败:", e);
+            return Result.error("删除用户失败!");
+        }
     }
 }

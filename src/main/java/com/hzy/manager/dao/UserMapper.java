@@ -8,4 +8,5 @@ import java.util.Map;
 
 public interface UserMapper extends BaseMapper<User> {
     List<User> selectUserAndDeptPage(Map<String, Object> selectUserListMap);
+    User selectByUid(Long uid);
 }

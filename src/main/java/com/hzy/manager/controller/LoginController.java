@@ -74,6 +74,7 @@ public class LoginController {
         userService.register(user);
         return Result.ok("注册成功!");
     }
+
     /**
      * 生成验证码
      *

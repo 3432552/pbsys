@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,10 +28,10 @@ public class RoleController {
         List<Role> roleList = null;
         try {
             roleList = roleService.roleList();
+            return Result.ok(roleList);
         } catch (Exception e) {
             log.error("查询角色列表失败:", e);
             return Result.error("查询角色列表失败!");
         }
-        return Result.ok(roleList);
     }
 }

@@ -14,4 +14,10 @@ public interface MenuService extends IService<Menu> {
     Tree<Menu> getMenuTree(String userName, String type);
 
     List<VueRouter<Menu>> getUserRouters();
+
+    Menu findMenuById(Long mid);
+
+    void updateMenu(Menu menu);
+
+    void deleteMenu(Long mid);
 }

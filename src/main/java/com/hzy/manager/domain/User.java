@@ -20,7 +20,6 @@ public class User implements Serializable {
     private String userName;
     private String password;
     private Long deptId;
-    private transient String roleId;
     private String realName;
     private String phone;
     private String status;
@@ -34,5 +33,8 @@ public class User implements Serializable {
     private Date lastLoginTime;
     private String avatarUrl;
     private String describle;
-    private Dept dept;
+    //不是本表字段
+    private transient String roleId;
+    private String roleName;
+    private String deptName;
 }

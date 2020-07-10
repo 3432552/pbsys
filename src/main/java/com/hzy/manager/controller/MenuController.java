@@ -8,6 +8,7 @@ import com.hzy.manager.service.MenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Slf4j
@@ -36,7 +37,7 @@ public class MenuController {
     }
 
     /**
-     * 生成菜单列表,生成菜单和按钮
+     * 根据用户ID生成菜单列表,生成菜单和按钮
      *
      * @param
      * @return
@@ -54,7 +55,8 @@ public class MenuController {
     }
 
     /**
-     * 新增菜单 必要参数menuName,type,parentId(要获得点击菜单的那个父Id)
+     * 新增菜单 必要参数menuName,type,parentId(要获得点击菜单的那个父菜单Id【即菜单主键id】)
+     * 新增菜单后会给当前角色在菜单角色关联表中把把角色对应的菜单也会新增进关联表
      *
      * @param menu
      * @return
@@ -67,6 +69,57 @@ public class MenuController {
         } catch (Exception e) {
             log.error("新增菜单失败:", e);
             return Result.error("新增菜单失败!");
+        }
+    }
+
+    /**
+     * 根据菜单Id获取一条菜单信息，为了修改
+     *
+     * @param menuId
+     * @return
+     */
+    @GetMapping("/selectMenuById/{menuId}")
+    public Result selMenuById(@PathVariable Long menuId) {
+        try {
+            Menu menu = menuService.findMenuById(menuId);
+            return Result.ok(menu);
+        } catch (Exception e) {
+            log.error("查询菜单失败:", e);
+            return Result.error("查询菜单失败!");
+        }
+    }
+
+    /**
+     * 修改菜单
+     *
+     * @param menu
+     * @return
+     */
+    @PutMapping("/updateMenu")
+    public Result updateDeptById(Menu menu) {
+        try {
+            menuService.updateMenu(menu);
+            return Result.ok("修改菜单成功!");
+        } catch (Exception e) {
+            log.error("修改菜单失败:", e);
+            return Result.error("修改菜单失败!");
+        }
+    }
+
+    /**
+     * 删除菜单
+     *
+     * @param
+     * @return
+     */
+    @DeleteMapping("/deleteMenu/{mid}")
+    public Result deleteMenuById(@PathVariable Long mid) {
+        try {
+            menuService.deleteMenu(mid);
+            return Result.ok("删除菜单成功!");
+        } catch (Exception e) {
+            log.error("删除菜单失败:", e);
+            return Result.error("删除菜单失败!");
         }
     }
 }

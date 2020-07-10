@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzy.manager.dao.UserRoleMapper">
+    <resultMap id="BaseMapper" type="com.hzy.manager.domain.UserRole">
+        <result column="user_id" property="userId"/>
+        <result column="role_id" property="roleId"/>
+    </resultMap>
+    <delete id="deleteRoleIdByUid" parameterType="string">
+        delete from p_user_role
+        where user_id=#{uid}
+    </delete>
+</mapper>

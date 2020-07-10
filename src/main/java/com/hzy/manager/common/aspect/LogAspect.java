@@ -65,12 +65,8 @@ public class LogAspect {
             final String message1 = "401";
             final String message2 = "你没有此权限!";
             try (PrintWriter out = response.getWriter()) {
-                StringBuilder stringBuilder = new StringBuilder();
-                String responseJson1 = "{\"code\":\"" + message1 + "\"}";
-                String responseJson2 = "{\"msg\":\"" + message2 + "\"}";
-                stringBuilder.append(responseJson1 + ",");
-                stringBuilder.append(responseJson2);
-                out.print(stringBuilder);
+                String responseJson = "{\"code\":\"" + message1 + "\",\"msg\":\"" + message2 + "\"}";
+                out.print(responseJson);
             } catch (IOException e) {
                 log.error("PrintWriter error：", e);
             }

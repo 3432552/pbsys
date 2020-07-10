@@ -20,4 +20,10 @@ public interface UserService extends IService<User> {
 
     void addUser(User user) throws BusinessException;
 
+    User getUserById(Long uid);
+
+    void updateUser(User user);
+
+    void deleteUserByIds(String[] ids);
+
 }
