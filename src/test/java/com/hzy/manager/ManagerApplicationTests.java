@@ -1,30 +1,16 @@
 package com.hzy.manager;
 
-import com.hzy.manager.common.Constant;
-import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.dao.*;
-import com.hzy.manager.domain.Dept;
-import com.hzy.manager.domain.Menu;
-import com.hzy.manager.domain.Role;
-import com.hzy.manager.domain.User;
-import com.hzy.manager.dto.LoginUser;
+import com.hzy.manager.domain.*;
+import com.hzy.manager.service.RoleService;
 import com.hzy.manager.service.UserService;
-import com.hzy.manager.util.DateUtil;
-import com.hzy.manager.util.MD5Util;
-import net.bytebuddy.asm.Advice;
-import org.assertj.core.api.IntArrayAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.annotation.Resource;
-import javax.jws.soap.SOAPBinding;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @SpringBootTest
@@ -39,10 +25,16 @@ class ManagerApplicationTests {
     private DeptMapper deptMapper;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private WorkLogMapper workLogMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private LoginUserMapper loginUserMapper;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private ApprovalMapper approvalMapper;
 
     //获取用户角色
     @Test
@@ -50,6 +42,12 @@ class ManagerApplicationTests {
         String name = "wzh";
         List<Role> roleList = roleMapper.getUserRoles(name);
         roleList.forEach(System.out::println);
+    }
+
+    @Test
+    void contextLoads23() {
+        /*List<Approval> approvalList = approvalMapper.selectApprovalList("");
+        approvalList.forEach(System.out::println);*/
     }
 
     //获取用户权限
@@ -73,19 +71,13 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads4() {
-        Role role = roleMapper.getUserRole(1L);
-        System.out.println(role.toString());
+        List<Menu> menuList = menuMapper.getMenuByUserId(1L);
+        menuList.forEach(System.out::println);
     }
 
     @Test
     void contextLoads3() {
-        Map<String, Object> map = new HashMap<>();
-        /*map.put("realName", "张三");
-        map.put("deptId", "2");
-        map.put("status", "0");*/
-        map.put("offSet", 1);
-        map.put("pageSize", 5);
-        List<User> userList = userMapper.selectUserAndDeptPage(map);
-        System.out.println(userList.toString());
+        /*List<WorkLog> workLogList = workLogMapper.selectWorkLogList("王");
+        workLogList.forEach(System.out::println);*/
     }
 }

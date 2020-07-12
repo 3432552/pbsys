@@ -1,17 +1,14 @@
 package com.hzy.manager.common.authentication;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hzy.manager.common.Constant;
+import com.hzy.manager.common.properties.FebsProperties;
 import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.MenuMapper;
 import com.hzy.manager.dao.RoleMapper;
-import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.Menu;
 import com.hzy.manager.domain.Role;
-import com.hzy.manager.domain.User;
-import com.hzy.manager.dto.LoginUser;
-import com.hzy.manager.util.FebsUtil;
 import com.hzy.manager.util.MD5Util;
+import com.hzy.manager.vo.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -28,6 +25,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -42,7 +40,11 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private MenuMapper menuMapper;
     @Autowired
+    private FebsProperties febsProperties;
+    @Autowired
     private LoginUserMapper loginUserMapper;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     //同一个bean对象
     @Override
@@ -92,18 +94,17 @@ public class ShiroRealm extends AuthorizingRealm {
         // 这里的 token是从 JWTFilter 的 executeLogin 方法传递过来的，已经经过了解密
         String token = (String) authenticationToken.getCredentials();
         String username = JWTUtil.getUsername(token);
+        Long expireTimes = febsProperties.getShiro().getJwtTimeOut();
         log.info("用户名:" + username);
-        if (StringUtils.isBlank(username))
-            throw new AuthenticationException("token校验不通过");
-        // 通过用户名查询用户信息
         LoginUser loginUser = loginUserMapper.findByUserName(username);
-        if (loginUser == null) {
-            throw new AuthenticationException("用户名或密码错误");
+        if (!StringUtils.equals(loginUser.getUserName(), username)) {
+            throw new AuthenticationException("token无效");
         }
-       /* String cacheTokens = (String) redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY));
-        if (!StringUtils.equals(cacheTokens, FebsUtil.encryptToken(token))) {
-            throw new AuthenticationException("token校验不通过");
-        }*/
+        if (!StringUtils.isEmpty(token)) {
+            redisTemplate.opsForValue().set(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY), token, expireTimes, TimeUnit.SECONDS);
+        } else {
+            redisTemplate.delete(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY));
+        }
         return new SimpleAuthenticationInfo(token, token, getName());
     }
 }

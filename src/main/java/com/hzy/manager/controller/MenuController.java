@@ -1,9 +1,10 @@
 package com.hzy.manager.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.domain.Menu;
-import com.hzy.manager.dto.Tree;
-import com.hzy.manager.dto.router.VueRouter;
+import com.hzy.manager.vo.Tree;
+import com.hzy.manager.vo.router.VueRouter;
 import com.hzy.manager.service.MenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,15 +108,16 @@ public class MenuController {
     }
 
     /**
-     * 删除菜单
-     *
+     * 批量删除菜单或按钮
+     * 菜单id
      * @param
      * @return
      */
-    @DeleteMapping("/deleteMenu/{mid}")
-    public Result deleteMenuById(@PathVariable Long mid) {
+    @DeleteMapping("/deleteMenu/{mids}")
+    public Result deleteMenuById(@PathVariable String mids) {
         try {
-            menuService.deleteMenu(mid);
+            String[] midArr = mids.split(StringPool.COMMA);
+            menuService.deleteMenuByIds(midArr);
             return Result.ok("删除菜单成功!");
         } catch (Exception e) {
             log.error("删除菜单失败:", e);

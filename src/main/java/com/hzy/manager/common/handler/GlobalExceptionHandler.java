@@ -37,4 +37,11 @@ public class GlobalExceptionHandler {
         log.error("权限不足，{}", e.getMessage());
         return Result.error(401, "权限不足，不能执行此操作!");
     }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result handleException(AuthenticationException e) {
+        log.error("系统内部异常，异常信息：", e);
+        return Result.error(e.getMessage());
+    }
 }

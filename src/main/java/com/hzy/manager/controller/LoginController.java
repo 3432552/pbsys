@@ -2,13 +2,12 @@ package com.hzy.manager.controller;
 
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.Result;
-import com.hzy.manager.common.annotation.hasPermission;
 import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.common.properties.FebsProperties;
 import com.hzy.manager.domain.User;
-import com.hzy.manager.dto.LoginUser;
+import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.FebsUtil;
 import com.hzy.manager.util.MD5Util;
@@ -23,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @Slf4j
@@ -34,9 +32,7 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private FebsProperties febsProperties;
-
-    @RequestMapping("/mes")
-    @hasPermission("user:view")
+    @GetMapping("/mes")
     public Result mes() {
         return Result.ok();
     }
@@ -55,11 +51,10 @@ public class LoginController {
         LoginUser loginUser = userService.findByName(username, password, code);
         String token = FebsUtil.encryptToken(JWTUtil.sign(username, MD5Util.encrypt(username, password)));
         Long expireTimes = febsProperties.getShiro().getJwtTimeOut();
-        redisTemplate.opsForValue().set(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY), token, expireTimes, TimeUnit.SECONDS);
-        redisTemplate.opsForValue().set(MD5Util.encrypt(Constant.USER_CACHE), loginUser);
         Map<String, Object> map = new HashMap<>();
         map.put("user", loginUser);
         map.put("token", token);
+        map.put("expirestime", expireTimes);
         return Result.ok(map);
     }
 

@@ -5,9 +5,10 @@ package com.hzy.manager.common;
  */
 public class Constant {
     /**
-     * token 缓存前缀
+     * token 缓存前缀(只用来存放当前操作用户的token)
      */
-    public static final String TOKEN_CACHE_KEY = "cacheToken";
+    public static final String TOKEN_CACHE_KEY = "cacheToken**@#$%#@Q$%";
+
     /**
      * 登录用户信息缓存前缀
      */

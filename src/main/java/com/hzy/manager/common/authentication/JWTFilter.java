@@ -1,14 +1,21 @@
 package com.hzy.manager.common.authentication;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.common.properties.FebsProperties;
+import com.hzy.manager.dao.LoginUserMapper;
+import com.hzy.manager.dao.UserMapper;
+import com.hzy.manager.domain.User;
 import com.hzy.manager.util.FebsUtil;
 import com.hzy.manager.util.SpringContextUtil;
+import com.hzy.manager.vo.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -102,9 +109,10 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         httpResponse.setCharacterEncoding("utf-8");
         httpResponse.setContentType("application/json; charset=utf-8");
-        final String message = "登录认证不通过!";
+        final String message1 = "401";
+        final String message2 = "登录认证不通过";
         try (PrintWriter out = httpResponse.getWriter()) {
-            String responseJson = "{\"message\":\"" + message + "\"}";
+            String responseJson = "{\"code\":\"" + message1 + "\",\"msg\":\"" + message2 + "\"}";
             out.print(responseJson);
         } catch (IOException e) {
             log.error("sendChallenge error：", e);

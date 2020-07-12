@@ -2,11 +2,10 @@ package com.hzy.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzy.manager.domain.Menu;
-import com.hzy.manager.dto.Tree;
-import com.hzy.manager.dto.router.VueRouter;
+import com.hzy.manager.vo.Tree;
+import com.hzy.manager.vo.router.VueRouter;
 
 import java.util.List;
-import java.util.Map;
 
 public interface MenuService extends IService<Menu> {
     void addMenu(Menu menu);
@@ -19,5 +18,5 @@ public interface MenuService extends IService<Menu> {
 
     void updateMenu(Menu menu);
 
-    void deleteMenu(Long mid);
+    void deleteMenuByIds(String[] mids);
 }

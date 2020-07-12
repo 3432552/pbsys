@@ -5,7 +5,7 @@ import com.hzy.manager.common.Result;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.domain.User;
-import com.hzy.manager.dto.LoginUser;
+import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.PageUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +66,7 @@ public class UserController {
     /**
      * 新增用户
      *
-     * @param user 可批量新增角色信息
+     * @param user 可批量新增角色信息(一个用户对应一个角色)
      * @return deptId, userName, roleId
      * @throws BusinessException
      */

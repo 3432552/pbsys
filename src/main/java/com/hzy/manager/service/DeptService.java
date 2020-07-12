@@ -1,9 +1,8 @@
 package com.hzy.manager.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.domain.Dept;
-import com.hzy.manager.dto.Tree;
+import com.hzy.manager.vo.Tree;
 
 import java.util.List;
 

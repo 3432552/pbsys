@@ -35,6 +35,6 @@ public class User implements Serializable {
     private String describle;
     //不是本表字段
     private transient String roleId;
-    private String roleName;
-    private String deptName;
+    private transient String roleName;
+    private transient String deptName;
 }

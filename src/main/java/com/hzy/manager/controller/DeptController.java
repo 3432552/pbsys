@@ -3,7 +3,7 @@ package com.hzy.manager.controller;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.domain.Dept;
-import com.hzy.manager.dto.Tree;
+import com.hzy.manager.vo.Tree;
 import com.hzy.manager.service.DeptService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,7 @@ package com.hzy.manager.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.dao.DeptMapper;
 import com.hzy.manager.domain.Dept;
-import com.hzy.manager.dto.Tree;
+import com.hzy.manager.vo.Tree;
 import com.hzy.manager.service.DeptService;
 import com.hzy.manager.util.TreeUtils;
 import org.springframework.beans.factory.annotation.Autowired;

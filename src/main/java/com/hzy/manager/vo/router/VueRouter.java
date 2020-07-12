@@ -1,4 +1,4 @@
-package com.hzy.manager.dto.router;
+package com.hzy.manager.vo.router;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

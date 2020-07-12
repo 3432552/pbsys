@@ -5,8 +5,11 @@
         <result column="menu_id" property="menuId"/>
         <result column="role_id" property="roleId"/>
     </resultMap>
-    <delete id="deleteRoleIdByMenuId" parameterType="long">
+    <delete id="deleteRoleIdByMenuId" parameterType="arraylist">
         delete from p_role_menu
-        where menu_id=#{mid}
+        where menu_id in
+        <foreach item="mids" collection="array" open="(" separator="," close=")">
+            #{mids}
+        </foreach>
     </delete>
 </mapper>

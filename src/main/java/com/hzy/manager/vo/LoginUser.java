@@ -1,4 +1,4 @@
-package com.hzy.manager.dto;
+package com.hzy.manager.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

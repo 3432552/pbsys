@@ -1,7 +1,6 @@
 package com.hzy.manager.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
@@ -12,7 +11,7 @@ import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.dao.UserRoleMapper;
 import com.hzy.manager.domain.User;
 import com.hzy.manager.domain.UserRole;
-import com.hzy.manager.dto.LoginUser;
+import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
@@ -44,21 +43,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public LoginUser findByName(String username, String password, String code) throws LoginException {
         if (StringUtils.isEmpty(username)) {
-            throw new LoginException("用户名不能为空!");
+            throw new LoginException("用户名不能为空");
         }
         LoginUser user = loginUserMapper.findByUserName(username);
         if (user == null) {
-            throw new LoginException("用户或密码错误!");
+            throw new LoginException("用户或密码错误");
         }
         if (user.getStatus().equals(Constant.LOCK)) {
-            throw new LoginException("账户已被锁定!");
+            throw new LoginException("账户已被锁定");
         }
         if (!StringUtils.equals(user.getPassword(), MD5Util.encrypt(username, password))) {
-            throw new LoginException("密码输入错误!");
+            throw new LoginException("密码输入错误");
         }
         String cacheCode = (String) redisTemplate.opsForValue().get(Constant.CODE_KEY);
         if (!StringUtils.equals(cacheCode, code)) {
-            throw new LoginException("验证码输入错误!");
+            throw new LoginException("验证码输入错误");
         }
         return user;
     }
@@ -150,7 +149,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void deleteUserByIds(String[] ids) {
         //删除用户
         userMapper.deleteBatchIds(Arrays.asList(ids));
-        //删除用户角色
+        //删除用户角色,在for循环里一个个删的
         Arrays.asList(ids).forEach(uid -> {
             UserRole userRole = new UserRole();
             userRole.setUserId(Long.valueOf(uid));

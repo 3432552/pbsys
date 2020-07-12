@@ -37,7 +37,7 @@ spring:
 febs:
   shiro:
     #免认证接口
-    anonUrl: /user/**,/login,/gifCode,/register,/dept/**,/menu/**,/role/**,/mes
+    anonUrl: /user/**,/login,/gifCode,/register,/dept/**,/role/**,/test/**
     # token有效期，单位秒
     jwtTimeOut: 3600
   #redis的配置

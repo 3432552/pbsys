@@ -7,6 +7,7 @@
         <result column="remark" property="remark"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
+        <result column="id" property="menuId"/>
     </resultMap>
     <select id="getUserRoles" resultMap="BaseMapper">
      select r.* from p_role r
@@ -19,5 +20,11 @@
        LEFT JOIN p_user_role ur ON(r.id=ur.role_id)
        LEFT JOIN p_user u ON(u.id=ur.user_id)
        where u.id=#{uid}
+    </select>
+    <select id="selMenuIds" resultMap="BaseMapper" parameterType="long">
+        SELECT m.id FROM p_role r
+        LEFT JOIN p_role_menu rm ON(r.id=rm.role_id)
+        LEFT JOIN p_menu m ON(rm.menu_id=m.id)
+        WHERE r.id=#{roleId}
     </select>
 </mapper>

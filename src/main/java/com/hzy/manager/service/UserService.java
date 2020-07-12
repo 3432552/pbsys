@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.domain.User;
-import com.hzy.manager.dto.LoginUser;
+import com.hzy.manager.vo.LoginUser;
 
 import java.util.List;
 import java.util.Map;

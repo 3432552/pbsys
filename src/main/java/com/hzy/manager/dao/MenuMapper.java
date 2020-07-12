@@ -3,12 +3,10 @@ package com.hzy.manager.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hzy.manager.domain.Menu;
 import org.apache.ibatis.annotations.Param;
-
-import javax.annotation.security.PermitAll;
 import java.util.List;
-import java.util.Map;
 
 public interface MenuMapper extends BaseMapper<Menu> {
+
     //根据用户名查找拥有的权限
     List<Menu> getUserPermissions(String userName);
 

@@ -2,13 +2,13 @@ package com.hzy.manager.common.aspect;
 
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.annotation.hasPermission;
+import com.hzy.manager.common.authentication.JWTUtil;
+import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.MenuMapper;
 import com.hzy.manager.domain.Menu;
-import com.hzy.manager.dto.LoginUser;
-import com.hzy.manager.util.HttpContextUtils;
+import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.web.util.WebUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,6 +35,8 @@ public class LogAspect {
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private HttpServletResponse response;
+    @Autowired
+    private LoginUserMapper loginUserMapper;
 
     @Pointcut("@annotation(com.hzy.manager.common.annotation.hasPermission)")
     public void pointcut() {
@@ -48,7 +50,10 @@ public class LogAspect {
         //获取自定义注解的值
         hasPermission logValue = ((MethodSignature) point.getSignature()).getMethod().getAnnotation(hasPermission.class);
         log.info("此时访问接口的权限:" + logValue.value());
-        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.USER_CACHE));
+        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
+        log.info("当前操作用户的token:" + token);
+        LoginUser loginUser = loginUserMapper.findByUserName(JWTUtil.getUsername(token));
+        log.info("User对象:" + loginUser.toString());
         List<Menu> menuList = menuMapper.getUserPermissions(loginUser.getUserName());
         boolean flag = false;
         for (Menu m : menuList
