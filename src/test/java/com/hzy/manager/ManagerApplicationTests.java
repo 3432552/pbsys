@@ -46,8 +46,8 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads23() {
-        /*List<Approval> approvalList = approvalMapper.selectApprovalList("");
-        approvalList.forEach(System.out::println);*/
+        List<WorkLog> workLogMes = workLogMapper.selWorkLogListByUid(2L, "2020-7-11");
+        workLogMes.forEach(System.out::println);
     }
 
     //获取用户权限

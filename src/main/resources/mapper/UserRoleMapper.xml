@@ -9,4 +9,8 @@
         delete from p_user_role
         where user_id=#{uid}
     </delete>
+    <delete id="deleteUserRoleById" parameterType="long">
+        delete from p_user_role
+        where user_id=#{uId} and role_id=#{rId}
+    </delete>
 </mapper>

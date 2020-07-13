@@ -16,7 +16,7 @@ public class Approval implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     private String approvalStatus;
-    private String approvalContent;
+    private String applicationContent;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

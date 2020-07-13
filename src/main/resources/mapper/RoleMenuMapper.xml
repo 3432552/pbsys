@@ -12,4 +12,8 @@
             #{mids}
         </foreach>
     </delete>
+    <delete id="deleteRoleMenuById" parameterType="long">
+        delete from p_role_menu
+        where menu_id=#{mId} and role_id=#{rId}
+    </delete>
 </mapper>

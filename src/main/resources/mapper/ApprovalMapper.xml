@@ -4,7 +4,7 @@
     <resultMap id="BaseMapper" type="com.hzy.manager.domain.Approval">
         <id column="id" property="id"></id>
         <result column="approval_status" property="approvalStatus"/>
-        <result column="application_content" property="approvalContent"/>
+        <result column="application_content" property="applicationContent"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
         <result column="real_name" property="realName"/>
@@ -17,6 +17,9 @@
         where 1=1
         <if test="realName!=null and realName!=''">
             and u.real_name like concat('%',#{realName},'%')
+        </if>
+        <if test="approvalStatus!=null and approvalStatus!=''">
+            and approvalStatus=#{approvalStatus}
         </if>
         order by create_time desc
         limit #{offeSet},#{pageSize}

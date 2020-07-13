@@ -40,4 +40,10 @@
         order by create_time desc
         limit #{offeSet},#{pageSize}
     </select>
+    <select id="selWorkLogListByUid" resultMap="BaseMapper">
+        SELECT w.*,u.id FROM p_worklog w
+        LEFT JOIN p_user_worklog uw ON(w.id=uw.id)
+        LEFT JOIN p_user u ON(uw.user_id=u.id)
+        WHERE u.id=#{uid} and w.work_date=#{workDate}
+    </select>
 </mapper>

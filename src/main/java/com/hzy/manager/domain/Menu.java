@@ -24,8 +24,6 @@ public class Menu implements Serializable {
     private String icon;
     private String type;
     private Integer orderNum;
-    //逻辑删除 0:未删除1:已删除(这个字段只用来播控操作工作日志)
-    private char isDelete;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

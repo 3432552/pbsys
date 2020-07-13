@@ -11,7 +11,6 @@
         <result column="icon" property="icon"/>
         <result column="type" property="type"/>
         <result column="order_num" property="orderNum"/>
-        <result column="is_delete" property="isDelete"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
     </resultMap>

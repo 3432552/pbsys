@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.common.authentication.JWTUtil;
+import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.domain.Role;
 import com.hzy.manager.domain.User;
@@ -118,24 +119,25 @@ public class WorkLogController {
     }
 
     /**
-     * 新增工作日志
+     * 新增工作日志,播控小伙伴每天只能新增一条工作日志
      *
      * @param workLog
      * @return
      */
     @PostMapping("/addWorkLog")
-    public Result addWorkLog(WorkLog workLog) {
-        try {
-            workLogService.addWorkLog(workLog);
+    public Result addWorkLog(WorkLog workLog) throws BusinessException {
+        int result = workLogService.addWorkLog(workLog);
+        if (result > 0) {
             return Result.ok("新增工作日志成功");
-        } catch (Exception e) {
-            log.error("新增工作日志失败:", e);
+        } else {
             return Result.error("新增工作日志失败");
         }
     }
 
     /**
      * 修改工作日志根据工作日志id
+     * 说明:播控人员得到管理人员审批成功后只能修改一次播控工作日志,
+     * 修改后播控人员又没有了修改工作日志这个菜单了需要再向管理员申请后才可进行下次工作日志的修改
      *
      * @param workLog
      * @return
