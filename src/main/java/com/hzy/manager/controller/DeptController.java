@@ -5,6 +5,10 @@ import com.hzy.manager.common.Result;
 import com.hzy.manager.domain.Dept;
 import com.hzy.manager.vo.Tree;
 import com.hzy.manager.service.DeptService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +17,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@Api(tags = "部门控制类")
 @RequestMapping("/dept")
 public class DeptController {
     @Autowired
@@ -23,6 +28,7 @@ public class DeptController {
      *
      * @return
      */
+    @ApiOperation(value = "查询所有部门信息")
     @GetMapping("/deptList")
     public Result selectDeptList() {
         List<Dept> deptList = null;
@@ -40,6 +46,7 @@ public class DeptController {
      *
      * @return
      */
+    @ApiOperation(value = "生成部门树")
     @GetMapping("/deptTree")
     public Result buildDeptTree() {
         Tree<Dept> deptTree = null;
@@ -56,11 +63,16 @@ public class DeptController {
      * 新增部门
      * 新增之前可以调用全部部门信息接口，部门名字不能重复
      * 必须参数:deptName,parentId
-     *
      * @param dept
      * @return
      * @throws Exception
      */
+    @ApiOperation(value = "新增部门信息")
+    @ApiImplicitParam(name = "Dept", value = "Dept实体")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "deptName(String)", value = "部门名字", required = true),
+            @ApiImplicitParam(name = "parentId(Long)", value = "部门父Id(就是父部门主键deptId)", required = true),
+    })
     @PostMapping("/addDept")
     public Result addDept(@RequestBody Dept dept) {
         try {
@@ -78,6 +90,8 @@ public class DeptController {
      * @param deptId
      * @return
      */
+    @ApiOperation(value = "根据部门id查找一条部门信息")
+    @ApiImplicitParam(name = "deptId(Long)", value = "部门id", required = true)
     @GetMapping("/selectDeptById/{deptId}")
     public Result selDeptById(@PathVariable Long deptId) {
         try {
@@ -96,6 +110,13 @@ public class DeptController {
      * @param dept
      * @return
      */
+    @ApiOperation(value = "修改部门信息")
+    @ApiImplicitParam(name = "Dept", value = "Dept实体", required = true)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "deptId", value = "部门id", required = true),
+            @ApiImplicitParam(name = "deptName", value = "部门名字", required = true),
+            @ApiImplicitParam(name = "parentId(Long)", value = "部门父Id", required = true),
+    })
     @PutMapping("/updateDept")
     public Result updateDeptById(@RequestBody Dept dept) {
         try {
@@ -113,7 +134,9 @@ public class DeptController {
      * @param ids
      * @return
      */
-    @DeleteMapping("/deleteDept/{ids}")
+    @ApiOperation(value = "根据部门id删除部门信息(支持批量删除)")
+    @ApiImplicitParam(name = "ids", value = "部门ids(String)[部门id字符串,例如:1,2,3]", required = true)
+    @DeleteMapping("/deleteDeptById/{ids}")
     public Result delDeptById(@PathVariable String ids) {
         try {
             String[] idArray = ids.split(StringPool.COMMA);

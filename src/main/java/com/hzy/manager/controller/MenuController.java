@@ -6,6 +6,10 @@ import com.hzy.manager.domain.Menu;
 import com.hzy.manager.vo.Tree;
 import com.hzy.manager.vo.router.VueRouter;
 import com.hzy.manager.service.MenuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +18,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@Api(tags = "角色控制类")
 @RequestMapping("/menu")
 public class MenuController {
     @Autowired
@@ -25,6 +30,7 @@ public class MenuController {
      * @param
      * @return
      */
+    @ApiOperation(value = "根据当前登录用户查询这个用户所拥有的菜单,只有菜单用于左侧展示")
     @GetMapping("/onlyMenuTree")
     public Result getMenuRoutes() {
         List<VueRouter<Menu>> vueRouters = null;
@@ -43,8 +49,13 @@ public class MenuController {
      * @param
      * @return
      */
+    @ApiOperation(value = "根据当前登录用户查询这个用户所拥有的菜单,菜单和按钮,用于菜单列表的展示(可多条件查询)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "menuName", value = "菜单名称", required = true),
+            @ApiImplicitParam(name = "type", value = "菜单类型", required = true)
+    })
     @GetMapping("/menuTree")
-    public Result getMenu(Menu menu) {
+    public Result getMenu(@RequestBody Menu menu) {
         Tree<Menu> menuTree = null;
         try {
             menuTree = menuService.getMenuTree(menu.getMenuName(), menu.getType());
@@ -62,8 +73,17 @@ public class MenuController {
      * @param menu
      * @return
      */
+    @ApiOperation(value = "新增菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "menuName", value = "菜单名称", required = true),
+            @ApiImplicitParam(name = "type", value = "菜单类型", required = true),
+            @ApiImplicitParam(name = "path", value = "菜单url", required = true),
+            @ApiImplicitParam(name = "perms", value = "权限标识", required = true),
+            @ApiImplicitParam(name = "icon", value = "菜单图标", required = true),
+            @ApiImplicitParam(name = "parentId", value = "菜单父id,这个是传菜单的id", required = true)
+    })
     @PostMapping("/addMenu")
-    public Result addDept(Menu menu) {
+    public Result addDept(@RequestBody Menu menu) {
         try {
             menuService.addMenu(menu);
             return Result.ok("新增菜单成功");
@@ -79,6 +99,8 @@ public class MenuController {
      * @param menuId
      * @return
      */
+    @ApiOperation(value = "根据菜单id获取一条菜单信息")
+    @ApiImplicitParam(name = "id", value = "菜单id", required = true)
     @GetMapping("/selectMenuById/{menuId}")
     public Result selMenuById(@PathVariable Long menuId) {
         try {
@@ -96,8 +118,17 @@ public class MenuController {
      * @param menu
      * @return
      */
+    @ApiOperation(value = "修改菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "menuName", value = "菜单名称", required = true),
+            @ApiImplicitParam(name = "type", value = "菜单类型", required = true),
+            @ApiImplicitParam(name = "path", value = "菜单url", required = true),
+            @ApiImplicitParam(name = "perms", value = "权限标识", required = true),
+            @ApiImplicitParam(name = "icon", value = "菜单图标", required = true),
+            @ApiImplicitParam(name = "parentId", value = "菜单父id,这个是传菜单的id", required = true)
+    })
     @PutMapping("/updateMenu")
-    public Result updateDeptById(Menu menu) {
+    public Result updateDeptById(@RequestBody Menu menu) {
         try {
             menuService.updateMenu(menu);
             return Result.ok("修改菜单成功!");
@@ -110,9 +141,12 @@ public class MenuController {
     /**
      * 批量删除菜单或按钮
      * 菜单id
+     *
      * @param
      * @return
      */
+    @ApiOperation(value = "删除菜单信息")
+    @ApiImplicitParam(name = "id", value = "菜单ids(可批量删除,拼接成字符串如：1,2,3,4)", required = true)
     @DeleteMapping("/deleteMenu/{mids}")
     public Result deleteMenuById(@PathVariable String mids) {
         try {

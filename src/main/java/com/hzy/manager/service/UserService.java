@@ -1,5 +1,6 @@
 package com.hzy.manager.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
@@ -16,7 +17,7 @@ public interface UserService extends IService<User> {
 
     void register(User user) throws BusinessException;
 
-    List<User> getUserList(Map<String, Object> getMap);
+    List<Page<User>> getUserAndDeptPage(User user, Page<User> userPage);
 
     void addUser(User user) throws BusinessException;
 
@@ -25,5 +26,8 @@ public interface UserService extends IService<User> {
     void updateUser(User user);
 
     void deleteUserByIds(String[] ids);
+
+    //修改密码
+    int updatePwd(User user) throws BusinessException;
 
 }

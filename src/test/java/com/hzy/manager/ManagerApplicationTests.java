@@ -1,5 +1,8 @@
 package com.hzy.manager;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.dao.*;
 import com.hzy.manager.domain.*;
 import com.hzy.manager.service.RoleService;
@@ -77,7 +80,8 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads3() {
-        /*List<WorkLog> workLogList = workLogMapper.selectWorkLogList("王");
-        workLogList.forEach(System.out::println);*/
+
+        //System.out.println("分页结果:"+page.toString());
+
     }
 }

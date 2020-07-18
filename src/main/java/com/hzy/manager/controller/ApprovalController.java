@@ -1,10 +1,14 @@
 package com.hzy.manager.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.domain.Approval;
 import com.hzy.manager.service.ApprovalService;
-import com.hzy.manager.util.PageUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +19,14 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@Api(tags = "播控人员申请审批控制类")
 @RequestMapping("/approval")
 public class ApprovalController {
     @Autowired
     private ApprovalService approvalService;
 
     /**
-     * 查询全部的审批申请记录
+     * 查询全部的审批申请记录(mybatisPlus实现物理分页)
      * 多条件查询参数:realName(根据用户真实名字),approvalStatus(审核状态)
      *
      * @param approval
@@ -29,19 +34,20 @@ public class ApprovalController {
      * @param pageSize
      * @return
      */
+    @ApiOperation(value = "申请修改工作日志申请信息列表", notes = "带分页,currentNo:当前页;pageSize:页面容量")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "realName", value = "真实名字", required = true),
+            @ApiImplicitParam(name = "approvalStatus", value = "申请状态 0：待审批 1：审批通过 2：审批不通过", required = true)
+    })
     @GetMapping("/selectApprovalList/{currentNo}/{pageSize}")
-    public Result selApprovalList(Approval approval, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
+    public Result selApprovalList(@RequestBody Approval approval, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
         try {
-            int totalNum = approvalService.count();
-            PageUtils<Approval> pageUtils = new PageUtils<>(currentNo, pageSize, totalNum);
+            Page<Approval> page = new Page<>(currentNo, pageSize);
+            List<Page<Approval>> pageList = approvalService.getApprovalList(approval, page);
             Map<String, Object> map = new HashMap<>();
-            map.put("realName", approval.getRealName());
-            map.put("approvalStatus", approval.getApprovalStatus());
-            map.put("offeSet", pageUtils.getOffset());
-            map.put("pageSize", pageUtils.getPageSize());
-            List<Approval> approvalList = approvalService.getWorkLogList(map);
-            pageUtils.setPageList(approvalList);
-            return Result.ok(pageUtils);
+            map.put("pageList", pageList);
+            map.put("page", page);
+            return Result.ok(map);
         } catch (Exception e) {
             log.error("查询审批申请信息失败:", e);
             return Result.error("查询审批申请信息失败!");
@@ -53,6 +59,8 @@ public class ApprovalController {
      *
      * @return
      */
+    @ApiOperation(value = "根据审批id查询一条审批申请信息")
+    @ApiImplicitParam(name = "id", value = "审批id", required = true)
     @GetMapping("/selectApprovalById/{aId}")
     public Result selectApprovalByIdMes(@PathVariable Long aId) {
         try {
@@ -70,8 +78,9 @@ public class ApprovalController {
      * @param approval
      * @return
      */
+    @ApiOperation(value = "修改审批申请信息(审批是播控人员发起的管理员也不应该修改它,【不用调用这个接口】)")
     @PutMapping("/updateApproval")
-    public Result updateApproval(Approval approval) {
+    public Result updateApproval(@RequestBody Approval approval) {
         try {
             approvalService.updateApproval(approval);
             return Result.ok("修改审批申请信息成功");
@@ -87,6 +96,8 @@ public class ApprovalController {
      *
      * @return
      */
+    @ApiOperation(value = "根据审批id删除审批申请信息")
+    @ApiImplicitParam(name = "id", value = "审批申请ids(可批量删除,拼接成字符串如：1,2,3,4)", required = true)
     @DeleteMapping("/deleteApprovalByIds/{aIds}")
     public Result deleteApprovalByIdsMes(@PathVariable String aIds) {
         try {
@@ -105,8 +116,9 @@ public class ApprovalController {
      *
      * @return
      */
+    @ApiOperation(value = "审批申请通过", notes = "不用传参数")
     @PostMapping("/approvalPass")
-    public Result approvalPass(Approval approval) {
+    public Result approvalPass(@RequestBody Approval approval) {
         try {
             approvalService.updateApprovalStatusOk(approval);
             return Result.ok("审批通过提交成功");
@@ -122,8 +134,9 @@ public class ApprovalController {
      *
      * @return
      */
+    @ApiOperation(value = "审批申请不通过", notes = "不用传参数")
     @PostMapping("/approvalNoPass")
-    public Result approvalNoPass(Approval approval) {
+    public Result approvalNoPass(@RequestBody Approval approval) {
         try {
             approvalService.updateApprovalStatusNoOk(approval);
             return Result.ok("审批不通过提交成功");

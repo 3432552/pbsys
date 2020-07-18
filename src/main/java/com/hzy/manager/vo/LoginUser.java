@@ -1,6 +1,7 @@
 package com.hzy.manager.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -26,4 +27,6 @@ public class LoginUser implements Serializable {
     private Date lastLoginTime;
     private String avatarUrl;
     private String describle;
+    @JsonIgnore
+    private String code;
 }

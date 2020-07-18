@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -37,4 +39,8 @@ public class User implements Serializable {
     private transient String roleId;
     private transient String roleName;
     private transient String deptName;
+    @JsonIgnore
+    private transient String newPwd;
+    @JsonIgnore
+    private transient String confirmPwd;
 }

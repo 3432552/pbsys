@@ -10,6 +10,8 @@ import java.util.Map;
 public interface WorkLogService extends IService<WorkLog> {
     List<WorkLog> getWorkLogList(Map<String, Object> map);
 
+    int getWorkLogListCount(String realName);
+
     List<WorkLog> getWorkLogListByBoKong(Map<String, Object> map);
 
     WorkLog worklog(Long logId);

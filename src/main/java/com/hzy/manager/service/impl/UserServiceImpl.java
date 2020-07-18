@@ -2,8 +2,10 @@ package com.hzy.manager.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
+import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.dao.LoginUserMapper;
@@ -14,6 +16,7 @@ import com.hzy.manager.domain.UserRole;
 import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.MD5Util;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,6 +32,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
+@Slf4j
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
@@ -59,12 +63,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!StringUtils.equals(cacheCode, code)) {
             throw new LoginException("验证码输入错误");
         }
+        //更新用户登录时间
+        User u = new User();
+        u.setId(user.getId());
+        u.setLastLoginTime(new Date());
+        userMapper.updateLoginTime(u);
         return user;
     }
 
     @Override
-    public List<User> getUserList(Map<String, Object> getMap) {
-        return userMapper.selectUserAndDeptPage(getMap);
+    public List<Page<User>> getUserAndDeptPage(User user, Page<User> userPage) {
+        return userMapper.selectUserAndDeptPage(user, userPage);
     }
 
     public LoginUser findByUserToRegister(String userName) throws LoginException {
@@ -74,21 +83,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Transactional
     public void register(User user) throws BusinessException {
-        user.setUserName(user.getUserName());
+        if (StringUtils.isEmpty(user.getUserName())) {
+            throw new BusinessException("用户名不能为空");
+        }
+        if (StringUtils.isEmpty(user.getPassword())) {
+            throw new BusinessException("密码不能为空");
+        }
         user.setPassword(MD5Util.encrypt(user.getUserName(), user.getPassword()));
-        user.setRealName(user.getRealName());
+        if (StringUtils.isEmpty(user.getRealName())) {
+            throw new BusinessException("真实姓名不能为空");
+        }
+        if (StringUtils.isEmpty(user.getPhone())) {
+            throw new BusinessException("手机号不能为空");
+        }
         Pattern pattern = Pattern.compile("^[1]\\d{10}$");
         if (pattern.matcher(user.getPhone()).matches() == false) {
             throw new BusinessException("你输入的手机号格式不正确!");
         }
-        user.setPhone(user.getPhone());
-        user.setSex(user.getSex());
-        user.setEmail(user.getEmail());
+        if (StringUtils.isEmpty(user.getEmail())) {
+            throw new BusinessException("邮箱不能为空");
+        }
+        if (StringUtils.isEmpty(user.getSex())) {
+            throw new BusinessException("性别不能为空");
+        }
+        if (user.getDeptId() == null) {
+            throw new BusinessException("部门不能为空");
+        }
         Pattern p = Pattern.compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
         if (p.matcher(user.getEmail()).matches() == false) {
-            throw new BusinessException("你输入的邮箱格式不正确!");
+            throw new BusinessException("你输入的邮箱格式不正确");
         }
-        user.setDeptId(user.getDeptId());
+        user.setAvatarUrl("default.jpg");
         user.setCreateTime(new Date());
         userMapper.insert(user);
     }
@@ -101,21 +126,36 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Transactional
     @Override
     public void addUser(User user) throws BusinessException {
-        user.setUserName(user.getUserName());
+        if (StringUtils.isEmpty(user.getUserName())) {
+            throw new BusinessException("用户名不能为空");
+        }
+        if (StringUtils.isEmpty(user.getPassword())) {
+            throw new BusinessException("密码不能为空");
+        }
         user.setPassword(MD5Util.encrypt(user.getUserName(), user.getPassword()));
-        user.setRealName(user.getRealName());
+        if (StringUtils.isEmpty(user.getRealName())) {
+            throw new BusinessException("真实姓名不能为空");
+        }
+        if (StringUtils.isEmpty(user.getPhone())) {
+            throw new BusinessException("手机号不能为空");
+        }
         Pattern pattern = Pattern.compile("^[1]\\d{10}$");
         if (pattern.matcher(user.getPhone()).matches() == false) {
             throw new BusinessException("你输入的手机号格式不正确!");
         }
-        user.setPhone(user.getPhone());
-        user.setSex(user.getSex());
-        user.setEmail(user.getEmail());
+        if (StringUtils.isEmpty(user.getEmail())) {
+            throw new BusinessException("邮箱不能为空");
+        }
+        if (StringUtils.isEmpty(user.getSex())) {
+            throw new BusinessException("性别不能为空");
+        }
+        if (user.getDeptId() == null) {
+            throw new BusinessException("部门不能为空");
+        }
         Pattern p = Pattern.compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
         if (p.matcher(user.getEmail()).matches() == false) {
-            throw new BusinessException("你输入的邮箱格式不正确!");
+            throw new BusinessException("你输入的邮箱格式不正确");
         }
-        user.setDeptId(user.getDeptId());
         user.setCreateTime(new Date());
         userMapper.insert(user);
         //保存用户角色,可批量保存用户角色
@@ -155,5 +195,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             userRole.setUserId(Long.valueOf(uid));
             userRoleMapper.deleteRoleIdByUid(userRole.getUserId().toString());
         });
+    }
+
+    @Override
+    public int updatePwd(User user) throws BusinessException {
+        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
+        String userName = JWTUtil.getUsername(token);
+        LoginUser loginUser = loginUserMapper.findByUserName(userName);
+        log.info("User对象:" + loginUser.toString());
+        if (!StringUtils.equals(MD5Util.encrypt(userName, user.getPassword()), loginUser.getPassword())) {
+            throw new BusinessException("原密码错误");
+        }
+        if (StringUtils.equals(user.getNewPwd(), user.getPassword())) {
+            throw new BusinessException("原密码和新密码一致,请重新设置新密码");
+        }
+        if (!StringUtils.equals(user.getNewPwd(), user.getConfirmPwd())) {
+            throw new BusinessException("新密码和确认密码不一致,请重新输入");
+        }
+        user.setId(loginUser.getId());
+        user.setPassword(MD5Util.encrypt(userName, user.getNewPwd()));
+        int result = userMapper.updateById(user);
+        return result;
     }
 }

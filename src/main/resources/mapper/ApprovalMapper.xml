@@ -9,19 +9,18 @@
         <result column="modify_time" property="modifyTime"/>
         <result column="real_name" property="realName"/>
     </resultMap>
-    <select id="selectApprovalList" resultMap="BaseMapper" parameterType="map">
+    <select id="selectApprovalList" resultMap="BaseMapper">
         SELECT a.id,u.real_name,a.approval_status,a.application_content,a.create_time,a.modify_time
         FROM p_approval a
         LEFT JOIN p_approval_user au ON(a.id=au.aid)
         LEFT JOIN p_user u ON(au.uid=u.id)
         where 1=1
-        <if test="realName!=null and realName!=''">
-            and u.real_name like concat('%',#{realName},'%')
+        <if test="approval.realName!=null and approval.realName!=''">
+            and u.real_name like concat('%',#{approval.realName},'%')
         </if>
-        <if test="approvalStatus!=null and approvalStatus!=''">
-            and approvalStatus=#{approvalStatus}
+        <if test="approval.approvalStatus!=null and approval.approvalStatus!=''">
+            and a.approval_status=#{approval.approvalStatus}
         </if>
         order by create_time desc
-        limit #{offeSet},#{pageSize}
     </select>
 </mapper>

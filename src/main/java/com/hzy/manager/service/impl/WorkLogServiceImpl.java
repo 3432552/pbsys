@@ -46,6 +46,11 @@ public class WorkLogServiceImpl extends ServiceImpl<WorkLogMapper, WorkLog> impl
     }
 
     @Override
+    public int getWorkLogListCount(String realName) {
+        return workLogMapper.selectWorkLogListCount(realName);
+    }
+
+    @Override
     public List<WorkLog> getWorkLogListByBoKong(Map<String, Object> map) {
         return workLogMapper.selectWorkLogListByBoKong(map);
     }

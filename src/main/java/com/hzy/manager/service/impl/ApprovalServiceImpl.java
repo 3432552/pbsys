@@ -1,5 +1,6 @@
 package com.hzy.manager.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.authentication.JWTUtil;
@@ -42,8 +43,8 @@ public class ApprovalServiceImpl extends ServiceImpl<ApprovalMapper, Approval> i
     private RoleMenuMapper roleMenuMapper;
 
     @Override
-    public List<Approval> getWorkLogList(Map<String, Object> map) {
-        return approvalMapper.selectApprovalList(map);
+    public List<Page<Approval>> getApprovalList(Approval approval, Page<Approval> approvalPage) {
+        return approvalMapper.selectApprovalList(approval, approvalPage);
     }
 
     @Override
