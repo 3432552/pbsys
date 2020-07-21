@@ -40,7 +40,6 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private FebsProperties febsProperties;
-
     /**
      * 用户登录
      *

@@ -39,8 +39,6 @@ public class User implements Serializable {
     private transient String roleId;
     private transient String roleName;
     private transient String deptName;
-    @JsonIgnore
     private transient String newPwd;
-    @JsonIgnore
     private transient String confirmPwd;
 }

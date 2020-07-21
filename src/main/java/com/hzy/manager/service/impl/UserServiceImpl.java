@@ -60,7 +60,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new LoginException("密码输入错误");
         }
         String cacheCode = (String) redisTemplate.opsForValue().get(Constant.CODE_KEY);
-        if (!StringUtils.equals(cacheCode, code)) {
+        if (!StringUtils.equals(cacheCode, code.toLowerCase())) {
             throw new LoginException("验证码输入错误");
         }
         //更新用户登录时间

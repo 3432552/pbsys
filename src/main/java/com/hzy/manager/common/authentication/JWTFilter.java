@@ -56,6 +56,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         log.info("=====================>2");
         HttpServletRequest req = (HttpServletRequest) request;
         String token = req.getHeader(TOKEN);
+        log.info("前端传的token值=============:>" + token);
         return token != null;
     }
 

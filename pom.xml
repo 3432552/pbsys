@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.hzy</groupId>
-    <artifactId>manager</artifactId>
+    <artifactId>hzypbsystem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>manager</name>
     <description>Demo project for Spring Boot</description>

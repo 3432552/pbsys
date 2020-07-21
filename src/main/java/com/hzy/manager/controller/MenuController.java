@@ -18,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Api(tags = "角色控制类")
+@Api(tags = "菜单控制类")
 @RequestMapping("/menu")
 public class MenuController {
     @Autowired

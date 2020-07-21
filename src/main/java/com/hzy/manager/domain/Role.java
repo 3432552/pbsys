@@ -23,6 +23,5 @@ public class Role implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date modifyTime;
     //其他表字段
-    @JsonIgnore
     private transient String menuId;
 }
