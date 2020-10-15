@@ -4,16 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.hzy.manager.common.Constant;
 import com.hzy.manager.common.Result;
-import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.dao.LoginUserMapper;
+import com.hzy.manager.dao.WorkLogMapper;
 import com.hzy.manager.domain.Role;
-import com.hzy.manager.domain.User;
 import com.hzy.manager.domain.UserWorkLog;
 import com.hzy.manager.domain.WorkLog;
 import com.hzy.manager.service.RoleService;
 import com.hzy.manager.service.UserWorkLogService;
 import com.hzy.manager.service.WorkLogService;
+import com.hzy.manager.util.HttpServletUtil;
 import com.hzy.manager.util.MD5Util;
 import com.hzy.manager.util.PageUtils;
 import com.hzy.manager.vo.LoginUser;
@@ -27,6 +27,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,8 @@ public class WorkLogController {
     private RoleService roleService;
     @Autowired
     private UserWorkLogService userWorkLogService;
+    @Autowired
+    private WorkLogMapper workLogMapper;
 
     /**
      * 这个用的是自己封装的分页工具
@@ -59,10 +62,10 @@ public class WorkLogController {
             @ApiImplicitParam(name = "realName", value = "真实名字", required = true)
     })
     @GetMapping("/selectLogList/{currentNo}/{pageSize}")
-    public Result selWorkLogList(@RequestBody WorkLog workLog, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
+    public Result selWorkLogList(WorkLog workLog,@PathVariable Integer currentNo, @PathVariable Integer pageSize) {
         try {
-            String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
-            LoginUser loginUser = loginUserMapper.findByUserName(JWTUtil.getUsername(token));
+            LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
+            LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
             Long uid = loginUser.getId();
             Role role = roleService.getRoleByuId(uid);
             //如果是播控人员,只能看到自己的工作日志,其他有权限的能看到全部工作日志
@@ -190,6 +193,27 @@ public class WorkLogController {
         } catch (Exception e) {
             log.error("修改工作日志失败:", e);
             return Result.error("修改工作日志失败");
+        }
+    }
+
+    /**
+     * excel快速实现导出
+     *
+     * @param response
+     * @return
+     */
+    @GetMapping("/exportExcel")
+    public Result excelExport(HttpServletResponse response) {
+        try {
+            List<WorkLog> list = workLogMapper.selectList(null);
+            System.out.println("==========================");
+            list.forEach(System.out::print);
+            System.out.println("==========================");
+            //ExcelKit.$Export(WorkLog.class, response).downXlsx(list, false);
+            return Result.ok("导出工作日志Excel成功");
+        } catch (Exception e) {
+            log.error("导出工作日志Excel失败:", e);
+            return Result.error("导出工作日志Excel失败");
         }
     }
 }

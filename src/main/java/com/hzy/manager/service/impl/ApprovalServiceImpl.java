@@ -3,7 +3,6 @@ package com.hzy.manager.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
-import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.dao.ApprovalMapper;
 import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.RoleMenuMapper;
@@ -12,6 +11,7 @@ import com.hzy.manager.domain.Approval;
 import com.hzy.manager.domain.RoleMenu;
 import com.hzy.manager.domain.UserRole;
 import com.hzy.manager.service.ApprovalService;
+import com.hzy.manager.util.HttpServletUtil;
 import com.hzy.manager.util.MD5Util;
 import com.hzy.manager.vo.LoginUser;
 import lombok.extern.slf4j.Slf4j;
@@ -29,12 +29,9 @@ import java.util.Map;
 
 @Service
 @Slf4j
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class ApprovalServiceImpl extends ServiceImpl<ApprovalMapper, Approval> implements ApprovalService {
     @Autowired
     private ApprovalMapper approvalMapper;
-    @Autowired
-    private LoginUserMapper loginUserMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
@@ -47,12 +44,14 @@ public class ApprovalServiceImpl extends ServiceImpl<ApprovalMapper, Approval> i
         return approvalMapper.selectApprovalList(approval, approvalPage);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateApproval(Approval approval) {
         approval.setModifyTime(new Date());
         approvalMapper.updateById(approval);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteApprovalByIds(String[] aIds) {
         approvalMapper.deleteBatchIds(Arrays.asList(aIds));
@@ -63,13 +62,10 @@ public class ApprovalServiceImpl extends ServiceImpl<ApprovalMapper, Approval> i
         return approvalMapper.selectById(aId);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateApprovalStatusOk(Approval approval) {
-        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
-        log.info("当前操作用户的token:" + token);
-        LoginUser loginUser = loginUserMapper.findByUserName(JWTUtil.getUsername(token));
-        log.info("User对象:" + loginUser.toString());
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
         //修改申请表状态approvalStatus为1
         approval.setModifyTime(new Date());
         approval.setApprovalStatus(Constant.APPROVALPASS);
@@ -86,7 +82,7 @@ public class ApprovalServiceImpl extends ServiceImpl<ApprovalMapper, Approval> i
         roleMenuMapper.insert(roleMenu);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateApprovalStatusNoOk(Approval approval) {
         approval.setModifyTime(new Date());

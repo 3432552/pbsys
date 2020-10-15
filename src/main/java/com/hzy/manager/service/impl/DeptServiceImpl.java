@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
     @Autowired
     private DeptMapper deptMapper;
@@ -33,7 +32,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         return dept == null ? null : dept;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateDept(Dept dept) {
         dept.setModifyTime(new Date());
@@ -54,7 +53,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         return TreeUtils.build(trees);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addDept(Dept dept) {
         Long parentId = dept.getParentId();
         if (parentId == null) {
@@ -64,7 +63,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         deptMapper.insert(dept);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteDeptByIds(String[] ids) {
         deptMapper.deleteBatchIds(Arrays.asList(ids));

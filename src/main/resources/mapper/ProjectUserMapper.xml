@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzy.manager.dao.ProjectUserMapper">
+    <resultMap id="BaseMapper" type="com.hzy.manager.vo.ProjectMemberVo">
+        <id column="id" property="id"/>
+        <result column="working_time" property="workingTime"/>
+        <result column="real_name" property="realName"/>
+        <result column="dept_name" property="deptName"/>
+    </resultMap>
+    <delete id="deleteProjectUser" parameterType="arraylist">
+        delete from p_project_user
+        where project_id in
+        <foreach item="puId" collection="array" open="(" separator="," close=")">
+            #{puId}
+        </foreach>
+    </delete>
+    <select id="selectMemberListByProjectId" resultMap="BaseMapper">
+        SELECT pu.*,
+        u.real_name,
+        u.dept_id,
+        d.dept_name
+        FROM p_project_user pu
+        LEFT JOIN p_user u ON(pu.user_id=u.id)
+        LEFT JOIN p_dept d ON(u.dept_id=d.id)
+        WHERE pu.project_id=#{projectId}
+    </select>
+</mapper>

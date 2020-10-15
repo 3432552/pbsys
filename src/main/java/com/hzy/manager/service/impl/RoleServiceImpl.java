@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
@@ -49,7 +48,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         return roleMapper.getUserRole(uId);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void addRole(Role role) {
         role.setCreateTime(new Date());
@@ -68,6 +67,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         });
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateRole(Role role) {
         role.setModifyTime(new Date());
@@ -80,6 +80,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         setRoleMenu(role, menuId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteRoleById(String[] rId) {
         //删除角色表

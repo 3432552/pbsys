@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzy.manager.dao.ProjectMapper">
+    <resultMap id="BaseMapper" type="com.hzy.manager.domain.Project">
+        <id column="id" property="id"/>
+        <result column="project_name" property="projectName"/>
+        <result column="project_location" property="projectLocation"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="describle" property="describle"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <select id="selProjectList" resultMap="BaseMapper">
+        select * from p_project
+        <where>
+            <if test="project.projectName!='' and project.projectName!=null">
+                and project_name like concat('%',#{project.projectName},'%')
+            </if>
+        </where>
+        order by end_time desc
+    </select>
+</mapper>

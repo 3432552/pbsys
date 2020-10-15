@@ -3,11 +3,11 @@ package com.hzy.manager.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
-import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.dao.*;
 import com.hzy.manager.domain.UserWorkLog;
 import com.hzy.manager.domain.WorkLog;
+import com.hzy.manager.util.HttpServletUtil;
 import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.service.WorkLogService;
 import com.hzy.manager.util.MD5Util;
@@ -60,18 +60,17 @@ public class WorkLogServiceImpl extends ServiceImpl<WorkLogMapper, WorkLog> impl
         return workLogMapper.selectById(logId);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteWorkLogById(String[] logIds) {
         workLogMapper.deleteBatchIds(Arrays.asList(logIds));
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int addWorkLog(WorkLog workLog) throws BusinessException {
-        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
-        log.info("当前操作用户的token:" + token);
-        LoginUser loginUser = loginUserMapper.findByUserName(JWTUtil.getUsername(token));
+        LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
+        LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
         log.info("loginUser:" + loginUser.toString());
         int res = 0;
         if (!StringUtils.isEmpty(workLog.getWorkDate())) {
@@ -90,12 +89,11 @@ public class WorkLogServiceImpl extends ServiceImpl<WorkLogMapper, WorkLog> impl
         return res;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateWorkLog(WorkLog workLog) {
-        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
-        log.info("当前操作用户的token:" + token);
-        LoginUser loginUser = loginUserMapper.findByUserName(JWTUtil.getUsername(token));
+        LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
+        LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
         log.info("User对象:" + loginUser.toString());
         workLog.setModifyTime(new Date());
         workLogMapper.updateById(workLog);

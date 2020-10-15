@@ -15,6 +15,10 @@ spring:
     time-between-eviction-runs-millis: 60000
     # 配置连接在池中的最小生存时间
     min-evictable-idle-time-millis: 300000
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
   #redis配置
   redis:
     database: 1
@@ -37,12 +41,9 @@ spring:
 febs:
   shiro:
     #免认证接口
-    anonUrl: /logOut,/login/**,/gifCode,/register,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/favicon.ico
+    anonUrl: /test/**,/schedule/**,/login,/user/checkUserName/**,/register,/dept/deptList,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/favicon.ico
     # token有效期，单位秒
-    jwtTimeOut: 7200
-logging:
-  level:
-    com.wzh.dao: debug
+    tokenTimeOut: 1800
 #mybatisplus配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

@@ -7,6 +7,7 @@ import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.vo.BroadcastUserVo;
 import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.PageUtils;
@@ -153,6 +154,18 @@ public class UserController {
         } catch (Exception e) {
             log.error("修改用户失败:", e);
             return Result.error("修改用户失败!");
+        }
+    }
+
+    @ApiOperation(value = "查询所有播控人员姓名", notes = "无参数")
+    @GetMapping("/selectBroadcastUser")
+    public Result selBroadcastUser() {
+        try {
+            List<BroadcastUserVo> b = userService.selectAllBroadcastUser();
+            return Result.ok(b);
+        } catch (Exception e) {
+            log.error("加载所有播控人员失败:", e);
+            return Result.error("加载所有播控人员失败:");
         }
     }
 

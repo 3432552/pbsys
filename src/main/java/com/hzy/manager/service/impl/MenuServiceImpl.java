@@ -1,8 +1,6 @@
 package com.hzy.manager.service.impl;
-
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
-import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.MenuMapper;
 import com.hzy.manager.dao.RoleMapper;
@@ -10,6 +8,7 @@ import com.hzy.manager.dao.RoleMenuMapper;
 import com.hzy.manager.domain.Menu;
 import com.hzy.manager.domain.Role;
 import com.hzy.manager.domain.RoleMenu;
+import com.hzy.manager.util.HttpServletUtil;
 import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.vo.Tree;
 import com.hzy.manager.vo.router.RouterMeta;
@@ -30,7 +29,7 @@ import java.util.*;
 
 @Service
 @Slf4j
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class)
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
@@ -43,7 +42,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Autowired
     private LoginUserMapper loginUserMapper;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void addMenu(Menu menu) {
         Long parentId = menu.getParentId();
@@ -56,9 +55,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         menu.setCreateTime(new Date());
         menuMapper.insert(menu);
-        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
-        log.info("当前操作用户的token:" + token);
-        LoginUser loginUser = loginUserMapper.findByUserName(JWTUtil.getUsername(token));
+        LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
+        LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
         log.info("User对象:" + loginUser.toString());
         Role role = roleMapper.getUserRole(loginUser.getId());
         RoleMenu roleMenu = new RoleMenu();
@@ -67,6 +65,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         roleMenuMapper.insert(roleMenu);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateMenu(Menu menu) {
         if (menu.getType().equals(Constant.BUTTON)) {
@@ -80,9 +79,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public List<VueRouter<Menu>> getUserRouters() {
         List<VueRouter<Menu>> routes = new ArrayList<>();
-        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
-        log.info("当前操作用户的token:" + token);
-        LoginUser loginUser = loginUserMapper.findByUserName(JWTUtil.getUsername(token));
+        LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
+        LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
         log.info("User对象:" + loginUser.toString());
         List<Menu> menus = menuMapper.getMenuByUserId(loginUser.getId());
         menus.forEach(menu -> {
@@ -102,9 +100,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public Tree<Menu> getMenuTree(String userName, String type) {
         List<Tree<Menu>> menuTree = new ArrayList<>();
-        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
-        log.info("当前操作用户的token:" + token);
-        LoginUser loginUser = loginUserMapper.findByUserName(JWTUtil.getUsername(token));
+        LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
+        LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
         log.info("User对象:" + loginUser.toString());
         List<Menu> menuList = menuMapper.getMenuByCondition(userName, type, loginUser.getId());
         menuList.forEach(menu -> {
@@ -127,7 +124,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         return menuMapper.selectById(mid);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteMenuByIds(String[] mids) {
         //先删除菜单

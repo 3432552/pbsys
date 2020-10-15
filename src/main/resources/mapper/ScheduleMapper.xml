@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzy.manager.dao.ScheduleMapper">
+    <resultMap id="BaseMapper" type="com.hzy.manager.domain.Schedule">
+        <id column="id" property="id"/>
+        <result column="work_date" property="workDate"/>
+        <result column="week" property="week"/>
+        <result column="user_id" property="userId"/>
+        <result column="game_time" property="gameTime"/>
+        <result column="studio" property="studio"/>
+        <result column="post" property="post"/>
+        <result column="league" property="league"/>
+        <result column="game" property="game"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+        <association property="user" javaType="com.hzy.manager.domain.User">
+            <result column="real_name" property="realName"/>
+        </association>
+    </resultMap>
+    <select id="getScheduleListByCondition" resultMap="BaseMapper">
+        select s.*,u.id,u.real_name from p_schedule s
+        left join p_user u on (s.user_id=u.id)
+        <where>
+            <if test="scheduleDto.startTime!='' and scheduleDto.startTime!=null and scheduleDto.endTime!='' and scheduleDto.endTime!=null">
+                and s.work_date between #{scheduleDto.startTime} and #{scheduleDto.endTime}
+            </if>
+            <if test="scheduleDto.userId!='' and scheduleDto.userId!=null">
+                and s.user_id =#{scheduleDto.userId}
+            </if>
+        </where>
+        order by s.work_date
+    </select>
+    <select id="getScheduleInfo" resultMap="BaseMapper">
+        select s.*,u.id,u.real_name from p_schedule s
+        left join p_user u on (s.user_id=u.id)
+        <where>
+            <if test="scheduleDto.startTime!='' and scheduleDto.startTime!=null">
+                and s.work_date>=#{scheduleDto.startTime}
+            </if>
+        </where>
+    </select>
+    <select id="getScheduleList" resultMap="BaseMapper">
+        select s.*,u.id,u.real_name from p_schedule s
+        left join p_user u on (s.user_id=u.id)
+    </select>
+</mapper>

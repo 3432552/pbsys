@@ -5,9 +5,9 @@ public class ShiroProperties {
     private String anonUrl;
 
     /**
-     * token默认有效时间 30小时
+     * token默认有效时间 30分钟
      */
-    private Long jwtTimeOut;
+    private Long tokenTimeOut;
 
     public String getAnonUrl() {
         return anonUrl;
@@ -17,11 +17,11 @@ public class ShiroProperties {
         this.anonUrl = anonUrl;
     }
 
-    public Long getJwtTimeOut() {
-        return jwtTimeOut;
+    public Long getTokenTimeOut() {
+        return tokenTimeOut;
     }
 
-    public void setJwtTimeOut(Long jwtTimeOut) {
-        this.jwtTimeOut = jwtTimeOut;
+    public void setTokenTimeOut(Long tokenTimeOut) {
+        this.tokenTimeOut = tokenTimeOut;
     }
 }

@@ -5,14 +5,26 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.dao.*;
 import com.hzy.manager.domain.*;
+import com.hzy.manager.domain.Menu;
 import com.hzy.manager.service.RoleService;
 import com.hzy.manager.service.UserService;
+import com.hzy.manager.vo.BroadcastUserVo;
+import com.hzy.manager.vo.LoginUser;
+import org.apache.logging.log4j.util.Base64Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.util.Base64Utils;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -42,9 +54,8 @@ class ManagerApplicationTests {
     //获取用户角色
     @Test
     void contextLoads() {
-        String name = "wzh";
-        List<Role> roleList = roleMapper.getUserRoles(name);
-        roleList.forEach(System.out::println);
+        List<BroadcastUserVo> s = userMapper.getAllBroadcastUser();
+        s.forEach(System.out::println);
     }
 
     @Test
@@ -80,8 +91,24 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads3() {
+        String token = "aee10d889b6f4de9937455e5e5124591";
+        boolean a = redisTemplate.hasKey(token);
+        System.out.println("是否有这个用户:" + a);
+    }
 
-        //System.out.println("分页结果:"+page.toString());
-
+    /**
+     * 生成图片base64
+     */
+    @Test
+    void contentLoad4() {
+        BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(image, "JPEG", byteArrayOutputStream);
+            String imageBase64 = Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray());
+            System.out.println("图片base64:" + imageBase64);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

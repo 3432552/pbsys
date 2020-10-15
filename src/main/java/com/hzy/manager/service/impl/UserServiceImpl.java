@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hzy.manager.common.Constant;
-import com.hzy.manager.common.authentication.JWTUtil;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.dao.LoginUserMapper;
@@ -13,6 +12,8 @@ import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.dao.UserRoleMapper;
 import com.hzy.manager.domain.User;
 import com.hzy.manager.domain.UserRole;
+import com.hzy.manager.util.HttpServletUtil;
+import com.hzy.manager.vo.BroadcastUserVo;
 import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.MD5Util;
@@ -21,19 +22,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
 @Slf4j
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     private LoginUserMapper loginUserMapper;
@@ -45,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public LoginUser findByName(String username, String password, String code) throws LoginException {
+    public LoginUser findByName(String username, String password) throws LoginException {
         if (StringUtils.isEmpty(username)) {
             throw new LoginException("用户名不能为空");
         }
@@ -58,10 +57,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         if (!StringUtils.equals(user.getPassword(), MD5Util.encrypt(username, password))) {
             throw new LoginException("密码输入错误");
-        }
-        String cacheCode = (String) redisTemplate.opsForValue().get(Constant.CODE_KEY);
-        if (!StringUtils.equals(cacheCode, code.toLowerCase())) {
-            throw new LoginException("验证码输入错误");
         }
         //更新用户登录时间
         User u = new User();
@@ -81,7 +76,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return loginUser == null ? null : loginUser;
     }
 
-    @Transactional
+    @Override
+    public List<BroadcastUserVo> selectAllBroadcastUser() {
+        return userMapper.getAllBroadcastUser();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     public void register(User user) throws BusinessException {
         if (StringUtils.isEmpty(user.getUserName())) {
             throw new BusinessException("用户名不能为空");
@@ -93,25 +93,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (StringUtils.isEmpty(user.getRealName())) {
             throw new BusinessException("真实姓名不能为空");
         }
-        if (StringUtils.isEmpty(user.getPhone())) {
-            throw new BusinessException("手机号不能为空");
-        }
-        Pattern pattern = Pattern.compile("^[1]\\d{10}$");
-        if (pattern.matcher(user.getPhone()).matches() == false) {
-            throw new BusinessException("你输入的手机号格式不正确!");
-        }
-        if (StringUtils.isEmpty(user.getEmail())) {
-            throw new BusinessException("邮箱不能为空");
-        }
-        if (StringUtils.isEmpty(user.getSex())) {
-            throw new BusinessException("性别不能为空");
-        }
         if (user.getDeptId() == null) {
             throw new BusinessException("部门不能为空");
-        }
-        Pattern p = Pattern.compile("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
-        if (p.matcher(user.getEmail()).matches() == false) {
-            throw new BusinessException("你输入的邮箱格式不正确");
         }
         user.setAvatarUrl("default.jpg");
         user.setCreateTime(new Date());
@@ -123,7 +106,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.selectByUid(uid);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void addUser(User user) throws BusinessException {
         if (StringUtils.isEmpty(user.getUserName())) {
@@ -168,7 +151,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         });
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateUser(User user) {
         user.setModifyTime(new Date());
@@ -184,7 +167,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         });
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteUserByIds(String[] ids) {
         //删除用户
@@ -197,13 +180,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         });
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updatePwd(User user) throws BusinessException {
-        String token = redisTemplate.opsForValue().get(MD5Util.encrypt(Constant.TOKEN_CACHE_KEY)).toString();
-        String userName = JWTUtil.getUsername(token);
-        LoginUser loginUser = loginUserMapper.findByUserName(userName);
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
+        String userName = loginUser.getUserName();
+        LoginUser loginUser1 = loginUserMapper.findByUserName(userName);
         log.info("User对象:" + loginUser.toString());
-        if (!StringUtils.equals(MD5Util.encrypt(userName, user.getPassword()), loginUser.getPassword())) {
+        if (!StringUtils.equals(MD5Util.encrypt(userName, user.getPassword()), loginUser1.getPassword())) {
             throw new BusinessException("原密码错误");
         }
         if (StringUtils.equals(user.getNewPwd(), user.getPassword())) {
@@ -212,7 +196,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!StringUtils.equals(user.getNewPwd(), user.getConfirmPwd())) {
             throw new BusinessException("新密码和确认密码不一致,请重新输入");
         }
-        user.setId(loginUser.getId());
+        user.setId(loginUser1.getId());
         user.setPassword(MD5Util.encrypt(userName, user.getNewPwd()));
         int result = userMapper.updateById(user);
         return result;

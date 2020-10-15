@@ -20,6 +20,10 @@
         <result column="role_name" property="roleName"/>
         <result column="rid" property="roleId"/>
     </resultMap>
+    <resultMap id="BroadcastMapper" type="com.hzy.manager.vo.BroadcastUserVo">
+        <id column="id" property="id"/>
+        <result column="real_name" property="realName"/>
+    </resultMap>
     <sql id="selectUser">
         select u.id,u.user_name,u.password,u.real_name,u.dept_id,u.phone,u.status,u.sex,
         u.email,u.create_time,u.modify_time,u.last_login_time,u.avatar_url,u.describle
@@ -56,4 +60,9 @@
         set last_login_time=#{lastLoginTime}
         where id=#{id}
     </update>
+    <select id="getAllBroadcastUser" resultMap="BroadcastMapper">
+        select u.id,u.real_name from p_user u
+        left join p_user_role ur on (u.id=ur.user_id)
+        where ur.role_id=3
+    </select>
 </mapper>

@@ -68,7 +68,7 @@ public class ApprovalController {
             return Result.ok(approval);
         } catch (Exception e) {
             log.error("查询一条审批申请信息失败:", e);
-            return Result.error("查询一条审批申请信息失败!");
+            return Result.error("查询一条审批申请信息失败");
         }
     }
 
@@ -78,7 +78,7 @@ public class ApprovalController {
      * @param approval
      * @return
      */
-    @ApiOperation(value = "修改审批申请信息(审批是播控人员发起的管理员也不应该修改它,【不用调用这个接口】)")
+    @ApiOperation(value = "修改审批申请信息(审批是播控人员发起的管理员也不应该修改它】)")
     @PutMapping("/updateApproval")
     public Result updateApproval(@RequestBody Approval approval) {
         try {
@@ -88,7 +88,6 @@ public class ApprovalController {
             log.error("修改审批申请信息失败:", e);
             return Result.error("修改审批申请信息失败");
         }
-
     }
 
     /**
@@ -116,7 +115,8 @@ public class ApprovalController {
      *
      * @return
      */
-    @ApiOperation(value = "审批申请通过", notes = "不用传参数")
+    @ApiOperation(value = "审批申请通过")
+    @ApiImplicitParam(name = "id", value = "审批申请id", required = true)
     @PostMapping("/approvalPass")
     public Result approvalPass(@RequestBody Approval approval) {
         try {
@@ -127,14 +127,14 @@ public class ApprovalController {
             return Result.error("审批通过提交失败");
         }
     }
-
     /**
      * 审批申请不通过
      * id(审批id)
      *
      * @return
      */
-    @ApiOperation(value = "审批申请不通过", notes = "不用传参数")
+    @ApiOperation(value = "审批申请不通过")
+    @ApiImplicitParam(name = "id", value = "审批申请id", required = true)
     @PostMapping("/approvalNoPass")
     public Result approvalNoPass(@RequestBody Approval approval) {
         try {

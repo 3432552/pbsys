@@ -27,5 +27,4 @@ public class LoginUser implements Serializable {
     private Date lastLoginTime;
     private String avatarUrl;
     private String describle;
-    private transient String code;
 }
