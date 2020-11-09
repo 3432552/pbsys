@@ -20,8 +20,11 @@ public class Constant {
     public static final String MENU = "0";
     public static final String BUTTON = "1";
     /**
-     * 审批状态 0:待审批(数据库默认值就是0) 1:审批通过 2:审批不通过
+     * 审批状态0:正常【默认】 1:待审批 2:审批成功 3:审批失败
      */
-    public static final String APPROVALPASS = "1";
-    public static final String APPROVALNOPASS = "2";
+    public static final Integer APPROVALDEFAULT = 0;
+    public static final Integer APPROVALPENDING = 1;
+    public static final Integer APPROVALSUCCESS = 2;
+    public static final Integer APPROVALFAIL = 3;
+
 }

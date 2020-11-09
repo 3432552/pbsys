@@ -41,9 +41,9 @@ spring:
 febs:
   shiro:
     #免认证接口
-    anonUrl: /test/**,/schedule/**,/login,/user/checkUserName/**,/register,/dept/deptList,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/favicon.ico
+    anonUrl: /worklog/**,/user/**,/dict/**,/test/**,/schedule/**,/login,/user/checkUserName/**,/register,/dept/deptList,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/favicon.ico
     # token有效期，单位秒
-    tokenTimeOut: 1800
+    tokenTimeOut: 18000
 #mybatisplus配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

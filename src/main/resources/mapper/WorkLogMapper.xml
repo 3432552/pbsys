@@ -10,7 +10,8 @@
         <result column="league" property="league"/>
         <result column="game" property="game"/>
         <result column="post" property="post"/>
-        <result column="job_content" property="jobContent"/>
+        <result column="approval_opinion" property="approvalOpinion"/>
+        <result column="status" property="status"/>
         <result column="work_hours" property="workHours"/>
         <result column="post_allowance" property="postAllowance"/>
         <result column="create_time" property="createTime"/>

@@ -34,7 +34,6 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private FebsProperties febsProperties;
-
     /**
      * 用户登录
      *
@@ -51,13 +50,12 @@ public class LoginController {
     public Result userLogin(@RequestBody LoginUser loginUser) throws LoginException {
         LoginUser loginUser1 = userService.findByName(loginUser.getUserName(), loginUser.getPassword());
         String token = UUIDUtil.uuid();
-        redisTemplate.opsForValue().set(token, loginUser1, febsProperties.getShiro().getTokenTimeOut(), TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(token, loginUser1, febsProperties.getShiro().getTokenTimeOut(),TimeUnit.SECONDS);
         Map<String, Object> map = new HashMap<>();
         map.put("user", loginUser1);
         map.put("token", token);
         return Result.ok(map);
     }
-
     /**
      * 注册用户(前端要检查用户名是否存在,带新增部门)
      * 必传参数:userName,password,realName,phone,sex,email,deptId
@@ -65,7 +63,7 @@ public class LoginController {
      * @param user
      * @return
      */
-    @ApiOperation(value = "用户注册",notes = "不用传token")
+    @ApiOperation(value = "用户注册", notes = "不用传token")
     @ApiImplicitParam(name = "User", value = "User实体", dataType = "User")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", required = true),

@@ -8,6 +8,7 @@ import com.hzy.manager.dto.ScheduleDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -18,7 +19,9 @@ import java.util.List;
  * @since 2020-10-14
  */
 public interface ScheduleService extends IService<Schedule> {
-    List<Page<Schedule>> getScheduleListBy(ScheduleDto scheduleDto, Page<Schedule> schedulePage);
+    List<Schedule> getScheduleListByPage(Map<String, Object> map);
+
+    int getScheduleListCountMes(Map<String, Object> map);
 
     List<Schedule> getNewSchedule(ScheduleDto scheduleDto);
 

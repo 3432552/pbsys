@@ -96,6 +96,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (user.getDeptId() == null) {
             throw new BusinessException("部门不能为空");
         }
+        User u = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUserName, user.getUserName()));
+        if (u != null) {
+            throw new BusinessException("用户名已被占用");
+        }
         user.setAvatarUrl("default.jpg");
         user.setCreateTime(new Date());
         userMapper.insert(user);

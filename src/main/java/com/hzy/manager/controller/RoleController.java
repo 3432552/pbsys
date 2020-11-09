@@ -42,7 +42,6 @@ public class RoleController {
             return Result.error("查询角色列表失败!");
         }
     }
-
     /**
      * 通过角色id得到这个角色的所有菜单ids和这个角色的信息(用于修改)
      *
@@ -93,7 +92,6 @@ public class RoleController {
             return Result.error("新增角色失败!");
         }
     }
-
     /**
      * 修改角色
      *

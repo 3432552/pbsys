@@ -8,6 +8,7 @@ import com.hzy.manager.domain.*;
 import com.hzy.manager.domain.Menu;
 import com.hzy.manager.service.RoleService;
 import com.hzy.manager.service.UserService;
+import com.hzy.manager.util.EncryptUtil;
 import com.hzy.manager.vo.BroadcastUserVo;
 import com.hzy.manager.vo.LoginUser;
 import org.apache.logging.log4j.util.Base64Util;
@@ -25,7 +26,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @SpringBootTest
@@ -49,19 +52,24 @@ class ManagerApplicationTests {
     @Autowired
     private RoleService roleService;
     @Autowired
-    private ApprovalMapper approvalMapper;
+    private ScheduleMapper scheduleMapper;
 
     //获取用户角色
     @Test
     void contextLoads() {
-        List<BroadcastUserVo> s = userMapper.getAllBroadcastUser();
-        s.forEach(System.out::println);
+        Map<String, Object> map = new HashMap<>();
+        map.put("startTime", "2020-10-04");
+        map.put("endTime", "2020-10-21");
+        int count = scheduleMapper.getScheduleListByConditionCount(map);
+        System.out.println("数据总数:" + count);
     }
 
+    //验证Base64编码和解码
     @Test
     void contextLoads23() {
-        List<WorkLog> workLogMes = workLogMapper.selWorkLogListByUid(2L, "2020-7-11");
-        workLogMes.forEach(System.out::println);
+        String name = "654363";
+        String encodeString = Base64Utils.encodeToString(name.getBytes());
+        System.out.println("加密的参数:" + encodeString);
     }
 
     //获取用户权限

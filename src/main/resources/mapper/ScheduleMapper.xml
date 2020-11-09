@@ -21,23 +21,46 @@
         select s.*,u.id,u.real_name from p_schedule s
         left join p_user u on (s.user_id=u.id)
         <where>
-            <if test="scheduleDto.startTime!='' and scheduleDto.startTime!=null and scheduleDto.endTime!='' and scheduleDto.endTime!=null">
-                and s.work_date between #{scheduleDto.startTime} and #{scheduleDto.endTime}
+            <if test="startTime!='' and startTime!=null and endTime!='' and endTime!=null">
+                and s.work_date between #{startTime} and #{endTime}
             </if>
-            <if test="scheduleDto.userId!='' and scheduleDto.userId!=null">
-                and s.user_id =#{scheduleDto.userId}
+            <if test="userId!='' and userId!=null">
+                and s.user_id =#{userId}
             </if>
         </where>
         order by s.work_date
+        limit #{currentNo},#{pageSize}
+    </select>
+    <select id="getScheduleListByConditionCount" parameterType="map" resultType="int">
+        select count(1) from p_schedule s
+        left join p_user u on (s.user_id=u.id)
+        <where>
+            <if test="startTime!='' and startTime!=null">
+                and s.work_date <![CDATA[>=]]> #{startTime}
+            </if>
+            <if test="endTime!='' and endTime!=null">
+                and s.work_date <![CDATA[<=]]> #{endTime}
+            </if>
+            <if test="userId!='' and userId!=null">
+                and s.user_id =#{userId}
+            </if>
+        </where>
     </select>
     <select id="getScheduleInfo" resultMap="BaseMapper">
         select s.*,u.id,u.real_name from p_schedule s
         left join p_user u on (s.user_id=u.id)
         <where>
             <if test="scheduleDto.startTime!='' and scheduleDto.startTime!=null">
-                and s.work_date>=#{scheduleDto.startTime}
+                and s.work_date <![CDATA[>=]]> #{scheduleDto.startTime}
+            </if>
+            <if test="scheduleDto.endTime!='' and scheduleDto.endTime!=null">
+                and s.work_date <![CDATA[<=]]> #{scheduleDto.endTime}
+            </if>
+            <if test="scheduleDto.userId!='' and scheduleDto.userId!=null">
+                and s.user_id =#{scheduleDto.userId}
             </if>
         </where>
+        order by s.work_date
     </select>
     <select id="getScheduleList" resultMap="BaseMapper">
         select s.*,u.id,u.real_name from p_schedule s

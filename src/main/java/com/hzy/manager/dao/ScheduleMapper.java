@@ -20,9 +20,12 @@ import java.util.Map;
  */
 public interface ScheduleMapper extends BaseMapper<Schedule> {
     //多条件查询排版信息【后台接口】
-    List<Page<Schedule>> getScheduleListByCondition(@Param("scheduleDto") ScheduleDto scheduleDto, Page<Schedule> schedulePage);
+    List<Schedule> getScheduleListByCondition(Map<String, Object> map);
 
-    //查询从今天往后的排版信息
+    //多条件查询排版信息总数【后台接口】
+    int getScheduleListByConditionCount(Map<String, Object> map);
+
+    //多条件查询排版信息【前台接口】
     List<Schedule> getScheduleInfo(@Param("scheduleDto") ScheduleDto scheduleDto);
 
     List<Schedule> getScheduleList();

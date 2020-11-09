@@ -7,9 +7,13 @@ import com.hzy.manager.common.Result;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.dao.LoginUserMapper;
 import com.hzy.manager.dao.WorkLogMapper;
+import com.hzy.manager.domain.Dict;
 import com.hzy.manager.domain.Role;
 import com.hzy.manager.domain.UserWorkLog;
 import com.hzy.manager.domain.WorkLog;
+import com.hzy.manager.dto.PageDto;
+import com.hzy.manager.dto.WorkLogDto;
+import com.hzy.manager.service.DictService;
 import com.hzy.manager.service.RoleService;
 import com.hzy.manager.service.UserWorkLogService;
 import com.hzy.manager.service.WorkLogService;
@@ -17,17 +21,21 @@ import com.hzy.manager.util.HttpServletUtil;
 import com.hzy.manager.util.MD5Util;
 import com.hzy.manager.util.PageUtils;
 import com.hzy.manager.vo.LoginUser;
+import com.hzy.manager.vo.ScheduleVo;
+import com.hzy.manager.vo.WorkLogVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,13 +50,13 @@ public class WorkLogController {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
-    private LoginUserMapper loginUserMapper;
-    @Autowired
     private RoleService roleService;
     @Autowired
     private UserWorkLogService userWorkLogService;
     @Autowired
     private WorkLogMapper workLogMapper;
+    @Autowired
+    private DictService dictService;
 
     /**
      * 这个用的是自己封装的分页工具
@@ -59,37 +67,66 @@ public class WorkLogController {
      */
     @ApiOperation(value = "播控工作日志列表信息", notes = "带分页,currentNo:当前页;pageSize:页面容量")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "realName", value = "真实名字", required = true)
+            @ApiImplicitParam(name = "realName", value = "真实名字",required = false),
+            @ApiImplicitParam(name = "currentNo", value = "当前页",required = true),
+            @ApiImplicitParam(name = "pageSize", value = "页面容量",required = true)
     })
-    @GetMapping("/selectLogList/{currentNo}/{pageSize}")
-    public Result selWorkLogList(WorkLog workLog,@PathVariable Integer currentNo, @PathVariable Integer pageSize) {
+    @PostMapping("/selectLogList")
+    public Result selWorkLogList(@RequestBody WorkLogDto workLogDto) {
+        List<Dict> dictList = dictService.list();
+        Map<Integer, String> dictMap = new HashMap<>();
+        for (Dict d : dictList) {
+            dictMap.put(d.getDicKey(), d.getDicValue());
+        }
+        List<WorkLogVo> workLogVoList=new ArrayList<>();
         try {
             LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
-            LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
-            Long uid = loginUser.getId();
+            Long uid = loginUser1.getId();
             Role role = roleService.getRoleByuId(uid);
             //如果是播控人员,只能看到自己的工作日志,其他有权限的能看到全部工作日志
             if (role.getId() == 3) {
                 int totalNum = userWorkLogService.count(new LambdaQueryWrapper<UserWorkLog>().eq(UserWorkLog::getUserId, uid));
-                PageUtils<WorkLog> pageUtils = new PageUtils<>(currentNo, pageSize, totalNum);
+                PageUtils<WorkLog> pageUtils = new PageUtils<>(workLogDto.getCurrentNo(),workLogDto.getPageSize(),totalNum);
                 Map<String, Object> map = new HashMap<>();
-                map.put("realName", workLog.getRealName());
-                map.put("offeSet", pageUtils.getOffset());
+                map.put("realName", workLogDto.getRealName());
+                map.put("offSet", pageUtils.getOffset());
                 map.put("pageSize", pageUtils.getPageSize());
                 map.put("uid", uid);
                 List<WorkLog> list = workLogService.getWorkLogListByBoKong(map);
-                pageUtils.setPageList(list);
-                return Result.ok(pageUtils);
+                list.forEach(schedule -> {
+                    WorkLogVo workLogVo=new WorkLogVo();
+                    workLogVo.setId(schedule.getId()).setWorkDate(schedule.getWorkDate()).setWeek(schedule.getWeek());
+                    workLogVo.setGameTime(schedule.getGameTime()).setStudioKey(schedule.getStudio()).setStatus(schedule.getStatus()).setApprovalOpinion(schedule.getApprovalOpinion());
+                    workLogVo.setStudioValue(dictMap.get(schedule.getStudio())).setLeague(schedule.getLeague()).setGame(schedule.getGame()).setApprovalOpinion(schedule.getApprovalOpinion());
+                    workLogVo.setWorkHours(schedule.getWorkHours()).setPostAllowance(schedule.getPostAllowance());
+                    workLogVo.setPostKey(schedule.getPost()).setRealName(schedule.getRealName()).setPostValue(dictMap.get(schedule.getPost())).setCreateTime(schedule.getCreateTime()).setModifyTime(schedule.getModifyTime());
+                    workLogVoList.add(workLogVo);
+                });
+                Map<String, Object> dataList = new HashMap<>();
+                dataList.put("page",pageUtils);
+                dataList.put("workLogList",workLogVoList);
+                return Result.ok(dataList);
             } else {
-                int totalNum = workLogService.getWorkLogListCount(workLog.getRealName());
-                PageUtils<WorkLog> pageUtils = new PageUtils<>(currentNo, pageSize, totalNum);
+                int totalNum = workLogService.getWorkLogListCount(workLogDto.getRealName());
+                PageUtils<WorkLog> pageUtils = new PageUtils<>(workLogDto.getCurrentNo(),workLogDto.getPageSize(), totalNum);
                 Map<String, Object> map = new HashMap<>();
-                map.put("realName", workLog.getRealName());
+                map.put("realName", workLogDto.getRealName());
                 map.put("offeSet", pageUtils.getOffset());
                 map.put("pageSize", pageUtils.getPageSize());
                 List<WorkLog> list = workLogService.getWorkLogList(map);
-                pageUtils.setPageList(list);
-                return Result.ok(pageUtils);
+                list.forEach(schedule -> {
+                    WorkLogVo workLogVo=new WorkLogVo();
+                    workLogVo.setId(schedule.getId()).setWorkDate(schedule.getWorkDate()).setWeek(schedule.getWeek());
+                    workLogVo.setGameTime(schedule.getGameTime()).setStudioKey(schedule.getStudio()).setStatus(schedule.getStatus()).setApprovalOpinion(schedule.getApprovalOpinion());
+                    workLogVo.setStudioValue(dictMap.get(schedule.getStudio())).setLeague(schedule.getLeague()).setGame(schedule.getGame()).setApprovalOpinion(schedule.getApprovalOpinion());
+                    workLogVo.setWorkHours(schedule.getWorkHours()).setPostAllowance(schedule.getPostAllowance());
+                    workLogVo.setPostKey(schedule.getPost()).setRealName(schedule.getRealName()).setPostValue(dictMap.get(schedule.getPost())).setCreateTime(schedule.getCreateTime()).setModifyTime(schedule.getModifyTime());
+                    workLogVoList.add(workLogVo);
+                });
+                Map<String, Object> dataList = new HashMap<>();
+                dataList.put("page",pageUtils);
+                dataList.put("workLogList",workLogVoList);
+                return Result.ok(dataList);
             }
         } catch (Exception e) {
             log.error("查询工作日志失败:", e);
@@ -142,18 +179,6 @@ public class WorkLogController {
      * @return
      */
     @ApiOperation(value = "新增工作日志信息", notes = "岗位(在线包,对战,大屏+ar,其实就这几个岗位，整个下拉框固定下，做到这再确认下吧)，演播室也可整个下拉框")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "workDate", value = "工作日期如:2020-7-22", required = true),
-            @ApiImplicitParam(name = "week", value = "星期几", required = true),
-            @ApiImplicitParam(name = "gameTime", value = "比赛直播时间如:12:56", required = true),
-            @ApiImplicitParam(name = "studio", value = "演播室", required = true),
-            @ApiImplicitParam(name = "league", value = "联赛", required = true),
-            @ApiImplicitParam(name = "game", value = "比赛", required = true),
-            @ApiImplicitParam(name = "post", value = "岗位", required = true),
-            @ApiImplicitParam(name = "jobContent", value = "工作内容描述", required = true),
-            @ApiImplicitParam(name = "workHours", value = "工作时长", required = true),
-            @ApiImplicitParam(name = "postAllowance", value = "岗位补贴", required = true)
-    })
     @PostMapping("/addWorkLog")
     public Result addWorkLog(@RequestBody WorkLog workLog) throws BusinessException {
         int result = workLogService.addWorkLog(workLog);
@@ -166,54 +191,52 @@ public class WorkLogController {
 
     /**
      * 修改工作日志根据工作日志id
-     * 说明:播控人员得到管理人员审批成功后只能修改一次播控工作日志,
-     * 修改后播控人员又没有了修改工作日志这个菜单了需要再向管理员申请后才可进行下次工作日志的修改
      *
      * @param workLog
      * @return
      */
-    @ApiOperation(value = "修改工作日志信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "workDate", value = "工作日期如:2020-7-22", required = true),
-            @ApiImplicitParam(name = "week", value = "星期几", required = true),
-            @ApiImplicitParam(name = "gameTime", value = "比赛直播时间如:12:56", required = true),
-            @ApiImplicitParam(name = "studio", value = "演播室", required = true),
-            @ApiImplicitParam(name = "league", value = "联赛", required = true),
-            @ApiImplicitParam(name = "game", value = "比赛", required = true),
-            @ApiImplicitParam(name = "post", value = "岗位", required = true),
-            @ApiImplicitParam(name = "jobContent", value = "工作内容描述", required = true),
-            @ApiImplicitParam(name = "workHours", value = "工作时长", required = true),
-            @ApiImplicitParam(name = "postAllowance", value = "岗位补贴", required = true)
-    })
+    @ApiOperation(value = "修改工作日志信息播控人员修改工作日志后,工作日志就是待审核状态】【前台接口】")
     @PutMapping("/updateWorkLog")
     public Result updateWorkLogMes(@RequestBody WorkLog workLog) {
-        try {
-            workLogService.updateWorkLog(workLog);
+        int res = workLogService.updateWorkLog(workLog);
+        if (res > 0) {
             return Result.ok("修改工作日志成功");
-        } catch (Exception e) {
-            log.error("修改工作日志失败:", e);
+        } else {
             return Result.error("修改工作日志失败");
         }
     }
 
-    /**
-     * excel快速实现导出
-     *
-     * @param response
-     * @return
-     */
-    @GetMapping("/exportExcel")
-    public Result excelExport(HttpServletResponse response) {
-        try {
-            List<WorkLog> list = workLogMapper.selectList(null);
-            System.out.println("==========================");
-            list.forEach(System.out::print);
-            System.out.println("==========================");
-            //ExcelKit.$Export(WorkLog.class, response).downXlsx(list, false);
-            return Result.ok("导出工作日志Excel成功");
-        } catch (Exception e) {
-            log.error("导出工作日志Excel失败:", e);
-            return Result.error("导出工作日志Excel失败");
+    @ApiOperation(value = "修改日志信息审批通过【支持批量通过审批：如：1,4,7,8】")
+    @PutMapping("/approvalOk/{ids}")
+    public Result workLogPass(@PathVariable String ids) {
+        List<WorkLog> workLogList = new ArrayList<>();
+        String[] nums = ids.split(StringPool.COMMA);
+        for (int i = 0; i < nums.length; i++) {
+            WorkLog w = new WorkLog();
+            w.setId(Long.valueOf(nums[i]));
+            w.setStatus(Constant.APPROVALSUCCESS);
+            workLogList.add(w);
+        }
+        boolean res = workLogService.updateBatchById(workLogList);
+        if (res == true) {
+            return Result.ok("修改成功");
+        } else {
+            return Result.error("修改失败");
+        }
+    }
+
+    @ApiOperation(value = "修改日志信息审批失败")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "工作日志ids", required = true),
+            @ApiImplicitParam(name = "approvalOpinion", value = "不通过原因", required = true)
+    })
+    @PutMapping("/approvalNo")
+    public Result workLogNo(@RequestBody WorkLog workLog) {
+        int res = workLogService.updateWorkLogNo(workLog);
+        if (res > 0) {
+            return Result.ok("修改成功");
+        } else {
+            return Result.ok("修改失败");
         }
     }
 }

@@ -25,7 +25,7 @@ import java.util.List;
  * @since 2020-09-08
  */
 @Slf4j
-@Api(tags = "项目用户控制器")
+@Api(tags = "项目用户控制类")
 @RestController
 @RequestMapping("/projectuser")
 public class ProjectUserController {

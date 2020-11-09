@@ -31,14 +31,8 @@ public class WorkLogServiceImpl extends ServiceImpl<WorkLogMapper, WorkLog> impl
     private WorkLogMapper workLogMapper;
     @Autowired
     private UserWorkLogMapper userWorkLogMapper;
-    @Autowired
-    private LoginUserMapper loginUserMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
-    @Autowired
-    private UserRoleMapper userRoleMapper;
-    @Autowired
-    private RoleMenuMapper roleMenuMapper;
 
     @Override
     public List<WorkLog> getWorkLogList(Map<String, Object> map) {
@@ -69,37 +63,28 @@ public class WorkLogServiceImpl extends ServiceImpl<WorkLogMapper, WorkLog> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int addWorkLog(WorkLog workLog) throws BusinessException {
-        LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
-        LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
-        log.info("loginUser:" + loginUser.toString());
-        int res = 0;
-        if (!StringUtils.isEmpty(workLog.getWorkDate())) {
-            List<WorkLog> workLogMes = workLogMapper.selWorkLogListByUid(loginUser.getId(), workLog.getWorkDate());
-            if (workLogMes.size() == 0) {
-                workLog.setCreateTime(new Date());
-                res = workLogMapper.insert(workLog);
-                UserWorkLog userWorkLog = new UserWorkLog();
-                userWorkLog.setUserId(loginUser.getId());
-                userWorkLog.setId(workLog.getId());
-                userWorkLogMapper.insert(userWorkLog);
-            } else {
-                throw new BusinessException("一天只能新增一条工作日志");
-            }
-        }
+        LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
+        workLog.setCreateTime(new Date());
+        int res;
+        res = workLogMapper.insert(workLog);
+        UserWorkLog userWorkLog = new UserWorkLog();
+        userWorkLog.setUserId(loginUser.getId());
+        userWorkLog.setId(workLog.getId());
+        res = userWorkLogMapper.insert(userWorkLog);
         return res;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateWorkLog(WorkLog workLog) {
-        LoginUser loginUser1 = (LoginUser) redisTemplate.opsForValue().get(HttpServletUtil.getHeaderToken());
-        LoginUser loginUser = loginUserMapper.findByUserName(loginUser1.getUserName());
-        log.info("User对象:" + loginUser.toString());
-        workLog.setModifyTime(new Date());
-        workLogMapper.updateById(workLog);
-        //用户角色中间表删除当前播控用户一个修改播控日志的角色
-        userRoleMapper.deleteUserRoleById(loginUser.getId(), 4L);
-        //角色菜单中间表删除当前播控用户角色对应的修改工作日志的菜单
-        roleMenuMapper.deleteRoleMenuById(4L, 11L);
+    public int updateWorkLog(WorkLog workLog) {
+        workLog.setStatus(Constant.APPROVALPENDING);
+        return workLogMapper.updateById(workLog);
+    }
+
+    @Override
+    public int updateWorkLogNo(WorkLog workLog) {
+        workLog.setStatus(Constant.APPROVALFAIL);
+        return workLogMapper.updateById(workLog);
     }
 }
+

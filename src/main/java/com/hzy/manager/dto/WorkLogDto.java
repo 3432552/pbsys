@@ -3,10 +3,8 @@ package com.hzy.manager.dto;
 import lombok.Data;
 
 @Data
-public class ScheduleDto {
-    private Long userId;
-    private String startTime;
-    private String endTime;
+public class WorkLogDto {
+    private String realName;
     private Integer currentNo;
     private Integer pageSize;
 }

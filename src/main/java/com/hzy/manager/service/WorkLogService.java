@@ -20,5 +20,8 @@ public interface WorkLogService extends IService<WorkLog> {
 
     int addWorkLog(WorkLog workLog) throws BusinessException;
 
-    void updateWorkLog(WorkLog workLog);
+    int updateWorkLog(WorkLog workLog);
+
+    //工作日志审核失败
+    int updateWorkLogNo(WorkLog workLog);
 }

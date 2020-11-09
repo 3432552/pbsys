@@ -45,7 +45,7 @@ public class PageUtils<T> {
         this.totalNums = totalNums;
         this.totalPages = (int) Math.ceil((double) totalNums / pageSize);
         this.prevPage = currentNo - 1;
-        this.nextPage = currentNo + 1;
+        this.nextPage = (currentNo + 1) > totalPages ? null : (currentNo + 1);
         this.currentStartNum = (currentNo - 1) * pageSize + 1;
         this.currentEndNum = totalNums / pageSize >= currentNo ? (currentNo - 1) * pageSize + pageSize : (currentNo - 1) * pageSize + (totalNums % pageSize);
     }

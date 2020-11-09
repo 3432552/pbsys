@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -19,13 +20,16 @@ public class WorkLog implements Serializable {
     private String workDate;
     private String week;
     private String gameTime;
-    private String studio;
+    private Integer studio;
     private String league;
     private String game;
-    private String post;
-    private String jobContent;
-    private String workHours;
-    private String postAllowance;
+    private Integer post;
+    private Integer workHours;
+    private BigDecimal postAllowance;
+    //审批状态0:正常【默认】 1:待审批 2:审批成功 3:审批失败
+    private Integer status;
+    //审批反馈
+    private String approvalOpinion;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

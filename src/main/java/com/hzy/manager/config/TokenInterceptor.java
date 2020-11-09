@@ -27,7 +27,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         log.info("前端请求的token:" + token);
         if (!StringUtils.isBlank(token) && redisTemplate.hasKey(token) == true) {
             //有用户操作则重置token有效时间
-            redisTemplate.expire(token, febsProperties.getShiro().getTokenTimeOut(), TimeUnit.SECONDS);
+            redisTemplate.expire(token, febsProperties.getShiro().getTokenTimeOut(),TimeUnit.SECONDS);
             return true;
         } else {
             final String message1 = "10010";
@@ -37,6 +37,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             return false;
         }
     }
+
     //返回给客户端
     private void responseMsg(HttpServletResponse response, PrintWriter out, String resJson) {
         response.setContentType("application/json; charset=utf-8");

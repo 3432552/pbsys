@@ -39,7 +39,7 @@ febs:
     #免认证接口
     anonUrl: /login,/register,/user/checkUserName/**,/dept/deptList,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/favicon.ico
     # token有效期，单位秒
-    tokenTimeOut: 1800
+    tokenTimeOut: 36000
 #mybatisplus配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

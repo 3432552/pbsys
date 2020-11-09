@@ -63,6 +63,7 @@ public class DeptController {
      * 新增部门
      * 新增之前可以调用全部部门信息接口，部门名字不能重复
      * 必须参数:deptName,parentId
+     *
      * @param dept
      * @return
      * @throws Exception

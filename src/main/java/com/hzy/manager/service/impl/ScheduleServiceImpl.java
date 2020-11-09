@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 
 /**
@@ -57,8 +58,13 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule> i
     }
 
     @Override
-    public List<Page<Schedule>> getScheduleListBy(ScheduleDto scheduleDto, Page<Schedule> schedulePage) {
-        return scheduleMapper.getScheduleListByCondition(scheduleDto, schedulePage);
+    public List<Schedule> getScheduleListByPage(Map<String, Object> map) {
+        return scheduleMapper.getScheduleListByCondition(map);
+    }
+
+    @Override
+    public int getScheduleListCountMes(Map<String, Object> map) {
+        return scheduleMapper.getScheduleListByConditionCount(map);
     }
 
     @Transactional(rollbackFor = Exception.class)

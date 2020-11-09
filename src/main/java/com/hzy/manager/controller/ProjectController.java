@@ -4,12 +4,10 @@ package com.hzy.manager.controller;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.common.Result;
-import com.hzy.manager.domain.Approval;
 import com.hzy.manager.domain.Project;
 import com.hzy.manager.service.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ import java.util.Map;
  * @since 2020-09-08
  */
 @Slf4j
-@Api(tags = "项目控制器")
+@Api(tags = "项目控制类")
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
@@ -46,7 +44,7 @@ public class ProjectController {
      */
     @ApiOperation(value = "项目信息列表", notes = "带分页,currentNo:当前页;pageSize:页面容量")
     @ApiImplicitParam(name = "productName", value = "项目名称", required = true)
-    @GetMapping("/selectProjectList/{currentNo}/{pageSize}")
+    @PostMapping("/selectProjectList/{currentNo}/{pageSize}")
     public Result selProductListMes(@RequestBody Project project, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
         try {
             Page<Project> page = new Page<>(currentNo, pageSize);
