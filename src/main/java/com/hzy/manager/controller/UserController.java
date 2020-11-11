@@ -92,7 +92,6 @@ public class UserController {
     @ApiOperation(value = "新增用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "deptId", value = "部门id", required = true),
-            @ApiImplicitParam(name = "roleId", value = "角色ids字符串例如:1,2,3,4", required = true),
             @ApiImplicitParam(name = "userName", value = "用户名", required = true),
             @ApiImplicitParam(name = "password", value = "用户密码", required = true),
             @ApiImplicitParam(name = "realName", value = "真实名字", required = true),
