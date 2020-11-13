@@ -74,7 +74,7 @@ public class LoginController {
     @PostMapping("/register")
     public Result registerUser(@RequestBody User user) throws BusinessException {
         userService.register(user);
-        return Result.ok("注册成功");
+        return Result.ok("用户注册成功");
     }
 
     /**

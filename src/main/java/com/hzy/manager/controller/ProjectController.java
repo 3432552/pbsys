@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.domain.Project;
+import com.hzy.manager.dto.PageDto;
+import com.hzy.manager.dto.ProjectDto;
 import com.hzy.manager.service.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,26 +39,26 @@ public class ProjectController {
     /**
      * 查询全部的项目信息(mybatisPlus实现物理分页)
      * 多条件查询参数:productName(项目名称)
-     *
-     * @param project
-     * @param currentNo
-     * @param pageSize
      * @return
      */
     @ApiOperation(value = "项目信息列表", notes = "带分页,currentNo:当前页;pageSize:页面容量")
-    @ApiImplicitParam(name = "productName", value = "项目名称", required = true)
-    @PostMapping("/selectProjectList/{currentNo}/{pageSize}")
-    public Result selProductListMes(@RequestBody Project project, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "productName", value = "项目名称"),
+            @ApiImplicitParam(name = "currentNo", value = "当前页", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "页面容量", required = true)
+    })
+    @PostMapping("/selectProjectList")
+    public Result selProductListMes(@RequestBody ProjectDto projectDto) {
         try {
-            Page<Project> page = new Page<>(currentNo, pageSize);
-            List<Page<Project>> pageList = projectService.getProjectList(project, page);
+            Page<Project> page = new Page<>(projectDto.getCurrentNo(),projectDto.getPageSize());
+            List<Page<Project>> pageList = projectService.getProjectList(projectDto, page);
             Map<String, Object> map = new HashMap<>();
             map.put("pageList", pageList);
             map.put("page", page);
             return Result.ok(map);
         } catch (Exception e) {
             log.error("查询项目信息失败:", e);
-            return Result.error("查询项目信息失败!");
+            return Result.error("查询项目信息失败");
         }
     }
 
@@ -66,7 +69,7 @@ public class ProjectController {
             projectService.addProject(project);
         } catch (Exception e) {
             log.error("新增项目信息失败:", e);
-            return Result.error("新增项目信息失败!");
+            return Result.error("新增项目信息失败");
         }
         return Result.ok("新增项目信息成功");
     }
@@ -79,7 +82,7 @@ public class ProjectController {
             projectService.deleteProject(projectIds.split(StringPool.COMMA));
         } catch (Exception e) {
             log.error("新增项目信息失败:", e);
-            return Result.error("新增项目信息失败!");
+            return Result.error("新增项目信息失败");
         }
         return Result.ok("删除项目信息成功");
     }

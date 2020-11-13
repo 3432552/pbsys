@@ -49,12 +49,12 @@ public class RoleController {
      */
     @ApiOperation(value = "根据角色id查到这个角色信息和角色所拥有的菜单权限menuIds(修改之前调用)")
     @ApiImplicitParam(name = "id", value = "角色id", required = true)
-    @GetMapping("/getMenuIds/{roleId}")
-    public Result getMenuIdsByRoleId(@PathVariable Long roleId) {
+    @PostMapping("/getMenuIds")
+    public Result getMenuIdsByRoleId(@RequestBody Role role1) {
         Map<String, Object> map = null;
         try {
-            List<Role> menuIdsList = roleService.getMenuIdsByRoleId(roleId);
-            Role getRole = roleService.getRoleById(roleId);
+            List<Role> menuIdsList = roleService.getMenuIdsByRoleId(role1.getId());
+            Role getRole = roleService.getRoleById(role1.getId());
             //创建集合把菜单ids加进去
             List<String> menuIdList = new ArrayList<>();
             menuIdsList.forEach(menuId -> {

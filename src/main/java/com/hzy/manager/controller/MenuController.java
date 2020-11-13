@@ -23,7 +23,6 @@ import java.util.List;
 public class MenuController {
     @Autowired
     private MenuService menuService;
-
     /**
      * 根据用户ID生成左侧菜单,只生成菜单(增删改属于按钮,左侧菜单树不显示)
      *
@@ -54,7 +53,7 @@ public class MenuController {
             @ApiImplicitParam(name = "menuName", value = "菜单名称", required = true),
             @ApiImplicitParam(name = "type", value = "菜单类型", required = true)
     })
-    @GetMapping("/menuTree")
+    @PostMapping("/menuTree")
     public Result getMenu(@RequestBody Menu menu) {
         Tree<Menu> menuTree = null;
         try {
@@ -96,15 +95,14 @@ public class MenuController {
     /**
      * 根据菜单Id获取一条菜单信息，为了修改
      *
-     * @param menuId
      * @return
      */
     @ApiOperation(value = "根据菜单id获取一条菜单信息")
     @ApiImplicitParam(name = "id", value = "菜单id", required = true)
-    @GetMapping("/selectMenuById/{menuId}")
-    public Result selMenuById(@PathVariable Long menuId) {
+    @PostMapping("/selectMenuById")
+    public Result selMenuById(@RequestBody Menu menu1) {
         try {
-            Menu menu = menuService.findMenuById(menuId);
+            Menu menu = menuService.findMenuById(menu1.getId());
             return Result.ok(menu);
         } catch (Exception e) {
             log.error("查询菜单失败:", e);

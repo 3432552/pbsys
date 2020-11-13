@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.domain.Dict;
+import com.hzy.manager.dto.PageDto;
 import com.hzy.manager.service.DictService;
 import com.hzy.manager.util.PageUtils;
 import io.swagger.annotations.Api;
@@ -37,17 +38,17 @@ public class DictController {
     private DictService dictService;
 
     @ApiOperation(value = "查看所有字典信息", notes = "带分页,currentNo:当前页;pageSize:页面容量")
-    @PostMapping("/getAllDicInfo/{currentNo}/{pageSize}")
-    public Result selAllDicInfo(@PathVariable Integer currentNo, @PathVariable Integer pageSize) {
+    @PostMapping("/getAllDicInfo")
+    public Result selAllDicInfo(@RequestBody PageDto pageDto) {
         Map<String, Object> map = new HashMap<>();
-        map.put("currentNo", currentNo);
-        map.put("pageSize", pageSize);
+        map.put("currentNo", pageDto.getCurrentNo());
+        map.put("pageSize", pageDto.getPageSize());
         List<Dict> dictList = null;
         PageUtils<Dict> dictPageUtils = null;
         try {
             int totalCount = dictService.count();
             dictList = dictService.getDictListByPage(map);
-            dictPageUtils = new PageUtils<>(currentNo, pageSize, totalCount);
+            dictPageUtils = new PageUtils<>(pageDto.getCurrentNo(), pageDto.getPageSize(), totalCount);
             dictPageUtils.setPageList(dictList);
         } catch (Exception e) {
             log.error("查询所有字典信息失败:", e);
@@ -68,11 +69,11 @@ public class DictController {
     }
 
     @ApiOperation(value = "查看一条字典信息【为了修改字典】")
-    @PostMapping("/getOneDicInfo/{dictId}")
-    public Result selOneDicInfo(@PathVariable Long dictId) {
+    @PostMapping("/getOneDicInfo")
+    public Result selOneDicInfo(@RequestBody Dict dict) {
         List<Dict> oneDictList = null;
         try {
-            oneDictList = dictService.list(new LambdaQueryWrapper<Dict>().eq(Dict::getDictId, dictId));
+            oneDictList = dictService.list(new LambdaQueryWrapper<Dict>().eq(Dict::getDictId, dict.getDictId()));
         } catch (Exception e) {
             log.error("查询一条字典信息失败:", e);
             return Result.error("查询一条字典信息失败");

@@ -156,11 +156,11 @@ public class ScheduleController {
     }
 
     @ApiOperation(value = "查询一条排班信息")
-    @PostMapping("/selectOneSchedule/{sId}")
-    @ApiImplicitParam(name = "sId", value = "排版id", required = true)
-    public Result seScheduleOne(@PathVariable Long sId) {
+    @PostMapping("/selectOneSchedule")
+    @ApiImplicitParam(name = "id", value = "排版id", required = true,dataType = "Long")
+    public Result seScheduleOne(@RequestBody Schedule schedule) {
         try {
-            Schedule s = scheduleService.selScheduleOne(sId);
+            Schedule s = scheduleService.selScheduleOne(schedule);
             return Result.ok(s);
         } catch (Exception e) {
             log.error("查询一条排班信息失败:", e);

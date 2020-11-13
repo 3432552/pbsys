@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.domain.Project;
 import com.hzy.manager.domain.ProjectUser;
+import com.hzy.manager.dto.ProjectDto;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public interface ProjectService extends IService<Project> {
     //多条件查询项目信息并分页
-    List<Page<Project>> getProjectList(Project project, Page<Project> projectPage);
+    List<Page<Project>> getProjectList(ProjectDto projectDto, Page<Project> projectPage);
 
     void addProject(Project project);
 

@@ -74,8 +74,8 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule> i
     }
 
     @Override
-    public Schedule selScheduleOne(Long sId) {
-        Schedule schedule = scheduleMapper.selectOne(new LambdaQueryWrapper<Schedule>().eq(Schedule::getId, sId));
+    public Schedule selScheduleOne(Schedule schedule1) {
+        Schedule schedule = scheduleMapper.selectOne(new LambdaQueryWrapper<Schedule>().eq(Schedule::getId,schedule1.getId()));
         return schedule;
     }
 

@@ -24,7 +24,7 @@ public class WorkLog implements Serializable {
     private String league;
     private String game;
     private Integer post;
-    private Integer workHours;
+    private Double workHours;
     private BigDecimal postAllowance;
     //审批状态0:正常【默认】 1:待审批 2:审批成功 3:审批失败
     private Integer status;

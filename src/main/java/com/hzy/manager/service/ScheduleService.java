@@ -29,7 +29,7 @@ public interface ScheduleService extends IService<Schedule> {
 
     int deleteSchedule(String[] ids);
 
-    Schedule selScheduleOne(Long sId);
+    Schedule selScheduleOne(Schedule schedule);
 
     int updateScheduleSer(Schedule schedule);
 }

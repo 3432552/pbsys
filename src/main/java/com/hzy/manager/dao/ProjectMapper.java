@@ -3,6 +3,7 @@ package com.hzy.manager.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.domain.Project;
+import com.hzy.manager.dto.ProjectDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,6 +17,6 @@ import java.util.List;
  * @since 2020-09-08
  */
 public interface ProjectMapper extends BaseMapper<Project> {
-    List<Page<Project>> selProjectList(@Param("project") Project project, Page<Project> projectPage);
+    List<Page<Project>> selProjectList(@Param("project")ProjectDto projectDto, Page<Project> projectPage);
 
 }

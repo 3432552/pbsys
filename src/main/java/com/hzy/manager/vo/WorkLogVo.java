@@ -61,7 +61,7 @@ public class WorkLogVo {
     /**
      * 工作时长
      */
-    private Integer workHours;
+    private Double workHours;
     /**
      * 岗位补贴
      */

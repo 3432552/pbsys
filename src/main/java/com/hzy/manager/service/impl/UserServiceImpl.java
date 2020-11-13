@@ -100,9 +100,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (u != null) {
             throw new BusinessException("用户名已被占用");
         }
-        user.setAvatarUrl("default.jpg");
-        user.setCreateTime(new Date());
-        userMapper.insert(user);
+        try {
+            user.setAvatarUrl("default.jpg");
+            user.setCreateTime(new Date());
+            userMapper.insert(user);
+            //如果部门是播控组,则给用户一个播控的角色
+            if (user.getDeptId() == 8) {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getId());
+                userRole.setRoleId(3L);
+                userRoleMapper.insert(userRole);
+            }
+        } catch (Exception e) {
+            throw new BusinessException("用户注册失败");
+        }
     }
 
     @Override
@@ -143,16 +154,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (p.matcher(user.getEmail()).matches() == false) {
             throw new BusinessException("你输入的邮箱格式不正确");
         }
-        user.setCreateTime(new Date());
-        userMapper.insert(user);
-        //保存用户角色,可批量保存用户角色
-        String[] roles = user.getRoleId().split(StringPool.COMMA);
-        Arrays.stream(roles).forEach(roleId -> {
-            UserRole userRole = new UserRole();
-            userRole.setUserId(user.getId());
-            userRole.setRoleId(Long.valueOf(roleId));
-            userRoleMapper.insert(userRole);
-        });
+        try {
+            user.setCreateTime(new Date());
+            userMapper.insert(user);
+            //保存用户角色,可批量保存用户角色
+            String[] roles = user.getRoleId().split(StringPool.COMMA);
+            Arrays.stream(roles).forEach(roleId -> {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getId());
+                userRole.setRoleId(Long.valueOf(roleId));
+                userRoleMapper.insert(userRole);
+            });
+        } catch (Exception e) {
+            throw new BusinessException("新增用户失败");
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)

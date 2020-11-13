@@ -37,7 +37,7 @@ public class DeptController {
             return Result.ok(deptList);
         } catch (Exception e) {
             log.error("查询所有部门失败:", e);
-            return Result.error("查询所有部门失败!");
+            return Result.error("查询所有部门失败");
         }
     }
 
@@ -84,19 +84,17 @@ public class DeptController {
             return Result.error("新增部门失败!");
         }
     }
-
     /**
      * 通过部门Id查找一条部门信息为了修改
      *
-     * @param deptId
      * @return
      */
     @ApiOperation(value = "根据部门id查找一条部门信息")
     @ApiImplicitParam(name = "deptId(Long)", value = "部门id", required = true)
-    @GetMapping("/selectDeptById/{deptId}")
-    public Result selDeptById(@PathVariable Long deptId) {
+    @PostMapping("/selectDeptById")
+    public Result selDeptById(@RequestBody Dept dept1) {
         try {
-            Dept dept = deptService.selectListById(deptId);
+            Dept dept = deptService.selectListById(dept1.getDeptId());
             return Result.ok(dept);
         } catch (Exception e) {
             log.error("查询部门失败:", e);

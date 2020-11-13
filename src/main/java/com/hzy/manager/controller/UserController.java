@@ -52,7 +52,6 @@ public class UserController {
             throw new LoginException("该用户名已被占用!");
         }
     }
-
     /**
      * 用户列表并实现分页(mybatisPlus实现物理分页)
      *
@@ -104,7 +103,6 @@ public class UserController {
         userService.addUser(user);
         return Result.ok("新增用户成功!");
     }
-
     /**
      * 根据用户ID查询一条用户信息用于修改
      *

@@ -27,17 +27,18 @@
         <if test="realName!=null and realName!=''">
             and u.real_name like concat('%', #{realName}, '%')
         </if>
-        order by create_time desc
+        order by work_date desc
         limit #{offeSet},#{pageSize}
     </select>
     <select id="selectWorkLogListCount" parameterType="string" resultType="int">
         SELECT COUNT(1) FROM p_worklog w
         LEFT JOIN p_user_worklog uw ON(w.id=uw.id)
         LEFT JOIN p_user u ON(uw.user_id=u.id)
-        where 1=1
-        <if test="realName!=null and realName!=''">
-            and u.real_name like concat('%', #{realName}, '%')
-        </if>
+        <where>
+            <if test="realName!=null and realName!=''">
+                and u.real_name like concat('%', #{realName}, '%')
+            </if>
+        </where>
     </select>
     <select id="selectWorkLogListByBoKong" resultMap="BaseMapper" parameterType="map">
         SELECT w.*,u.real_name,u.id FROM p_worklog w

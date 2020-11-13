@@ -7,6 +7,8 @@ import com.hzy.manager.dao.ProjectMapper;
 import com.hzy.manager.dao.ProjectUserMapper;
 import com.hzy.manager.domain.Project;
 import com.hzy.manager.domain.ProjectUser;
+import com.hzy.manager.dto.PageDto;
+import com.hzy.manager.dto.ProjectDto;
 import com.hzy.manager.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,8 +50,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     }
 
     @Override
-    public List<Page<Project>> getProjectList(Project project, Page<Project> projectPage) {
-        return projectMapper.selProjectList(project, projectPage);
+    public List<Page<Project>> getProjectList(ProjectDto projectDto, Page<Project> projectPage) {
+        return projectMapper.selProjectList(projectDto, projectPage);
     }
 
     @Transactional(rollbackFor = Exception.class)
