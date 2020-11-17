@@ -1,11 +1,14 @@
 package com.hzy.manager.domain;
+
 import java.io.Serializable;
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -39,10 +42,7 @@ public class Schedule implements Serializable {
      * 比赛时间
      */
     private String gameTime;
-    /**
-     * 外键,关联用户id
-     */
-    private Long userId;
+
     /**
      * 演播室
      */
@@ -57,11 +57,35 @@ public class Schedule implements Serializable {
      * 比赛
      */
     private String game;
+    /**
+     * trio岗位人员姓名
+     */
+    private Integer trioUserid;
 
     /**
-     * 岗位
+     * 大屏和AR岗位人员姓名
      */
-    private Integer post;
+    private Integer vcpMpUserid;
+
+    /**
+     * lv岗位人员姓名
+     */
+    private Integer lvUserid;
+
+    /**
+     * trtc岗位人员姓名
+     */
+    private Integer trtcUserid;
+
+    /**
+     * 学习和其他
+     */
+    private String studyOtherUserid;
+
+    /**
+     * 排班备注
+     */
+    private String remark;
     /**
      * 创建时间
      */
@@ -73,6 +97,4 @@ public class Schedule implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date modifyTime;
-    @TableField(exist = false)
-    private User user;
 }

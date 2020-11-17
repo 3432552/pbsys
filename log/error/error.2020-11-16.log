@@ -1,0 +1,2 @@
+2020-11-16 20:05:46 ERROR http-nio-8100-exec-7 com.hzy.manager.common.handler.GlobalExceptionHandler 登录失败:用户或密码错误
+2020-11-16 20:05:56 ERROR http-nio-8100-exec-9 com.hzy.manager.common.handler.GlobalExceptionHandler 登录失败:密码输入错误

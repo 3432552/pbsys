@@ -28,14 +28,6 @@ public class ScheduleVo {
      */
     private String gameTime;
     /**
-     * 外键,关联用户id
-     */
-    private Long userId;
-    /**
-     * 用户真实姓名
-     */
-    private String realName;
-    /**
      * 演播室key
      */
     private Integer studioKey;
@@ -54,13 +46,34 @@ public class ScheduleVo {
      */
     private String game;
     /**
-     * 岗位key
+     * trio岗位人员姓名
      */
-    private Integer postKey;
+    private String trioUseridName;
+
     /**
-     * 岗位值
+     * 大屏和AR岗位人员姓名
      */
-    private String postValue;
+    private String vcpMpUseridName;
+
+    /**
+     * lv岗位人员姓名
+     */
+    private String lvUseridName;
+
+    /**
+     * trtc岗位人员姓名
+     */
+    private String trtcUseridName;
+
+    /**
+     * 学习和其他
+     */
+    private String studyOtherUseridName;
+
+    /**
+     * 排班备注
+     */
+    private String remark;
     /**
      * 创建时间
      */

@@ -54,16 +54,6 @@ class ManagerApplicationTests {
     @Autowired
     private ScheduleMapper scheduleMapper;
 
-    //获取用户角色
-    @Test
-    void contextLoads() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("startTime", "2020-10-04");
-        map.put("endTime", "2020-10-21");
-        int count = scheduleMapper.getScheduleListByConditionCount(map);
-        System.out.println("数据总数:" + count);
-    }
-
     //验证Base64编码和解码
     @Test
     void contextLoads23() {

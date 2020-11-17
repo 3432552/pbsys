@@ -43,9 +43,10 @@ febs:
     #免认证接口
     anonUrl: /worklog/**,/user/**,/dict/**,/test/**,/schedule/**,/login,/user/checkUserName/**,/register,/dept/deptList,/swagger-resources/**,/webjars/**,/v2/**,/swagger-ui.html/**,/favicon.ico
     # token有效期，单位秒
-    tokenTimeOut: 18000
+    tokenTimeOut: 36000
 #mybatisplus配置
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   configuration:
+    map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

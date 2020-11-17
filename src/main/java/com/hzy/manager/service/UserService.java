@@ -30,6 +30,8 @@ public interface UserService extends IService<User> {
 
     List<BroadcastUserVo> selectAllBroadcastUser();
 
+    List<BroadcastUserVo> getBlurBroadcastUser(String realName);
+
     //修改密码
     int updatePwd(User user) throws BusinessException;
 

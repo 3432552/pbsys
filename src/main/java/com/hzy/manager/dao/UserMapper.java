@@ -22,4 +22,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     //根据播控角色查询所有播控人员
     List<BroadcastUserVo> getAllBroadcastUser();
+    //模糊查询播控人员
+    List<BroadcastUserVo> selectBlurBroadcastUser(String realName);
 }

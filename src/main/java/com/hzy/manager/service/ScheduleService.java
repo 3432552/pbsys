@@ -23,10 +23,6 @@ public interface ScheduleService extends IService<Schedule> {
 
     int getScheduleListCountMes(Map<String, Object> map);
 
-    List<Schedule> getNewSchedule(ScheduleDto scheduleDto);
-
-    int addSchedule(Schedule schedule) throws BusinessException;
-
     int deleteSchedule(String[] ids);
 
     Schedule selScheduleOne(Schedule schedule);

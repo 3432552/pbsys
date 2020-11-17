@@ -81,6 +81,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.getAllBroadcastUser();
     }
 
+    @Override
+    public List<BroadcastUserVo> getBlurBroadcastUser(String realName) {
+        return userMapper.selectBlurBroadcastUser(realName);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void register(User user) throws BusinessException {
         if (StringUtils.isEmpty(user.getUserName())) {

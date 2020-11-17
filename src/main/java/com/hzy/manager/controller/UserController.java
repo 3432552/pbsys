@@ -165,7 +165,18 @@ public class UserController {
             return Result.error("加载所有播控人员失败:");
         }
     }
-
+    @ApiOperation(value = "查询所有播控人员姓名", notes = "按真实名字模糊查询")
+    @ApiImplicitParam(name = "realName", value = "播控真实名字")
+    @PostMapping("/getBroadcastUserByName")
+    public Result getBroadcastUserMes(@RequestBody BroadcastUserVo broadcastUserVo) {
+        try {
+            List<BroadcastUserVo> b = userService.getBlurBroadcastUser(broadcastUserVo.getRealName());
+            return Result.ok(b);
+        } catch (Exception e) {
+            log.error("加载所有播控人员失败:", e);
+            return Result.error("加载所有播控人员失败:");
+        }
+    }
     /**
      * 可批量删除用户(也把用户角色信息一起删除了)
      *

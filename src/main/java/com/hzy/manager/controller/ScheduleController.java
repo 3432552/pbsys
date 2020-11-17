@@ -2,10 +2,13 @@ package com.hzy.manager.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.domain.Dict;
+import com.hzy.manager.domain.Project;
 import com.hzy.manager.domain.Schedule;
+import com.hzy.manager.domain.User;
 import com.hzy.manager.dto.PageDto;
 import com.hzy.manager.dto.ScheduleDto;
 import com.hzy.manager.service.DictService;
@@ -41,43 +44,55 @@ public class ScheduleController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "查看排版信息【后台接口】", notes = "例子:{\"startTime\":\"2020-9-21\",\"endTime\":\"2020-9-24\",\"userId\":\"4\"}")
+    @ApiOperation(value = "查看排版信息【后台接口】")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "startTime", value = "开始时间"),
             @ApiImplicitParam(name = "endTime", value = "结束时间"),
-            @ApiImplicitParam(name = "userId", value = "用户Id[可选,用来查询某个用户的排版信息]"),
+            @ApiImplicitParam(name = "currentNo", value = "当前页"),
+            @ApiImplicitParam(name = "pageSize", value = "页面容量"),
     })
-    @PostMapping("/selectScheduleByCondition")
-    public Result selScheduleInfo(@RequestBody ScheduleDto scheduleDto) {
+    @PostMapping("selectScheduleList")
+    public Result selScheduleList(@RequestBody ScheduleDto scheduleDto) {
         try {
             Map<String, Object> mapPage = new HashMap<>();
             Map<String, Object> map = new HashMap<>();
+            Map<Integer, String> userMap = new HashMap<>();
             mapPage.put("currentNo", (scheduleDto.getCurrentNo() - 1) * scheduleDto.getPageSize());
             mapPage.put("pageSize", scheduleDto.getPageSize());
             mapPage.put("startTime", scheduleDto.getStartTime());
             mapPage.put("endTime", scheduleDto.getEndTime());
-            mapPage.put("userId", scheduleDto.getUserId());
             map.put("startTime", scheduleDto.getStartTime());
             map.put("endTime", scheduleDto.getEndTime());
-            map.put("userId", scheduleDto.getUserId());
             List<Dict> dictList = dictService.list();
             Map<Integer, String> dictMap = new HashMap<>();
             for (Dict d : dictList) {
                 dictMap.put(d.getDicKey(), d.getDicValue());
             }
+            List<User> userList = userService.list();
+            for (User u : userList) {
+                userMap.put(u.getId().intValue(), u.getRealName());
+            }
             List<ScheduleVo> scheduleVoList = new ArrayList<>();
             List<Schedule> scheduleList = scheduleService.getScheduleListByPage(mapPage);
-            if (scheduleList.size() == 0) {
-                return Result.wan("没有排版信息哦");
-            }
             int totalCount = scheduleService.getScheduleListCountMes(map);
-            PageUtils<Schedule> schedulePageUtils = new PageUtils<>(scheduleDto.getCurrentNo(),scheduleDto.getPageSize(), totalCount);
+            PageUtils<Schedule> schedulePageUtils = new PageUtils<>(scheduleDto.getCurrentNo(), scheduleDto.getPageSize(), totalCount);
             scheduleList.forEach(schedule -> {
                 ScheduleVo scheduleVo = new ScheduleVo();
-                scheduleVo.setId(schedule.getId()).setWorkDate(schedule.getWorkDate()).setWeek(schedule.getWeek()).setUserId(schedule.getUserId());
-                scheduleVo.setRealName(schedule.getUser().getRealName()).setGameTime(schedule.getGameTime()).setStudioKey(schedule.getStudio());
-                scheduleVo.setStudioValue(dictMap.get(schedule.getStudio())).setLeague(schedule.getLeague()).setGame(schedule.getGame());
-                scheduleVo.setPostKey(schedule.getPost()).setPostValue(dictMap.get(schedule.getPost())).setCreateTime(schedule.getCreateTime()).setModifyTime(schedule.getModifyTime());
+                scheduleVo.setId(schedule.getId()).setWorkDate(schedule.getWorkDate()).setWeek(schedule.getWeek());
+                scheduleVo.setGameTime(schedule.getGameTime()).setStudioKey(schedule.getStudio()).setStudioValue(dictMap.get(schedule.getStudio()));
+                scheduleVo.setTrioUseridName(userMap.get(schedule.getTrioUserid())).setVcpMpUseridName(userMap.get(schedule.getVcpMpUserid()));
+                scheduleVo.setLvUseridName(userMap.get(schedule.getLvUserid())).setTrtcUseridName(userMap.get(schedule.getTrtcUserid()));
+                String studyString = "";
+                for (int i = 0; i < schedule.getStudyOtherUserid().split(StringPool.COMMA).length; i++) {
+                    if (i == schedule.getStudyOtherUserid().split(StringPool.COMMA).length - 1) {
+                        studyString += userMap.get(Integer.valueOf(schedule.getStudyOtherUserid().split(StringPool.COMMA)[i]));
+                        break;
+                    }
+                    studyString += userMap.get(Integer.valueOf(schedule.getStudyOtherUserid().split(StringPool.COMMA)[i])) + ",";
+                }
+                scheduleVo.setStudyOtherUseridName(studyString);
+                scheduleVo.setLeague(schedule.getLeague()).setGame(schedule.getGame());
+                scheduleVo.setRemark(schedule.getRemark()).setCreateTime(schedule.getCreateTime()).setModifyTime(schedule.getModifyTime());
                 scheduleVoList.add(scheduleVo);
             });
             Map<String, Object> dataList = new HashMap<>();
@@ -90,54 +105,11 @@ public class ScheduleController {
         }
     }
 
-    @ApiOperation(value = "查看排班信息【前台接口】", notes = "以下参数都是条件查询参数")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "startTime", value = "开始时间【为了查看包括今天的以后排班信息】"),
-            @ApiImplicitParam(name = "endTime", value = "结束时间"),
-            @ApiImplicitParam(name = "userId", value = "用户Id[只看自己的排班,传入当前登录用户的id]")
-    })
-    @PostMapping("/selectScheduleFront")
-    public Result selNewScheduleInfo(@RequestBody ScheduleDto scheduleDto) {
-        try {
-            List<Dict> dictList = dictService.list();
-            Map<Integer, String> dictMap = new HashMap<>();
-            for (Dict d : dictList) {
-                dictMap.put(d.getDicKey(), d.getDicValue());
-            }
-            List<ScheduleVo> scheduleVoList = new ArrayList<>();
-            List<Schedule> scheduleList = scheduleService.getNewSchedule(scheduleDto);
-            List<BroadcastUserVo> broadcastUserVoList = userService.selectAllBroadcastUser();
-            //没有排版信息
-            if (scheduleList.size() == 0) {
-                return Result.wan("今天没有你的排版哦");
-            }
-            scheduleList.forEach(schedule -> {
-                ScheduleVo scheduleVo = new ScheduleVo();
-                scheduleVo.setId(schedule.getId()).setWorkDate(schedule.getWorkDate()).setWeek(schedule.getWeek()).setUserId(schedule.getUserId());
-                scheduleVo.setRealName(schedule.getUser().getRealName()).setGameTime(schedule.getGameTime()).setStudioKey(schedule.getStudio());
-                scheduleVo.setStudioValue(dictMap.get(schedule.getStudio())).setLeague(schedule.getLeague()).setGame(schedule.getGame());
-                scheduleVo.setPostKey(schedule.getPost()).setPostValue(dictMap.get(schedule.getPost())).setCreateTime(schedule.getCreateTime()).setModifyTime(schedule.getModifyTime());
-                scheduleVoList.add(scheduleVo);
-            });
-            broadcastUserVoList = broadcastUserVoList.stream().
-                    filter(b -> !scheduleList.stream()
-                            .map(s -> s.getUserId()).collect(Collectors.toList()).
-                                    contains(b.getId())).collect(Collectors.toList());
-            Map<String, Object> map = new HashMap<>();
-            map.put("workUser", scheduleVoList);
-            map.put("restUser", broadcastUserVoList);
-            return Result.ok(map);
-        } catch (Exception e) {
-            log.error("查询排班信息失败:", e);
-            return Result.error("查询排班信息失败");
-        }
-    }
-
-    @ApiOperation(value = "新增排班信息")
+    @ApiOperation(value = "新增排班信息【支持批量新增】")
     @PostMapping("/addSchedule")
-    public Result insertSchedule(@RequestBody Schedule schedule) throws BusinessException {
-        int res = scheduleService.addSchedule(schedule);
-        if (res > 0) {
+    public Result insertSchedule(@RequestBody List<Schedule> scheduleList) {
+        boolean flag = scheduleService.saveBatch(scheduleList);
+        if (flag == true) {
             return Result.ok("新增排版信息成功");
         } else {
             return Result.ok("新增排版信息失败");
@@ -157,7 +129,7 @@ public class ScheduleController {
 
     @ApiOperation(value = "查询一条排班信息")
     @PostMapping("/selectOneSchedule")
-    @ApiImplicitParam(name = "id", value = "排版id", required = true,dataType = "Long")
+    @ApiImplicitParam(name = "id", value = "排版id", required = true, dataType = "Long")
     public Result seScheduleOne(@RequestBody Schedule schedule) {
         try {
             Schedule s = scheduleService.selScheduleOne(schedule);

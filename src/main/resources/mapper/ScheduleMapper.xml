@@ -5,65 +5,40 @@
         <id column="id" property="id"/>
         <result column="work_date" property="workDate"/>
         <result column="week" property="week"/>
-        <result column="user_id" property="userId"/>
         <result column="game_time" property="gameTime"/>
         <result column="studio" property="studio"/>
-        <result column="post" property="post"/>
         <result column="league" property="league"/>
         <result column="game" property="game"/>
+        <result column="trio_userid" property="trioUserid"/>
+        <result column="vcp_mp_userid" property="vcpMpUserid"/>
+        <result column="lv_userid" property="lvUserid"/>
+        <result column="trtc_userid" property="trtcUserid"/>
+        <result column="study_other_userid" property="studyOtherUserid"/>
+        <result column="remark" property="remark"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
-        <association property="user" javaType="com.hzy.manager.domain.User">
-            <result column="real_name" property="realName"/>
-        </association>
     </resultMap>
-    <select id="getScheduleListByCondition" resultMap="BaseMapper">
-        select s.*,u.id,u.real_name from p_schedule s
-        left join p_user u on (s.user_id=u.id)
-        <where>
-            <if test="startTime!='' and startTime!=null and endTime!='' and endTime!=null">
-                and s.work_date between #{startTime} and #{endTime}
-            </if>
-            <if test="userId!='' and userId!=null">
-                and s.user_id =#{userId}
-            </if>
-        </where>
-        order by s.work_date
-        limit #{currentNo},#{pageSize}
-    </select>
-    <select id="getScheduleListByConditionCount" parameterType="map" resultType="int">
-        select count(1) from p_schedule s
-        left join p_user u on (s.user_id=u.id)
+    <select id="getScheduleListByConditionCount" resultType="int">
+        select count(1) from p_schedule
         <where>
             <if test="startTime!='' and startTime!=null">
-                and s.work_date <![CDATA[>=]]> #{startTime}
+                and work_date <![CDATA[>=]]> #{startTime}
             </if>
             <if test="endTime!='' and endTime!=null">
-                and s.work_date <![CDATA[<=]]> #{endTime}
-            </if>
-            <if test="userId!='' and userId!=null">
-                and s.user_id =#{userId}
+                and work_date <![CDATA[<=]]> #{endTime}
             </if>
         </where>
     </select>
-    <select id="getScheduleInfo" resultMap="BaseMapper">
-        select s.*,u.id,u.real_name from p_schedule s
-        left join p_user u on (s.user_id=u.id)
+    <select id="getScheduleListByCondition" resultMap="BaseMapper">
+        select * from p_schedule
         <where>
-            <if test="scheduleDto.startTime!='' and scheduleDto.startTime!=null">
-                and s.work_date <![CDATA[>=]]> #{scheduleDto.startTime}
+            <if test="startTime!='' and startTime!=null">
+                and work_date <![CDATA[>=]]> #{startTime}
             </if>
-            <if test="scheduleDto.endTime!='' and scheduleDto.endTime!=null">
-                and s.work_date <![CDATA[<=]]> #{scheduleDto.endTime}
-            </if>
-            <if test="scheduleDto.userId!='' and scheduleDto.userId!=null">
-                and s.user_id =#{scheduleDto.userId}
+            <if test="endTime!='' and endTime!=null">
+                and work_date <![CDATA[<=]]> #{endTime}
             </if>
         </where>
-        order by s.work_date
-    </select>
-    <select id="getScheduleList" resultMap="BaseMapper">
-        select s.*,u.id,u.real_name from p_schedule s
-        left join p_user u on (s.user_id=u.id)
+        limit #{currentNo},#{pageSize}
     </select>
 </mapper>

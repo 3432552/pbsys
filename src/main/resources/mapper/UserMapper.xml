@@ -35,20 +35,21 @@
         left join p_user_role ur on (u.id=ur.user_id)
         left join p_role r on (ur.role_id=r.id)
         left join p_dept d on (u.dept_id=d.id)
-        where 1=1
-        <if test="user.realName != null and user.realName != ''">
-            and u.real_name like concat('%', #{user.realName}, '%')
-        </if>
-        <if test="user.deptId != null and user.deptId != ''">
-            and u.dept_id = #{user.deptId}
-        </if>
-        <if test="user.status != null and user.status != ''">
-            and u.status = #{user.status}
-        </if>
+        <where>
+            <if test="user.realName != null and user.realName != ''">
+                and u.real_name like concat('%', #{user.realName}, '%')
+            </if>
+            <if test="user.deptId != null and user.deptId != ''">
+                and u.dept_id = #{user.deptId}
+            </if>
+            <if test="user.status != null and user.status != ''">
+                and u.status = #{user.status}
+            </if>
+        </where>
         order by create_time desc
     </select>
     <select id="selectByUid" resultMap="BaseMapper" parameterType="long">
-      select u.* ,r.id as rid,r.role_name,d.dept_name
+        select u.* ,r.id as rid,r.role_name,d.dept_name
         from p_user u
         left join p_user_role ur on (u.id=ur.user_id)
         left join p_role r on (ur.role_id=r.id)
@@ -64,5 +65,15 @@
         select u.id,u.real_name from p_user u
         left join p_user_role ur on (u.id=ur.user_id)
         where ur.role_id=3
+    </select>
+    <select id="selectBlurBroadcastUser" resultMap="BroadcastMapper">
+        select u.id,u.real_name from p_user u
+        left join p_user_role ur on (u.id=ur.user_id)
+        <where>
+                ur.role_id=3
+            <if test="realName != null and realName != ''">
+                and u.real_name like concat('%', #{realName}, '%')
+            </if>
+        </where>
     </select>
 </mapper>

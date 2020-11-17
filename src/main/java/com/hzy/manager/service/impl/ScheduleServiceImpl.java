@@ -34,27 +34,8 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule> i
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int addSchedule(Schedule schedule) throws BusinessException {
-        if (StringUtils.isBlank(schedule.getWeek())) {
-            throw new BusinessException("星期不能为空");
-        }
-        if (StringUtils.isBlank(schedule.getGameTime())) {
-            throw new BusinessException("比赛时间不能为空");
-        }
-        if (StringUtils.isBlank(schedule.getLeague())) {
-            throw new BusinessException("联赛不能为空");
-        }
-        if (schedule.getPost() == 0) {
-            throw new BusinessException("岗位不能为空");
-        }
-        if (schedule.getStudio() == 0) {
-            throw new BusinessException("演播室不能为空");
-        }
-        if (StringUtils.isBlank(schedule.getGame())) {
-            throw new BusinessException("比赛不能为空");
-        }
-        schedule.setCreateTime(new Date());
-        return scheduleMapper.insert(schedule);
+    public int deleteSchedule(String[] ids) {
+        return scheduleMapper.deleteBatchIds(Arrays.asList(ids));
     }
 
     @Override
@@ -67,21 +48,10 @@ public class ScheduleServiceImpl extends ServiceImpl<ScheduleMapper, Schedule> i
         return scheduleMapper.getScheduleListByConditionCount(map);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public int deleteSchedule(String[] ids) {
-        return scheduleMapper.deleteBatchIds(Arrays.asList(ids));
-    }
-
     @Override
     public Schedule selScheduleOne(Schedule schedule1) {
-        Schedule schedule = scheduleMapper.selectOne(new LambdaQueryWrapper<Schedule>().eq(Schedule::getId,schedule1.getId()));
+        Schedule schedule = scheduleMapper.selectOne(new LambdaQueryWrapper<Schedule>().eq(Schedule::getId, schedule1.getId()));
         return schedule;
-    }
-
-    @Override
-    public List<Schedule> getNewSchedule(ScheduleDto scheduleDto) {
-        return scheduleMapper.getScheduleInfo(scheduleDto);
     }
 
     @Transactional(rollbackFor = Exception.class)
