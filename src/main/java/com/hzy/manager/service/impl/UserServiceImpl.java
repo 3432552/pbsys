@@ -12,6 +12,7 @@ import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.dao.UserRoleMapper;
 import com.hzy.manager.domain.User;
 import com.hzy.manager.domain.UserRole;
+import com.hzy.manager.dto.UserDto;
 import com.hzy.manager.util.HttpServletUtil;
 import com.hzy.manager.vo.BroadcastUserVo;
 import com.hzy.manager.vo.LoginUser;
@@ -53,7 +54,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new LoginException("用户或密码错误");
         }
         if (user.getStatus().equals(Constant.LOCK)) {
-            throw new LoginException("账户已被锁定");
+            throw new LoginException("账户已冻结");
         }
         if (!StringUtils.equals(user.getPassword(), MD5Util.encrypt(username, password))) {
             throw new LoginException("密码输入错误");
@@ -67,8 +68,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<Page<User>> getUserAndDeptPage(User user, Page<User> userPage) {
-        return userMapper.selectUserAndDeptPage(user, userPage);
+    public List<Page<User>> getUserAndDeptPage(UserDto userDto, Page<User> userPage) {
+        return userMapper.selectUserAndDeptPage(userDto, userPage);
     }
 
     public LoginUser findByUserToRegister(String userName) throws LoginException {
@@ -149,7 +150,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (StringUtils.isEmpty(user.getEmail())) {
             throw new BusinessException("邮箱不能为空");
         }
-        if (StringUtils.isEmpty(user.getSex())) {
+        if (user.getSex() == null) {
             throw new BusinessException("性别不能为空");
         }
         if (user.getDeptId() == null) {

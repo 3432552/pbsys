@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.dto.UserDto;
 import com.hzy.manager.vo.BroadcastUserVo;
 import com.hzy.manager.vo.LoginUser;
 
@@ -18,7 +19,7 @@ public interface UserService extends IService<User> {
 
     void register(User user) throws BusinessException;
 
-    List<Page<User>> getUserAndDeptPage(User user, Page<User> userPage);
+    List<Page<User>> getUserAndDeptPage(UserDto userDto, Page<User> userPage);
 
     void addUser(User user) throws BusinessException;
 

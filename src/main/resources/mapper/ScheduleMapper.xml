@@ -27,6 +27,13 @@
             <if test="endTime!='' and endTime!=null">
                 and work_date <![CDATA[<=]]> #{endTime}
             </if>
+            <if test="userId!=null">
+                and trio_userid=#{userId}
+                or vcp_mp_userid=#{userId}
+                or lv_userid=#{userId}
+                or trtc_userid=#{userId}
+                or study_other_userid like concat('%',#{userId},'%')
+            </if>
         </where>
     </select>
     <select id="getScheduleListByCondition" resultMap="BaseMapper">
@@ -37,6 +44,13 @@
             </if>
             <if test="endTime!='' and endTime!=null">
                 and work_date <![CDATA[<=]]> #{endTime}
+            </if>
+            <if test="userId!=null">
+                and trio_userid=#{userId}
+                or vcp_mp_userid=#{userId}
+                or lv_userid=#{userId}
+                or trtc_userid=#{userId}
+                or study_other_userid like concat('%',#{userId},'%')
             </if>
         </where>
         limit #{currentNo},#{pageSize}

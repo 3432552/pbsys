@@ -7,6 +7,7 @@ import com.hzy.manager.common.exception.BusinessException;
 import com.hzy.manager.common.exception.LoginException;
 import com.hzy.manager.dao.UserMapper;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.dto.UserDto;
 import com.hzy.manager.vo.BroadcastUserVo;
 import com.hzy.manager.vo.LoginUser;
 import com.hzy.manager.service.UserService;
@@ -52,25 +53,25 @@ public class UserController {
             throw new LoginException("该用户名已被占用!");
         }
     }
+
     /**
      * 用户列表并实现分页(mybatisPlus实现物理分页)
      *
-     * @param user
-     * @param currentNo
-     * @param pageSize
      * @return
      */
     @ApiOperation(value = "用户列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "realName", value = "真实名字", required = true),
-            @ApiImplicitParam(name = "deptId", value = "部门id", required = true),
-            @ApiImplicitParam(name = "status", value = "用户账号状态", required = true)
+            @ApiImplicitParam(name = "realName", value = "真实名字", dataType = "String"),
+            @ApiImplicitParam(name = "deptId", value = "部门id", dataType = "Long"),
+            @ApiImplicitParam(name = "status", value = "用户账号状态", dataType = "int"),
+            @ApiImplicitParam(name = "currentNo", value = "当前页", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "页面容量", required = true, dataType = "int"),
     })
-    @GetMapping("/selectUserList/{currentNo}/{pageSize}")
-    public Result userList(@RequestBody User user, @PathVariable Integer currentNo, @PathVariable Integer pageSize) {
+    @PostMapping("/selectUserList")
+    public Result userList(@RequestBody UserDto userDto) {
         try {
-            Page<User> page = new Page<>(currentNo, pageSize);
-            List<Page<User>> pageList = userService.getUserAndDeptPage(user, page);
+            Page<User> page = new Page<>(userDto.getCurrentNo(), userDto.getPageSize());
+            List<Page<User>> pageList = userService.getUserAndDeptPage(userDto, page);
             Map<String, Object> map = new HashMap<>();
             map.put("pageList", pageList);
             map.put("page", page);
@@ -103,6 +104,7 @@ public class UserController {
         userService.addUser(user);
         return Result.ok("新增用户成功!");
     }
+
     /**
      * 根据用户ID查询一条用户信息用于修改
      *
@@ -165,6 +167,7 @@ public class UserController {
             return Result.error("加载所有播控人员失败:");
         }
     }
+
     @ApiOperation(value = "查询所有播控人员姓名", notes = "按真实名字模糊查询")
     @ApiImplicitParam(name = "realName", value = "播控真实名字")
     @PostMapping("/getBroadcastUserByName")
@@ -196,7 +199,6 @@ public class UserController {
             return Result.error("删除用户失败!");
         }
     }
-
     /**
      * 修改用户头像
      *
@@ -237,9 +239,9 @@ public class UserController {
     public Result updateUserPwd(@RequestBody User user) throws BusinessException {
         int res = userService.updatePwd(user);
         if (res > 0) {
-            return Result.ok("修改用户登录密码成功");
+            return Result.ok("修改登录密码成功");
         } else {
-            return Result.ok("修改用户登录密码失败");
+            return Result.ok("修改登录密码失败");
         }
     }
 }

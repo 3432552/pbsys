@@ -3,6 +3,7 @@ package com.hzy.manager.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hzy.manager.domain.User;
+import com.hzy.manager.dto.UserDto;
 import com.hzy.manager.vo.BroadcastUserVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public interface UserMapper extends BaseMapper<User> {
     //多条件查询并分页
-    List<Page<User>> selectUserAndDeptPage(@Param("user") User user, Page<User> userPage);
+    List<Page<User>> selectUserAndDeptPage(@Param("user")UserDto userDto, Page<User> userPage);
 
     User selectByUid(Long uid);
 

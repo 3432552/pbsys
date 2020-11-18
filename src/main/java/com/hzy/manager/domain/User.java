@@ -24,8 +24,8 @@ public class User implements Serializable {
     private Long deptId;
     private String realName;
     private String phone;
-    private String status;
-    private String sex;
+    private Integer status;
+    private Integer sex;
     private String email;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;

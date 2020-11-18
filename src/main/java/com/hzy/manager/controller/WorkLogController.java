@@ -62,12 +62,11 @@ public class WorkLogController {
      * 这个用的是自己封装的分页工具
      * 查询工作日志列表(播控人员只能看到自己的日志，有看工作日志权限的能看到全部日志)
      *
-     * @param (currentNo,pageSize,realName)
      * @return
      */
-    @ApiOperation(value = "播控工作日志列表信息", notes = "带分页,currentNo:当前页;pageSize:页面容量")
+    @ApiOperation(value = "播控工作日志列表信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "realName", value = "真实名字",required = false),
+            @ApiImplicitParam(name = "realName", value = "真实名字"),
             @ApiImplicitParam(name = "currentNo", value = "当前页",required = true),
             @ApiImplicitParam(name = "pageSize", value = "页面容量",required = true)
     })

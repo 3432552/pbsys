@@ -16,6 +16,7 @@ import com.hzy.manager.service.ScheduleService;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.PageUtils;
 import com.hzy.manager.vo.BroadcastUserVo;
+import com.hzy.manager.vo.ScheduleToUpdateVo;
 import com.hzy.manager.vo.ScheduleVo;
 import com.sun.org.apache.xerces.internal.xs.StringList;
 import io.swagger.annotations.Api;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,12 +46,13 @@ public class ScheduleController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "查看排版信息【后台接口】")
+    @ApiOperation(value = "查看排版信息【前后台共用接口】")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "startTime", value = "开始时间"),
             @ApiImplicitParam(name = "endTime", value = "结束时间"),
-            @ApiImplicitParam(name = "currentNo", value = "当前页"),
-            @ApiImplicitParam(name = "pageSize", value = "页面容量"),
+            @ApiImplicitParam(name = "currentNo", value = "当前页", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "页面容量", required = true),
+            @ApiImplicitParam(name = "userId", value = "用户Id", dataType = "Long"),
     })
     @PostMapping("selectScheduleList")
     public Result selScheduleList(@RequestBody ScheduleDto scheduleDto) {
@@ -61,6 +64,7 @@ public class ScheduleController {
             mapPage.put("pageSize", scheduleDto.getPageSize());
             mapPage.put("startTime", scheduleDto.getStartTime());
             mapPage.put("endTime", scheduleDto.getEndTime());
+            mapPage.put("userId", scheduleDto.getUserId());
             map.put("startTime", scheduleDto.getStartTime());
             map.put("endTime", scheduleDto.getEndTime());
             List<Dict> dictList = dictService.list();
@@ -132,12 +136,53 @@ public class ScheduleController {
     @ApiImplicitParam(name = "id", value = "排版id", required = true, dataType = "Long")
     public Result seScheduleOne(@RequestBody Schedule schedule) {
         try {
+            Map<Integer, String> userMap = new HashMap<>();
             Schedule s = scheduleService.selScheduleOne(schedule);
-            return Result.ok(s);
+            ScheduleToUpdateVo scheduleToUpdateVo = new ScheduleToUpdateVo();
+            List<Dict> dictList = dictService.list();
+            Map<Integer, String> dictMap = new HashMap<>();
+            for (Dict d : dictList) {
+                dictMap.put(d.getDicKey(), d.getDicValue());
+            }
+            List<User> userList = userService.list();
+            for (User u : userList) {
+                userMap.put(u.getId().intValue(), u.getRealName());
+            }
+            scheduleToUpdateVo.setId(s.getId()).setWorkDate(s.getWorkDate()).setWeek(s.getWeek());
+            scheduleToUpdateVo.setGameTime(s.getGameTime()).setStudioKey(s.getStudio()).setStudioValue(dictMap.get(s.getStudio()));
+            scheduleToUpdateVo.setTrioUserid(s.getTrioUserid()).setTrioUseridName(userMap.get(s.getTrioUserid())).setVcpMpUserid(s.getVcpMpUserid()).setVcpMpUseridName(userMap.get(s.getVcpMpUserid()));
+            scheduleToUpdateVo.setLvUserid(s.getLvUserid()).setLvUseridName(userMap.get(s.getLvUserid())).setTrtcUserid(s.getTrtcUserid()).setTrtcUseridName(userMap.get(s.getTrtcUserid()));
+            String studyString = "";
+            for (int i = 0; i < s.getStudyOtherUserid().split(StringPool.COMMA).length; i++) {
+                if (i == s.getStudyOtherUserid().split(StringPool.COMMA).length - 1) {
+                    studyString += userMap.get(Integer.valueOf(s.getStudyOtherUserid().split(StringPool.COMMA)[i]));
+                    break;
+                }
+                studyString += userMap.get(Integer.valueOf(s.getStudyOtherUserid().split(StringPool.COMMA)[i])) + ",";
+            }
+            scheduleToUpdateVo.setStudyOtherUserid(s.getStudyOtherUserid());
+            scheduleToUpdateVo.setStudyOtherUseridName(studyString);
+            scheduleToUpdateVo.setLeague(s.getLeague()).setGame(s.getGame());
+            scheduleToUpdateVo.setRemark(s.getRemark()).setCreateTime(s.getCreateTime()).setModifyTime(s.getModifyTime());
+            return Result.ok(scheduleToUpdateVo);
         } catch (Exception e) {
             log.error("查询一条排班信息失败:", e);
             return Result.error("查询一条排班信息失败");
         }
+    }
+
+    @ApiOperation(value = "查询某天播控人员工作人员和休息人员")
+    @ApiImplicitParam(name = "workDate", value = "工作时间", required = true)
+    @PostMapping("/getWorkStatus")
+    public Result getWorkStatusMes(@RequestBody Schedule schedule) {
+        Map<String, Object> map = null;
+        try {
+            map = scheduleService.getWorkingCondition(schedule);
+        } catch (Exception e) {
+            log.error("查询某天播控人员工作人员和休息人员失败:", e);
+            return Result.error("查询某天播控人员工作人员和休息人员失败");
+        }
+        return Result.ok(map);
     }
 
     @ApiOperation(value = "删除排班信息")
@@ -163,18 +208,5 @@ public class ScheduleController {
             return Result.error("查询所有演播室失败");
         }
         return Result.ok(studioList);
-    }
-
-    @ApiOperation(value = "查看所有岗位", notes = "无参数")
-    @PostMapping("/selectPostInfo")
-    public Result selPostInfo() {
-        List<Dict> postList = null;
-        try {
-            postList = dictService.list(new LambdaQueryWrapper<Dict>().eq(Dict::getFieldName, "post"));
-        } catch (Exception e) {
-            log.error("查询所有岗位失败:", e);
-            return Result.error("查询所有岗位失败");
-        }
-        return Result.ok(postList);
     }
 }
