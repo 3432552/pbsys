@@ -60,36 +60,16 @@ class ManagerApplicationTests {
 
     @Test
     void contextLoads23() {
-        Map<Integer, String> userMap = new HashMap<>();
-        List<User> userList = userService.list();
-        for (User u : userList) {
-            userMap.put(u.getId().intValue(), u.getRealName());
+        Long uid = 1L;
+        String uidString = String.valueOf(uid);
+        String s = "11,4,5,18";
+        String[] values = s.split(",");
+        List<String> list = Arrays.asList(values);
+        if (list.contains(uidString)) {
+            System.out.println("包含此值");
+        } else {
+            System.out.println("不包含此值");
         }
-        String workDate = "2020-11-16";
-        List<Schedule> workUserList = scheduleMapper.selectList(new LambdaQueryWrapper<Schedule>().eq(Schedule::getWorkDate, workDate));
-        String workString = "";
-        for (Schedule w : workUserList) {
-            workString += w.getTrioUserid() + "," + w.getVcpMpUserid() + "," + w.getLvUserid() + "," + w.getTrtcUserid() + "," + w.getStudyOtherUserid() + ",";
-        }
-        System.out.println("字符串======》" + workString.toString());
-        String[] s = workString.split(StringPool.COMMA);
-        for (int i = 0; i < s.length; i++) {
-            System.out.println("所有用户id:" + s[i]);
-            System.out.println("所有播控人员:" + userMap.get(Integer.valueOf(s[i])));
-        }
-        Stream<String> stream = Arrays.stream(s);
-        List<String> workList = stream.distinct().collect(toList());
-        System.out.println("去重后的======也就是工作的人员====》" + workList+"\n");
-        List<BroadcastUserVo> userList1 = userService.selectAllBroadcastUser();
-        userList1.forEach(System.out::print);
-        List<String> broadUserAllString = new ArrayList<>();
-        userList1.forEach(m -> {
-            broadUserAllString.add(String.valueOf(m.getId()));
-        });
-        System.out.println("播控所有人员id====》" + broadUserAllString+"\n");
-        //取差集
-        List<String> reduce = broadUserAllString.stream().filter(item -> !workList.contains(item)).collect(toList());
-        System.out.println("取差集后的======也就是休息的人员====》" + reduce);
     }
 
     //获取用户权限

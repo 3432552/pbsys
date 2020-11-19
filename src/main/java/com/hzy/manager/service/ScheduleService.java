@@ -30,5 +30,8 @@ public interface ScheduleService extends IService<Schedule> {
     int updateScheduleSer(Schedule schedule);
 
     //查询某一天的排班【为了获取到这一天播控人员上班和不上班是谁和人数】
-    Map<String,Object> getWorkingCondition(Schedule schedule);
+    Map<String, Object> getWorkingCondition(Schedule schedule);
+
+    //查询一个播控人员的工作日志多条件
+    Map<String, Object> getWorkLogListByCondition(ScheduleDto scheduleDto);
 }

@@ -15,6 +15,7 @@ import com.hzy.manager.service.DictService;
 import com.hzy.manager.service.ScheduleService;
 import com.hzy.manager.service.UserService;
 import com.hzy.manager.util.PageUtils;
+import com.hzy.manager.util.StringUtil;
 import com.hzy.manager.vo.BroadcastUserVo;
 import com.hzy.manager.vo.ScheduleToUpdateVo;
 import com.hzy.manager.vo.ScheduleVo;
@@ -24,6 +25,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,6 +69,7 @@ public class ScheduleController {
             mapPage.put("userId", scheduleDto.getUserId());
             map.put("startTime", scheduleDto.getStartTime());
             map.put("endTime", scheduleDto.getEndTime());
+            map.put("userId", scheduleDto.getUserId());
             List<Dict> dictList = dictService.list();
             Map<Integer, String> dictMap = new HashMap<>();
             for (Dict d : dictList) {
@@ -107,6 +110,26 @@ public class ScheduleController {
             log.error("查询排班信息失败:", e);
             return Result.error("查询排班信息失败");
         }
+    }
+
+    @ApiOperation(value = "查询单人播控人员的日志【前后台共用接口】")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "startTime", value = "开始时间"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间"),
+            @ApiImplicitParam(name = "currentNo", value = "当前页", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "页面容量", required = true),
+            @ApiImplicitParam(name = "userId", value = "用户Id", dataType = "Long", required = true),
+    })
+    @PostMapping("/getWorkLog")
+    public Result getWorkLogMes(@RequestBody ScheduleDto scheduleDto) {
+        Map<String, Object> map = null;
+        try {
+            map = scheduleService.getWorkLogListByCondition(scheduleDto);
+        } catch (Exception e) {
+            log.error("查询单人播控人员的工作日志失败:", e);
+            return Result.error("查询单人播控人员的工作日志失败");
+        }
+        return Result.ok(map);
     }
 
     @ApiOperation(value = "新增排班信息【支持批量新增】")

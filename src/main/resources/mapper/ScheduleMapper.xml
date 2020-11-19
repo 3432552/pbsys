@@ -21,36 +21,36 @@
     <select id="getScheduleListByConditionCount" resultType="int">
         select count(1) from p_schedule
         <where>
-            <if test="startTime!='' and startTime!=null">
-                and work_date <![CDATA[>=]]> #{startTime}
-            </if>
-            <if test="endTime!='' and endTime!=null">
-                and work_date <![CDATA[<=]]> #{endTime}
-            </if>
             <if test="userId!=null">
                 and trio_userid=#{userId}
                 or vcp_mp_userid=#{userId}
                 or lv_userid=#{userId}
                 or trtc_userid=#{userId}
-                or study_other_userid like concat('%',#{userId},'%')
+                or find_in_set(#{userId},study_other_userid)
+            </if>
+            <if test="startTime!='' and startTime!=null">
+                and work_date <![CDATA[>=]]> #{startTime}
+            </if>
+            <if test="endTime!='' and endTime!=null">
+                and work_date <![CDATA[<=]]> #{endTime}
             </if>
         </where>
     </select>
     <select id="getScheduleListByCondition" resultMap="BaseMapper">
         select * from p_schedule
         <where>
-            <if test="startTime!='' and startTime!=null">
-                and work_date <![CDATA[>=]]> #{startTime}
-            </if>
-            <if test="endTime!='' and endTime!=null">
-                and work_date <![CDATA[<=]]> #{endTime}
-            </if>
             <if test="userId!=null">
                 and trio_userid=#{userId}
                 or vcp_mp_userid=#{userId}
                 or lv_userid=#{userId}
                 or trtc_userid=#{userId}
-                or study_other_userid like concat('%',#{userId},'%')
+                or find_in_set(#{userId},study_other_userid)
+            </if>
+            <if test="startTime!='' and startTime!=null">
+                and work_date <![CDATA[>=]]> #{startTime}
+            </if>
+            <if test="endTime!='' and endTime!=null">
+                and work_date <![CDATA[<=]]> #{endTime}
             </if>
         </where>
         limit #{currentNo},#{pageSize}
