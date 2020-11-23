@@ -1,0 +1,379 @@
+2020-11-23 10:30:05 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 33012 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:30:05 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:30:05 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:30:05 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:30:07 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:30:07 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:30:07 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 31ms. Found 0 Redis repository interfaces.
+2020-11-23 10:30:09 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:30:09 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:30:09 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:30:09 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:30:09 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:30:09 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 4064 ms
+2020-11-23 10:30:12 INFO  restartedMain org.apache.catalina.core.StandardService Stopping service [Tomcat]
+2020-11-23 10:30:12 INFO  restartedMain org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-11-23 10:30:38 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 17460 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:30:38 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:30:38 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:30:38 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:30:39 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:30:39 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:30:39 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 27ms. Found 0 Redis repository interfaces.
+2020-11-23 10:30:41 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:30:41 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:30:41 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:30:41 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:30:41 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:30:41 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3193 ms
+2020-11-23 10:30:43 INFO  restartedMain org.apache.catalina.core.StandardService Stopping service [Tomcat]
+2020-11-23 10:30:43 INFO  restartedMain org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-11-23 10:32:01 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 14968 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:32:01 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:32:01 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:32:01 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:32:03 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:32:03 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:32:03 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 28ms. Found 0 Redis repository interfaces.
+2020-11-23 10:32:04 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:32:04 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:32:04 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:32:04 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:32:04 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:32:04 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3271 ms
+2020-11-23 10:32:06 INFO  restartedMain org.apache.catalina.core.StandardService Stopping service [Tomcat]
+2020-11-23 10:32:06 INFO  restartedMain org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-11-23 10:32:47 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 16788 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:32:47 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:32:47 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:32:47 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:32:48 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:32:48 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:32:48 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 25ms. Found 0 Redis repository interfaces.
+2020-11-23 10:32:50 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:32:50 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:32:50 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:32:50 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:32:50 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:32:50 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3446 ms
+2020-11-23 10:32:52 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 10:32:52 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 10:32:52 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 10:32:53 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:32:53 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 10:32:53 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 10:32:53 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 10:32:53 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 10:32:53 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 10:32:53 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 10:32:53 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 10:32:53 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 6.699 seconds (JVM running for 7.458)
+2020-11-23 10:35:05 INFO  http-nio-8100-exec-2 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 10:35:05 INFO  http-nio-8100-exec-2 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 10:35:05 INFO  http-nio-8100-exec-2 org.springframework.web.servlet.DispatcherServlet Completed initialization in 7 ms
+2020-11-23 10:35:06 INFO  http-nio-8100-exec-2 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 10:36:42 INFO  http-nio-8100-exec-5 com.hzy.manager.config.TokenInterceptor 前端请求的token:null
+2020-11-23 10:37:50 INFO  http-nio-8100-exec-7 com.hzy.manager.config.TokenInterceptor 前端请求的token:null
+2020-11-23 10:38:24 INFO  http-nio-8100-exec-9 com.hzy.manager.config.TokenInterceptor 前端请求的token:null
+2020-11-23 10:45:58 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 4756 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:45:58 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:45:58 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:45:58 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:45:59 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:45:59 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:46:00 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 30ms. Found 0 Redis repository interfaces.
+2020-11-23 10:46:01 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:46:02 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:46:02 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:46:02 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:46:02 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:46:02 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3276 ms
+2020-11-23 10:46:03 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 10:46:03 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 10:46:03 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 10:46:04 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:46:04 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 10:46:04 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 10:46:04 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 10:46:04 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 10:46:04 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 10:46:04 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 10:46:04 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 10:46:04 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 6.371 seconds (JVM running for 6.994)
+2020-11-23 10:46:34 INFO  http-nio-8100-exec-2 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 10:46:34 INFO  http-nio-8100-exec-2 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 10:46:34 INFO  http-nio-8100-exec-2 org.springframework.web.servlet.DispatcherServlet Completed initialization in 10 ms
+2020-11-23 10:46:35 INFO  http-nio-8100-exec-2 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 10:48:49 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 23656 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:48:49 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:48:49 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:48:49 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:48:50 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:48:50 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:48:50 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 23ms. Found 0 Redis repository interfaces.
+2020-11-23 10:48:52 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:48:52 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:48:52 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:48:52 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:48:52 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:48:52 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3294 ms
+2020-11-23 10:48:54 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 10:48:54 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 10:48:54 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 10:48:54 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:48:54 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 10:48:54 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 10:48:54 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 10:48:55 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 10:48:55 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 10:48:55 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 10:48:55 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 10:48:55 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 6.094 seconds (JVM running for 6.704)
+2020-11-23 10:49:08 INFO  http-nio-8100-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 10:49:08 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 10:49:08 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Completed initialization in 9 ms
+2020-11-23 10:49:08 INFO  http-nio-8100-exec-1 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 10:50:20 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 11308 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:50:20 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:50:20 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:50:20 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:50:21 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:50:21 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:50:21 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 26ms. Found 0 Redis repository interfaces.
+2020-11-23 10:50:23 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:50:23 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:50:23 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:50:23 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:50:23 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:50:23 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 2980 ms
+2020-11-23 10:50:24 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 10:50:24 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 10:50:24 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 10:50:25 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:50:25 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 10:50:25 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 10:50:25 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 10:50:25 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 10:50:25 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 10:50:25 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 10:50:25 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 10:50:25 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 5.731 seconds (JVM running for 6.301)
+2020-11-23 10:50:36 INFO  http-nio-8100-exec-2 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 10:50:36 INFO  http-nio-8100-exec-2 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 10:50:36 INFO  http-nio-8100-exec-2 org.springframework.web.servlet.DispatcherServlet Completed initialization in 6 ms
+2020-11-23 10:50:36 INFO  http-nio-8100-exec-2 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 10:50:37 INFO  http-nio-8100-exec-2 com.hzy.manager.config.TokenInterceptor 前端请求的token:null
+2020-11-23 10:51:45 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 18728 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:51:45 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:51:45 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:51:45 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:51:46 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:51:46 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:51:46 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 29ms. Found 0 Redis repository interfaces.
+2020-11-23 10:51:48 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:51:48 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:51:48 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:51:48 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:51:48 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:51:48 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3384 ms
+2020-11-23 10:51:50 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 10:51:50 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 10:51:50 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 10:51:50 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:51:50 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 10:51:50 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 10:51:50 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 10:51:50 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 10:51:51 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 10:51:51 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 10:51:51 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 10:51:51 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 6.357 seconds (JVM running for 7.056)
+2020-11-23 10:52:36 INFO  http-nio-8100-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 10:52:36 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 10:52:36 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Completed initialization in 9 ms
+2020-11-23 10:52:36 INFO  http-nio-8100-exec-1 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 10:53:51 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 12044 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:53:51 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:53:51 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:53:51 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:53:53 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:53:53 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:53:53 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 31ms. Found 0 Redis repository interfaces.
+2020-11-23 10:53:54 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:53:54 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:53:54 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:53:54 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:53:55 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:53:55 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3188 ms
+2020-11-23 10:53:56 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 10:53:56 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 10:53:56 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 10:53:56 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:53:56 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 10:53:56 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 10:53:57 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 10:53:57 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 10:53:57 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 10:53:57 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 10:53:57 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 10:53:57 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 5.964 seconds (JVM running for 6.521)
+2020-11-23 10:54:07 INFO  http-nio-8100-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 10:54:07 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 10:54:07 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Completed initialization in 9 ms
+2020-11-23 10:54:07 INFO  http-nio-8100-exec-1 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 10:54:50 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 28860 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:54:50 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:54:50 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:54:50 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:54:51 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:54:51 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:54:51 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 29ms. Found 0 Redis repository interfaces.
+2020-11-23 10:54:53 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:54:53 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:54:53 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:54:53 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:54:53 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:54:53 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3134 ms
+2020-11-23 10:54:54 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 10:54:54 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 10:54:55 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 10:54:55 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:54:55 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 10:54:55 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 10:54:55 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 10:54:55 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 10:54:55 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 10:54:55 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 10:54:55 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 10:54:55 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 6.099 seconds (JVM running for 6.769)
+2020-11-23 10:55:38 INFO  http-nio-8100-exec-2 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 10:55:38 INFO  http-nio-8100-exec-2 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 10:55:38 INFO  http-nio-8100-exec-2 org.springframework.web.servlet.DispatcherServlet Completed initialization in 8 ms
+2020-11-23 10:55:39 INFO  http-nio-8100-exec-2 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 10:59:20 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 5052 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 10:59:20 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 10:59:20 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 10:59:20 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 10:59:22 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 10:59:22 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 10:59:22 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 28ms. Found 0 Redis repository interfaces.
+2020-11-23 10:59:23 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 10:59:23 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:59:23 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 10:59:23 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 10:59:24 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 10:59:24 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3282 ms
+2020-11-23 10:59:25 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 10:59:25 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 10:59:25 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 10:59:26 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 10:59:26 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 10:59:26 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 10:59:26 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 10:59:26 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 10:59:26 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 10:59:26 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 10:59:26 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 10:59:26 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 6.537 seconds (JVM running for 7.255)
+2020-11-23 11:00:23 INFO  http-nio-8100-exec-3 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 11:00:23 INFO  http-nio-8100-exec-3 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 11:00:23 INFO  http-nio-8100-exec-3 org.springframework.web.servlet.DispatcherServlet Completed initialization in 7 ms
+2020-11-23 11:00:23 INFO  http-nio-8100-exec-3 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 11:02:44 INFO  main com.hzy.manager.ManagerApplicationTests Starting ManagerApplicationTests on LAPTOP-9DJTMSIR with PID 14216 (started by viz in D:\hzyJava\pbsys)
+2020-11-23 11:02:44 INFO  main com.hzy.manager.ManagerApplicationTests The following profiles are active: test
+2020-11-23 11:02:45 INFO  main org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 11:02:45 INFO  main org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 11:02:45 INFO  main org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 32ms. Found 0 Redis repository interfaces.
+2020-11-23 11:02:49 INFO  main springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 11:02:49 INFO  main org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 11:02:50 INFO  main springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 11:02:50 INFO  main springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 11:02:50 INFO  main springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 11:02:50 INFO  main springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 11:02:50 INFO  main springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 11:02:50 INFO  main springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 11:02:50 INFO  main com.hzy.manager.ManagerApplicationTests Started ManagerApplicationTests in 6.44 seconds (JVM running for 7.666)
+2020-11-23 11:02:54 INFO  main com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 11:02:55 INFO  SpringContextShutdownHook org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Shutting down ExecutorService 'applicationTaskExecutor'
+2020-11-23 11:02:55 INFO  SpringContextShutdownHook com.alibaba.druid.pool.DruidDataSource {dataSource-1} closed
+2020-11-23 11:15:20 INFO  main com.hzy.manager.ManagerApplicationTests Starting ManagerApplicationTests on LAPTOP-9DJTMSIR with PID 4228 (started by viz in D:\hzyJava\pbsys)
+2020-11-23 11:15:20 INFO  main com.hzy.manager.ManagerApplicationTests The following profiles are active: test
+2020-11-23 11:15:21 INFO  main org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 11:15:21 INFO  main org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 11:15:21 INFO  main org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 29ms. Found 0 Redis repository interfaces.
+2020-11-23 11:15:23 INFO  main springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 11:15:24 INFO  main org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 11:15:24 INFO  main springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 11:15:24 INFO  main springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 11:15:24 INFO  main springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 11:15:24 INFO  main springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 11:15:24 INFO  main springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 11:15:25 INFO  main springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 11:15:25 INFO  main com.hzy.manager.ManagerApplicationTests Started ManagerApplicationTests in 4.827 seconds (JVM running for 5.774)
+2020-11-23 11:15:28 INFO  main com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 11:15:30 INFO  SpringContextShutdownHook org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Shutting down ExecutorService 'applicationTaskExecutor'
+2020-11-23 11:15:30 INFO  SpringContextShutdownHook com.alibaba.druid.pool.DruidDataSource {dataSource-1} closed
+2020-11-23 11:33:23 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 19232 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 11:33:23 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 11:33:23 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 11:33:23 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 11:33:24 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 11:33:24 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 11:33:24 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 30ms. Found 0 Redis repository interfaces.
+2020-11-23 11:33:26 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 11:33:26 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 11:33:26 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 11:33:26 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 11:33:26 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 11:33:26 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 2996 ms
+2020-11-23 11:33:28 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 11:33:28 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 11:33:28 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 11:33:28 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 11:33:28 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 11:33:28 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 11:33:28 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 11:33:28 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 11:33:28 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 11:33:28 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 11:33:28 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 11:33:28 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 5.726 seconds (JVM running for 6.351)
+2020-11-23 11:33:59 INFO  http-nio-8100-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 11:33:59 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 11:33:59 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Completed initialization in 10 ms
+2020-11-23 11:33:59 INFO  http-nio-8100-exec-1 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited
+2020-11-23 11:38:39 INFO  restartedMain com.hzy.manager.ManagerApplication Starting ManagerApplication on LAPTOP-9DJTMSIR with PID 18092 (D:\hzyJava\pbsys\target\classes started by viz in D:\hzyJava\pbsys)
+2020-11-23 11:38:39 INFO  restartedMain com.hzy.manager.ManagerApplication The following profiles are active: dev
+2020-11-23 11:38:39 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-11-23 11:38:39 INFO  restartedMain org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-11-23 11:38:40 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-11-23 11:38:40 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-11-23 11:38:41 INFO  restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 28ms. Found 0 Redis repository interfaces.
+2020-11-23 11:38:42 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat initialized with port(s): 8100 (http)
+2020-11-23 11:38:42 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Initializing ProtocolHandler ["http-nio-8100"]
+2020-11-23 11:38:42 INFO  restartedMain org.apache.catalina.core.StandardService Starting service [Tomcat]
+2020-11-23 11:38:42 INFO  restartedMain org.apache.catalina.core.StandardEngine Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-11-23 11:38:43 INFO  restartedMain org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+2020-11-23 11:38:43 INFO  restartedMain org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext Root WebApplicationContext: initialization completed in 3145 ms
+2020-11-23 11:38:44 INFO  restartedMain springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-11-23 11:38:44 INFO  restartedMain org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor Initializing ExecutorService 'applicationTaskExecutor'
+2020-11-23 11:38:44 INFO  restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer LiveReload server is running on port 35729
+2020-11-23 11:38:45 INFO  restartedMain org.apache.coyote.http11.Http11NioProtocol Starting ProtocolHandler ["http-nio-8100"]
+2020-11-23 11:38:45 INFO  restartedMain org.springframework.boot.web.embedded.tomcat.TomcatWebServer Tomcat started on port(s): 8100 (http) with context path ''
+2020-11-23 11:38:45 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Context refreshed
+2020-11-23 11:38:45 INFO  restartedMain springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper Found 1 custom documentation plugin(s)
+2020-11-23 11:38:45 INFO  restartedMain springfox.documentation.spring.web.scanners.ApiListingReferenceScanner Scanning for api listing references
+2020-11-23 11:38:45 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: addDeptUsingPOST_1
+2020-11-23 11:38:45 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_1
+2020-11-23 11:38:45 INFO  restartedMain springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator Generating unique operation named: updateDeptByIdUsingPUT_2
+2020-11-23 11:38:45 INFO  restartedMain com.hzy.manager.ManagerApplication Started ManagerApplication in 5.971 seconds (JVM running for 6.571)
+2020-11-23 11:38:52 INFO  http-nio-8100-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-23 11:38:52 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Initializing Servlet 'dispatcherServlet'
+2020-11-23 11:38:52 INFO  http-nio-8100-exec-1 org.springframework.web.servlet.DispatcherServlet Completed initialization in 7 ms
+2020-11-23 11:38:53 INFO  http-nio-8100-exec-1 com.alibaba.druid.pool.DruidDataSource {dataSource-1} inited

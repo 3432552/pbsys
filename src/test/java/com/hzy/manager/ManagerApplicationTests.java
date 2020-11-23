@@ -47,8 +47,6 @@ class ManagerApplicationTests {
     private DeptMapper deptMapper;
     @Autowired
     private RoleMapper roleMapper;
-    @Autowired
-    private WorkLogMapper workLogMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired

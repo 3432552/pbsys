@@ -110,14 +110,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             user.setAvatarUrl("default.jpg");
             user.setCreateTime(new Date());
             userMapper.insert(user);
-            //如果部门是播控组,则给用户一个播控的角色
+            //如果部门是播控组,则给用户一个播控的角色,其他部门都是注册用户角色
             if (user.getDeptId() == 8) {
                 UserRole userRole = new UserRole();
                 userRole.setUserId(user.getId());
                 userRole.setRoleId(3L);
                 userRoleMapper.insert(userRole);
+            } else {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(user.getId());
+                userRole.setRoleId(6L);
+                userRoleMapper.insert(userRole);
             }
         } catch (Exception e) {
+            log.error("用户注册失败:", e);
             throw new BusinessException("用户注册失败");
         }
     }
@@ -172,6 +178,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 userRoleMapper.insert(userRole);
             });
         } catch (Exception e) {
+            log.error("新增用户失败:", e);
             throw new BusinessException("新增用户失败");
         }
     }

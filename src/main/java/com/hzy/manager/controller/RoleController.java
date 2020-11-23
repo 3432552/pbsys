@@ -1,9 +1,12 @@
 package com.hzy.manager.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.hzy.manager.common.Result;
 import com.hzy.manager.domain.Role;
+import com.hzy.manager.domain.UserRole;
 import com.hzy.manager.service.RoleService;
+import com.hzy.manager.service.UserRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,6 +27,8 @@ import java.util.Map;
 public class RoleController {
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private UserRoleService userRoleService;
 
     /**
      * 查询角色列表接口
@@ -42,6 +47,7 @@ public class RoleController {
             return Result.error("查询角色列表失败!");
         }
     }
+
     /**
      * 通过角色id得到这个角色的所有菜单ids和这个角色的信息(用于修改)
      *
@@ -70,6 +76,27 @@ public class RoleController {
         return Result.ok(map);
     }
 
+    @ApiOperation(value = "给用户赋予角色")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true, dataType = "Long"),
+            @ApiImplicitParam(name = "roleId", value = "角色id", required = true, dataType = "Long"),
+    })
+    @PostMapping("/giveUserToRole")
+    public Result giveRoleToUserMes(@RequestBody UserRole userRole) {
+        UserRole role = userRoleService.getOne(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, userRole.getUserId()));
+        boolean flag1 = true;
+        if (role != null) {
+            flag1 = userRoleService.remove(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, userRole.getUserId()));
+        }
+        boolean flag2 = userRoleService.save(userRole);
+        if (flag1 == true && flag2 == true) {
+            return Result.ok("新增角色成功");
+        } else {
+            log.error("新增角色失败");
+            return Result.error("新增角色失败");
+        }
+    }
+
     /**
      * 新增角色
      *
@@ -92,6 +119,7 @@ public class RoleController {
             return Result.error("新增角色失败!");
         }
     }
+
     /**
      * 修改角色
      *

@@ -53,6 +53,7 @@
                 and work_date <![CDATA[<=]]> #{endTime}
             </if>
         </where>
+        order by work_date
         limit #{currentNo},#{pageSize}
     </select>
 </mapper>
